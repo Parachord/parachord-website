@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Parachord</title>
+    <meta name="description" content="Your music is everywhere. Now you don't have to be.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="assets/icon128.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark: #1e1b4b;
+            --darker: #0f0d24;
+            --light: #f8f8f8;
+            --muted: rgba(255,255,255,0.6);
+            --accent: #ec4899;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation - more transparent */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 13, 36, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            height: 26px;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--light);
+        }
+
+        /* Hero Section - Screenshot visible behind frosted glass */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('assets/screenshot.png');
+            background-size: 80%;
+            background-position: center 60%;
+            background-repeat: no-repeat;
+            filter: brightness(0.5);
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg,
+                rgba(15, 13, 36, 0.4) 0%,
+                rgba(15, 13, 36, 0.5) 40%,
+                rgba(15, 13, 36, 0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            background: rgba(15, 13, 36, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 3rem 4rem;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.4);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.9rem 2.5rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+        }
+
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .platforms svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .platforms svg:hover {
+            opacity: 0.8;
+        }
+
+        /* Gallery / Carousel Section */
+        .gallery {
+            padding: 4rem 2rem 6rem;
+            background: var(--darker);
+            overflow: hidden;
+        }
+
+        .gallery-label {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .gallery-track {
+            display: flex;
+            gap: 1.5rem;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+
+        .gallery-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .gallery-item {
+            flex-shrink: 0;
+            width: 400px;
+            height: 250px;
+            background: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item.placeholder {
+            background: linear-gradient(135deg, var(--dark) 0%, rgba(168, 85, 247, 0.1) 100%);
+        }
+
+        .gallery-item.placeholder span {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Concept Section */
+        .concept {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: var(--dark);
+        }
+
+        .concept-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .concept h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+
+        .concept h2 strong {
+            font-weight: 700;
+        }
+
+        .concept p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--darker);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .feature:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.25rem;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        .feature h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* Plugins Marketplace Section */
+        .plugins {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .plugins-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .plugins-header h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .plugins-header h2 strong {
+            font-weight: 700;
+        }
+
+        .plugins-header p {
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Filter Tabs */
+        .plugin-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .plugin-filter {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--muted);
+            padding: 0.5rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .plugin-filter:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: var(--light);
+        }
+
+        .plugin-filter.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Plugin Grid - matching app's ResolverCard style */
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .plugin-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: default;
+            transition: transform 0.2s;
+        }
+
+        .plugin-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .plugin-card.hidden {
+            display: none;
+        }
+
+        /* Colored square tile matching app's 120x120 cards */
+        .plugin-tile {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.2s;
+        }
+
+        .plugin-card:hover .plugin-tile {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .plugin-tile svg {
+            width: 48px;
+            height: 48px;
+            fill: white;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .exp-item h3 svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .plugin-card h4 {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .plugin-card span {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Experiences Section */
+        .experiences {
+            padding: 6rem 2rem;
+            background: var(--darker);
+        }
+
+        .experiences-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .experiences-header h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 300;
+        }
+
+        .experiences-header h2 strong {
+            font-weight: 700;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .exp-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .exp-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .exp-item h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exp-item p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* Signup Section */
+        .signup {
+            padding: 6rem 2rem;
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .signup-inner {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .signup h2 {
+            font-size: 1.75rem;
+            font-weight: 300;
+            margin-bottom: 0.75rem;
+        }
+
+        .signup h2 strong {
+            font-weight: 700;
+        }
+
+        .signup > p {
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .signup-form {
+            display: flex;
+            gap: 0;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .signup-form input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            padding: 1rem 1.25rem;
+            color: var(--light);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .signup-form input:focus {
+            border-color: var(--accent);
+        }
+
+        .signup-form input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .signup-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 1rem 1.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .signup-form button:hover {
+            background: #d6368a;
+        }
+
+        .form-note {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--darker);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            height: 22px;
+            filter: brightness(0) invert(1);
+            opacity: 0.5;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 2.5rem 2rem;
+                margin: 0 1rem;
+            }
+
+            .gallery-item {
+                width: 300px;
+                height: 188px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .plugins-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+
+            .plugin-tile {
+                width: 80px;
+                height: 80px;
+            }
+
+            .plugin-tile svg {
+                width: 36px;
+                height: 36px;
+            }
+
+            .exp-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .signup-form {
+                flex-direction: column;
+            }
+
+            .signup-form input {
+                border-right: 1px solid rgba(255,255,255,0.1);
+                border-radius: 4px;
+            }
+
+            .signup-form button {
+                border-radius: 4px;
+                margin-top: 0.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .plugins-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="assets/logo-wordmark.png" alt="Parachord" class="logo">
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#plugins">Plugins</a>
+            <a href="https://github.com/jherskowitz/parachord" target="_blank">GitHub</a>
+            <a href="#signup">Updates</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>parachord</h1>
+            <p class="tagline">Your music is everywhere. Now you don't have to be.</p>
+            <a href="#signup" class="hero-cta">Get Early Access</a>
+            <div class="platforms">
+                <!-- macOS -->
+                <svg viewBox="0 0 24 24"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg>
+                <!-- Windows -->
+                <svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                <!-- Linux -->
+                <svg viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.311.001-.465.003-.653.014-1.303.056-1.946.128C6.56.55 3.81 2.04 2.15 4.56c-1.616 2.452-2.15 5.582-2.15 8.42 0 2.839.534 5.97 2.15 8.42 1.66 2.52 4.41 4.01 7.943 4.43.643.072 1.293.114 1.946.128.154.002.31.003.465.003.156 0 .311-.001.465-.003.653-.014 1.303-.056 1.946-.128 3.533-.42 6.283-1.91 7.943-4.43 1.616-2.45 2.15-5.581 2.15-8.42 0-2.838-.534-5.968-2.15-8.42C21.19 2.04 18.44.55 14.907.131c-.643-.072-1.293-.114-1.946-.128C12.815.001 12.66 0 12.504 0z"/></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot Gallery -->
+    <section class="gallery">
+        <p class="gallery-label">See It In Action</p>
+        <div class="gallery-track">
+            <div class="gallery-item"><img src="assets/screenshot.png" alt="Album view"></div>
+            <div class="gallery-item placeholder"><span>Artist Page</span></div>
+            <div class="gallery-item placeholder"><span>Search Results</span></div>
+            <div class="gallery-item placeholder"><span>Queue View</span></div>
+            <div class="gallery-item placeholder"><span>Recommendations</span></div>
+            <div class="gallery-item placeholder"><span>Friends Activity</span></div>
+            <div class="gallery-item"><img src="assets/screenshot.png" alt="Album view"></div>
+            <div class="gallery-item placeholder"><span>Artist Page</span></div>
+            <div class="gallery-item placeholder"><span>Search Results</span></div>
+            <div class="gallery-item placeholder"><span>Queue View</span></div>
+            <div class="gallery-item placeholder"><span>Recommendations</span></div>
+            <div class="gallery-item placeholder"><span>Friends Activity</span></div>
+        </div>
+    </section>
+
+    <section class="concept">
+        <div class="concept-inner">
+            <p class="section-title">The Idea</p>
+            <h2>Stop chasing music across the web. Given a <strong>song</strong>, <strong>album</strong>, or <strong>playlist</strong>, Parachord finds the best available source for <strong>you</strong> and just plays it.</h2>
+            <p>A new kind of music player that invites all your streams, downloads, cloud music storage, playlists, radio stations and friends to the same party. It's about time they all mingle.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-header">
+            <p class="section-title">Features</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                </div>
+                <h3>Universal Link Translation</h3>
+                <p>Paste any music link from Spotify, Apple Music, YouTube, or anywhere else. Parachord translates it and plays from your preferred sources.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+                </div>
+                <h3>Plug-In Recommendations</h3>
+                <p>Connect your own recommendation engines—Last.fm, ListenBrainz, ChatGPT, Gemini—and discover music your way, not the algorithm's way.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                </div>
+                <h3>Friends & Listen Along</h3>
+                <p>Real human curation. See what friends are playing, browse their libraries, and listen along in real-time. Music is better together.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                </div>
+                <h3>Import Your Library</h3>
+                <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z"/></svg>
+                </div>
+                <h3>Plugin Marketplace</h3>
+                <p>Browse and install plugins for new sources, metadata providers, and recommendation engines. Or build your own with our open API.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+                </div>
+                <h3>Portable Playlists</h3>
+                <p>Standard XSPF format that works across services and survives platform changes. Your curation belongs to you, forever.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plugins Marketplace Section -->
+    <section class="plugins" id="plugins">
+        <div class="plugins-header">
+            <p class="section-title">Marketplace</p>
+            <h2>Plug in <strong>everything</strong></h2>
+            <p>Connect your favorite services, metadata providers, and recommendation engines.</p>
+        </div>
+
+        <div class="plugin-filters">
+            <button class="plugin-filter active" data-filter="all">All</button>
+            <button class="plugin-filter" data-filter="streaming">Streaming</button>
+            <button class="plugin-filter" data-filter="metadata">Metadata</button>
+            <button class="plugin-filter" data-filter="social">Social</button>
+            <button class="plugin-filter" data-filter="ai">AI</button>
+        </div>
+
+        <div class="plugins-grid">
+            <!-- Spotify -->
+            <div class="plugin-card" data-category="streaming">
+                <div class="plugin-tile" style="background-color: #1DB954;">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                </div>
+                <h4>Spotify</h4>
+                <span>Streaming</span>
+            </div>
+
+            <!-- YouTube -->
+            <div class="plugin-card" data-category="streaming">
+                <div class="plugin-tile" style="background-color: #FF0000;">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </div>
+                <h4>YouTube</h4>
+                <span>Streaming</span>
+            </div>
+
+            <!-- Bandcamp -->
+            <div class="plugin-card" data-category="streaming">
+                <div class="plugin-tile" style="background-color: #629AA9;">
+                    <svg viewBox="0 0 24 24"><path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/></svg>
+                </div>
+                <h4>Bandcamp</h4>
+                <span>Streaming</span>
+            </div>
+
+            <!-- Qobuz -->
+            <div class="plugin-card" data-category="streaming">
+                <div class="plugin-tile" style="background-color: #0E7EBF;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/></svg>
+                </div>
+                <h4>Qobuz</h4>
+                <span>Hi-Res</span>
+            </div>
+
+            <!-- Local Files -->
+            <div class="plugin-card" data-category="streaming">
+                <div class="plugin-tile" style="background-color: #6366f1;">
+                    <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10h-4v-4H8l4-4 4 4h-2v4z"/></svg>
+                </div>
+                <h4>Local Files</h4>
+                <span>Library</span>
+            </div>
+
+            <!-- Apple Music -->
+            <div class="plugin-card" data-category="metadata">
+                <div class="plugin-tile" style="background-color: #FA243C;">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                </div>
+                <h4>Apple Music</h4>
+                <span>Metadata</span>
+            </div>
+
+            <!-- Wikipedia -->
+            <div class="plugin-card" data-category="metadata">
+                <div class="plugin-tile" style="background-color: #636363;">
+                    <svg viewBox="0 0 24 24"><path d="M12.09 13.119c-.936 1.932-2.217 4.548-2.853 5.728-.616 1.074-1.127.931-1.532.029-1.406-3.321-4.293-9.144-5.651-12.409-.251-.601-.441-.987-.619-1.139-.181-.15-.554-.24-1.122-.271C.103 5.033 0 4.982 0 4.898v-.455l.052-.045c.924-.005 5.401 0 5.401 0l.051.045v.434c0 .119-.075.176-.225.176l-.564.031c-.485.029-.727.164-.727.436 0 .135.053.33.166.595 1.071 2.587 2.169 5.164 3.288 7.731l.063.126c.637-1.371 1.261-2.749 1.878-4.133l.063-.126c-.611-1.437-1.246-2.857-1.879-4.273-.118-.276-.178-.47-.178-.595 0-.271.203-.407.609-.436l.564-.031c.15 0 .225-.057.225-.176v-.434l-.051-.045s-4.152.005-5.076 0l-.052.045v.455c0 .084.103.135.307.159.568.031.941.121 1.122.271.178.152.368.538.619 1.139.27.655.576 1.326.899 2.016.45.969.893 1.943 1.324 2.927l.063.127c.32-.68.651-1.354.986-2.019.303-.614.615-1.218.932-1.817.236-.479.449-.934.636-1.358.128-.281.192-.496.192-.646 0-.271-.218-.417-.654-.436l-.564-.031c-.15 0-.225-.057-.225-.176v-.434l-.051-.045s3.839.005 4.763 0l.052.045v.455c0 .084-.103.135-.307.159-.568.031-.941.121-1.122.271-.178.152-.368.538-.619 1.139l-2.435 5.451c.644 1.476 1.296 2.944 1.955 4.406l.063.126c1.119-2.567 2.211-5.144 3.277-7.731.113-.265.166-.46.166-.595 0-.271-.242-.407-.727-.436l-.564-.031c-.15 0-.225-.057-.225-.176v-.434l-.051-.045s4.477.005 5.401 0l.052.045v.455c0 .084-.103.135-.307.159-.568.031-.941.121-1.122.271-.178.152-.368.538-.619 1.139-1.358 3.265-4.245 9.088-5.651 12.409-.405.902-.916 1.045-1.532-.029-.636-1.18-1.917-3.796-2.853-5.728z"/></svg>
+                </div>
+                <h4>Wikipedia</h4>
+                <span>Bios</span>
+            </div>
+
+            <!-- Discogs -->
+            <div class="plugin-card" data-category="metadata">
+                <div class="plugin-tile" style="background-color: #333333;">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm0 21.6c-5.304 0-9.6-4.296-9.6-9.6S6.696 2.4 12 2.4s9.6 4.296 9.6 9.6-4.296 9.6-9.6 9.6zm0-16.8c-3.972 0-7.2 3.228-7.2 7.2s3.228 7.2 7.2 7.2 7.2-3.228 7.2-7.2-3.228-7.2-7.2-7.2zm0 12c-2.652 0-4.8-2.148-4.8-4.8s2.148-4.8 4.8-4.8 4.8 2.148 4.8 4.8-2.148 4.8-4.8 4.8zm0-7.2c-1.326 0-2.4 1.074-2.4 2.4s1.074 2.4 2.4 2.4 2.4-1.074 2.4-2.4-1.074-2.4-2.4-2.4z"/></svg>
+                </div>
+                <h4>Discogs</h4>
+                <span>Metadata</span>
+            </div>
+
+            <!-- Last.fm -->
+            <div class="plugin-card" data-category="social">
+                <div class="plugin-tile" style="background-color: #D51007;">
+                    <svg viewBox="0 0 24 24"><path d="M10.584 17.21l-.88-2.392s-1.43 1.594-3.573 1.594c-1.897 0-3.244-1.649-3.244-4.288 0-3.382 1.704-4.591 3.381-4.591 2.42 0 3.189 1.567 3.849 3.574l.88 2.749c.88 2.666 2.529 4.81 7.285 4.81 3.409 0 5.718-1.044 5.718-3.793 0-2.227-1.265-3.381-3.63-3.931l-1.758-.385c-1.21-.275-1.567-.77-1.567-1.594 0-.934.742-1.484 1.952-1.484 1.32 0 2.034.495 2.144 1.677l2.749-.33c-.22-2.474-1.924-3.492-4.729-3.492-2.474 0-4.893.935-4.893 3.932 0 1.87.907 3.051 3.189 3.601l1.87.44c1.402.33 1.869.907 1.869 1.704 0 1.017-.99 1.43-2.86 1.43-2.776 0-3.93-1.457-4.59-3.464l-.907-2.75c-1.155-3.573-2.997-4.893-6.653-4.893C2.144 5.333 0 7.89 0 12.233c0 4.18 2.144 6.434 5.993 6.434 3.106 0 4.591-1.457 4.591-1.457z"/></svg>
+                </div>
+                <h4>Last.fm</h4>
+                <span>Scrobbling</span>
+            </div>
+
+            <!-- ListenBrainz -->
+            <div class="plugin-card" data-category="social">
+                <div class="plugin-tile" style="background-color: #353070;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <h4>ListenBrainz</h4>
+                <span>Open Source</span>
+            </div>
+
+            <!-- Libre.fm -->
+            <div class="plugin-card" data-category="social">
+                <div class="plugin-tile" style="background-color: #4CAF50;">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                </div>
+                <h4>Libre.fm</h4>
+                <span>Scrobbling</span>
+            </div>
+
+            <!-- ChatGPT -->
+            <div class="plugin-card" data-category="ai">
+                <div class="plugin-tile" style="background-color: #10a37f;">
+                    <svg viewBox="0 0 24 24"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
+                </div>
+                <h4>ChatGPT</h4>
+                <span>AI Playlists</span>
+            </div>
+
+            <!-- Gemini -->
+            <div class="plugin-card" data-category="ai">
+                <div class="plugin-tile" style="background-color: #4285f4;">
+                    <svg viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
+                </div>
+                <h4>Gemini</h4>
+                <span>AI Playlists</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences Section -->
+    <section class="experiences" id="experiences">
+        <div class="experiences-header">
+            <p class="section-title">Why Parachord</p>
+            <h2>Experiences you can't get <strong>anywhere else</strong></h2>
+        </div>
+
+        <div class="exp-grid">
+            <div class="exp-item">
+                <h3><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg> Find the rare stuff</h3>
+                <p>That live recording only on YouTube. The Bandcamp-exclusive EP. The vinyl rip in your collection. Parachord finds them all.</p>
+            </div>
+
+            <div class="exp-item">
+                <h3><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Support artists directly</h3>
+                <p>Prioritize Bandcamp purchases when available. More money to the artists, streaming as fallback.</p>
+            </div>
+
+            <div class="exp-item">
+                <h3><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> Listen together</h3>
+                <p>See what friends are playing and jump in to listen along in real-time. Share discoveries instantly.</p>
+            </div>
+
+            <div class="exp-item">
+                <h3><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> Your recommendations</h3>
+                <p>Plug in Last.fm, ListenBrainz, or AI engines. Get suggestions from sources you trust, not black-box algorithms.</p>
+            </div>
+
+            <div class="exp-item">
+                <h3><svg viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg> Translate any link</h3>
+                <p>Someone sent you a Spotify link but you use YouTube? Paste it in. Parachord plays it from your sources.</p>
+            </div>
+
+            <div class="exp-item">
+                <h3><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg> Own your playlists</h3>
+                <p>Standard XSPF format. Export, share, and keep your curation forever—even if platforms disappear.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Section -->
+    <section class="signup" id="signup">
+        <div class="signup-inner">
+            <p class="section-title">Stay Updated</p>
+            <h2>Get <strong>early access</strong></h2>
+            <p>Join the list. Be first to know when Parachord is ready.</p>
+
+            <form class="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Join</button>
+            </form>
+            <p class="form-note">No spam. Unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <img src="assets/logo-wordmark.png" alt="Parachord" class="footer-logo">
+            <div class="footer-links">
+                <a href="https://github.com/jherskowitz/parachord" target="_blank">Repository</a>
+                <a href="https://github.com/jherskowitz/parachord/issues" target="_blank">Issues</a>
+                <a href="https://github.com/jherskowitz/parachord/discussions" target="_blank">Community</a>
+            </div>
+            <span class="footer-copy">© 2026 Parachord · MIT License · Open Source</span>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Plugin filter
+        const filters = document.querySelectorAll('.plugin-filter');
+        const cards = document.querySelectorAll('.plugin-card');
+
+        filters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                const category = filter.dataset.filter;
+
+                filters.forEach(f => f.classList.remove('active'));
+                filter.classList.add('active');
+
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Form handling
+        const form = document.querySelector('.signup-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const button = form.querySelector('button');
+            const input = form.querySelector('input');
+            const original = button.textContent;
+
+            button.textContent = '...';
+            button.disabled = true;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    button.textContent = 'Done!';
+                    input.value = '';
+                    setTimeout(() => {
+                        button.textContent = original;
+                        button.disabled = false;
+                    }, 2000);
+                } else {
+                    throw new Error();
+                }
+            } catch {
+                button.textContent = 'Error';
+                button.disabled = false;
+                setTimeout(() => button.textContent = original, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
