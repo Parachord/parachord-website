@@ -238,6 +238,7 @@
             align-items: center;
             justify-content: center;
             transition: transform 0.3s, border-color 0.3s;
+            cursor: pointer;
         }
 
         .gallery-item:hover {
@@ -1255,8 +1256,8 @@
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxCurrent = document.getElementById('lightbox-current');
         const lightboxTotal = document.getElementById('lightbox-total');
-        const galleryItems = document.querySelectorAll('.gallery-item img');
-        const galleryImages = Array.from(galleryItems).map(img => img.src);
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const galleryImages = Array.from(galleryItems).map(item => item.querySelector('img').src);
         let currentIndex = 0;
 
         lightboxTotal.textContent = galleryImages.length;
@@ -1286,9 +1287,8 @@
             lightboxCurrent.textContent = currentIndex + 1;
         }
 
-        galleryItems.forEach((img, index) => {
-            img.style.cursor = 'pointer';
-            img.addEventListener('click', () => openLightbox(index));
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => openLightbox(index));
         });
 
         document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
