@@ -61,7 +61,6 @@
 
         .logo {
             height: 26px;
-            filter: brightness(0) invert(1);
         }
 
         .nav-links {
@@ -205,6 +204,11 @@
             margin-bottom: 2rem;
         }
 
+        .gallery-cta {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
         .gallery-track {
             display: flex;
             gap: 1.5rem;
@@ -256,6 +260,115 @@
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-close svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-nav svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+        }
+
+        .lightbox-prev {
+            left: 1rem;
+        }
+
+        .lightbox-next {
+            right: 1rem;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--muted);
+            font-size: 0.85rem;
         }
 
         /* Concept Section */
@@ -789,7 +902,10 @@
             <div class="gallery-item"><img src="assets/history.png" alt="Album view"></div>
             <div class="gallery-item"><img src="assets/playlists.png" alt="Album view"></div>
             <div class="gallery-item"><img src="assets/recommended-artists.png" alt="Album view"></div>
-            
+
+        </div>
+        <div class="gallery-cta">
+            <a href="https://www.youtube.com/playlist?list=PLKIAXRUWOTo62Fy835ZhTtQfzXnqaiVXV" target="_blank" class="hero-cta">View Demo Screencasts</a>
         </div>
     </section>
 
@@ -913,7 +1029,7 @@
             <!-- Wikipedia -->
             <div class="plugin-card" data-category="metadata">
                 <div class="plugin-tile" style="background-color: #000000;">
-                    <svg viewBox="0 0 24 24"><path d="M12.09 13.119c-.936 1.932-2.217 4.548-2.853 5.728-.616 1.074-1.127.931-1.532.029-1.406-3.321-4.293-9.144-5.651-12.409-.251-.601-.441-.987-.619-1.139-.181-.15-.554-.24-1.122-.271C.103 5.033 0 4.982 0 4.898v-.455l.052-.045c.924-.005 5.401 0 5.401 0l.051.045v.434c0 .119-.075.176-.225.176l-.564.031c-.485.029-.727.164-.727.436 0 .135.053.33.166.595 1.071 2.587 2.169 5.164 3.288 7.731l.063.126c.637-1.371 1.261-2.749 1.878-4.133l.063-.126c-.611-1.437-1.246-2.857-1.879-4.273-.118-.276-.178-.47-.178-.595 0-.271.203-.407.609-.436l.564-.031c.15 0 .225-.057.225-.176v-.434l-.051-.045s-4.152.005-5.076 0l-.052.045v.455c0 .084.103.135.307.159.568.031.941.121 1.122.271.178.152.368.538.619 1.139.27.655.576 1.326.899 2.016.45.969.893 1.943 1.324 2.927l.063.127c.32-.68.651-1.354.986-2.019.303-.614.615-1.218.932-1.817.236-.479.449-.934.636-1.358.128-.281.192-.496.192-.646 0-.271-.218-.417-.654-.436l-.564-.031c-.15 0-.225-.057-.225-.176v-.434l-.051-.045s3.839.005 4.763 0l.052.045v.455c0 .084-.103.135-.307.159-.568.031-.941.121-1.122.271-.178.152-.368.538-.619 1.139l-2.435 5.451c.644 1.476 1.296 2.944 1.955 4.406l.063.126c1.119-2.567 2.211-5.144 3.277-7.731.113-.265.166-.46.166-.595 0-.271-.242-.407-.727-.436l-.564-.031c-.15 0-.225-.057-.225-.176v-.434l-.051-.045s4.477.005 5.401 0l.052.045v.455c0 .084-.103.135-.307.159-.568.031-.941.121-1.122.271-.178.152-.368.538-.619 1.139-1.358 3.265-4.245 9.088-5.651 12.409-.405.902-.916 1.045-1.532-.029-.636-1.18-1.917-3.796-2.853-5.728z"/></svg>
+                    <svg viewBox="0 0 98.05 98.05"><path fill="white" d="M98.023,17.465l-19.584-0.056c-0.004,0.711-0.006,1.563-0.017,2.121c1.664,0.039,5.922,0.822,7.257,4.327L66.92,67.155c-0.919-2.149-9.643-21.528-10.639-24.02l9.072-18.818c1.873-2.863,5.455-4.709,8.918-4.843l-0.01-1.968L55.42,17.489c-0.045,0.499,0.001,1.548-0.068,2.069c5.315,0.144,7.215,1.334,5.941,4.508c-2.102,4.776-6.51,13.824-7.372,15.475c-2.696-5.635-4.41-9.972-7.345-16.064c-1.266-2.823,1.529-3.922,4.485-4.004v-1.981l-21.82-0.067c0.016,0.93-0.021,1.451-0.021,2.131c3.041,0.046,6.988,0.371,8.562,3.019c2.087,4.063,9.044,20.194,11.149,24.514c-2.685,5.153-9.207,17.341-11.544,21.913c-3.348-7.43-15.732-36.689-19.232-44.241c-1.304-3.218,3.732-5.077,6.646-5.213l0.019-2.148L0,17.398c0.005,0.646,0.027,1.71,0.029,2.187c4.025-0.037,9.908,6.573,11.588,10.683c7.244,16.811,14.719,33.524,21.928,50.349c0.002,0.029,2.256,0.059,2.281,0.008c4.717-9.653,10.229-19.797,15.206-29.56L63.588,80.64c0.005,0.004,2.082,0.016,2.093,0.007c7.962-18.196,19.892-46.118,23.794-54.933c1.588-3.767,4.245-6.064,8.543-6.194l0.032-1.956L98.023,17.465z"/></svg>
                 </div>
                 <h4>Wikipedia</h4>
                 <span>Metadata</span>
@@ -922,7 +1038,7 @@
             <!-- SoundCloud -->
             <div class="plugin-card" data-category="streaming">
                 <div class="plugin-tile" style="background-color: #ff5500;">
-                    <svg viewBox="0 0 24 24"><path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.098.101.098.05 0 .09-.04.099-.098l.255-2.105-.27-2.154c-.009-.06-.052-.1-.1-.1m-.899.828c-.06 0-.091.037-.104.094L0 14.479l.165 1.308c.014.057.045.094.09.094s.089-.037.099-.094l.19-1.308-.19-1.334c-.01-.057-.045-.09-.09-.09m1.83-1.229c-.06 0-.12.045-.12.104l-.21 2.563.225 2.458c0 .06.045.12.105.12.074 0 .12-.06.12-.12l.24-2.443-.24-2.578c0-.06-.06-.105-.12-.105m.945-.089c-.075 0-.135.06-.15.135l-.193 2.64.21 2.544c.016.077.075.138.149.138.075 0 .135-.061.15-.138l.225-2.544-.225-2.64c-.016-.075-.075-.135-.15-.135m.93-.132c-.09 0-.149.075-.165.165l-.195 2.76.195 2.52c.016.09.075.164.165.164.09 0 .165-.074.18-.164l.21-2.52-.21-2.76c-.016-.09-.09-.165-.18-.165m.96-.165c-.105 0-.18.09-.195.194l-.18 2.925.18 2.49c.015.105.09.18.195.18s.18-.075.195-.18l.195-2.49-.195-2.925c-.015-.105-.09-.195-.195-.195m1.005-.18c-.12 0-.21.104-.225.224l-.165 3.105.165 2.46c.015.12.105.225.225.225.12 0 .21-.105.225-.225l.18-2.46-.18-3.105c-.016-.12-.105-.225-.225-.225m1.65-2.115c-.06 0-.12.03-.165.06-.03.03-.06.09-.06.15l-.12 5.37.135 2.415c0 .135.105.24.24.24.12 0 .225-.105.225-.24l.15-2.43-.165-5.37c0-.06-.03-.12-.06-.15-.045-.03-.09-.045-.15-.045m.855-.06c-.075 0-.135.03-.18.075-.045.03-.075.09-.075.165l-.135 5.46.15 2.4c0 .15.12.255.255.255.135 0 .255-.12.255-.27l.165-2.385-.165-5.46c0-.075-.03-.135-.075-.165-.045-.045-.105-.075-.18-.075m.93-.18c-.195 0-.33.15-.345.345l-.12 5.64.135 2.37c.015.195.15.345.345.345.18 0 .33-.15.345-.345l.135-2.37-.135-5.64c-.015-.195-.165-.345-.345-.345m1.155.39c-.21 0-.375.165-.375.375l-.105 5.28.12 2.34c.015.21.165.375.375.375.195 0 .36-.165.375-.375l.135-2.34-.15-5.28c-.015-.21-.18-.375-.375-.375m1.155 1.155c-.225 0-.39.18-.405.405l-.09 4.11.105 2.31c.015.225.18.39.405.39.21 0 .39-.165.405-.39l.12-2.31-.12-4.11c-.015-.225-.195-.405-.405-.405m1.17.135c-.24 0-.42.195-.435.435l-.075 3.96.09 2.295c.015.24.195.42.435.42.225 0 .405-.18.435-.42l.09-2.295-.09-3.96c-.03-.24-.21-.435-.435-.435m1.395 2.235c-.03 0-.045 0-.075.015-.015 0-.03.015-.045.015-.03.015-.06.03-.09.06-.03.03-.06.06-.075.09 0 .015-.015.03-.015.045-.015.03-.015.06-.015.09v.105l.06 2.175-.06 2.205c-.015.21.165.42.39.45.015 0 .045.015.075.015.105 0 .195-.045.27-.12.06-.06.105-.15.105-.24l.015-.135.06-2.175-.075-3.87c0-.075-.015-.135-.045-.18-.015-.015-.015-.03-.03-.045a.443.443 0 0 0-.315-.135m1.86 1.68c-.015-.255-.225-.45-.48-.45-.255 0-.465.195-.48.45l-.06 2.43.06 2.115c.015.255.225.45.48.45.24 0 .45-.195.48-.45l.075-2.115-.075-2.43m.885-3.45c-.135-.03-.27-.045-.405-.045-.21 0-.42.03-.615.105-.03 0-.06.03-.075.03-.015 0-.03.015-.06.03-.015 0-.03.015-.06.03l-.03.015c-.06.03-.105.075-.165.12-.12.105-.225.225-.3.36-.12.21-.195.435-.24.675-.03.165-.045.33-.045.51v2.37c0 .255.21.48.48.495h4.215c.24 0 .45-.195.465-.435v-2.43c0-.87-.555-1.605-1.335-1.875z"/></svg>
+                    <svg viewBox="0 208.952 1048.713 581.696"><path fill="white" d="M0 686.216c0 13.014 4.718 22.854 14.152 29.524 9.435 6.669 19.52 9.027 30.256 7.076 10.085-1.952 17.161-5.531 21.229-10.736 4.066-5.205 6.1-13.827 6.1-25.864v-141.52c0-10.086-3.497-18.626-10.492-25.62-6.994-6.995-15.534-10.492-25.62-10.492-9.76 0-18.137 3.497-25.132 10.492C3.498 526.07 0 534.61 0 544.696v141.52zm112.24 60.512c0 9.436 3.335 16.511 10.004 21.229 6.67 4.718 15.21 7.076 25.62 7.076 10.736 0 19.438-2.359 26.108-7.076 6.669-4.717 10.004-11.793 10.004-21.229V416.84c0-9.76-3.498-18.138-10.492-25.132-6.995-6.994-15.535-10.492-25.62-10.492-9.76 0-18.138 3.498-25.132 10.492-6.995 6.995-10.492 15.372-10.492 25.132v329.888zm111.752 15.616c0 9.435 3.416 16.511 10.248 21.229 6.832 4.717 15.616 7.076 26.353 7.076 10.41 0 18.95-2.359 25.619-7.076 6.67-4.718 10.005-11.794 10.005-21.229V461.248c0-10.085-3.498-18.707-10.492-25.864-6.995-7.157-15.372-10.735-25.132-10.735-10.086 0-18.707 3.578-25.864 10.735s-10.736 15.779-10.736 25.864v301.096zm112.24 1.464c0 17.894 12.037 26.841 36.112 26.841 24.074 0 36.111-8.947 36.111-26.841v-488c0-27.328-8.296-42.781-24.888-46.36-10.736-2.603-21.31.488-31.72 9.272-10.411 8.784-15.616 21.146-15.616 37.088v488zm114.193 14.152V247.016c0-16.917 5.042-27.002 15.128-30.256 21.797-5.205 43.432-7.808 64.904-7.808 49.775 0 96.136 11.712 139.079 35.136 42.944 23.424 77.674 55.388 104.188 95.892 26.515 40.505 41.887 85.156 46.116 133.957 19.845-8.459 40.991-12.688 63.439-12.688 45.547 0 84.506 16.104 116.876 48.312 32.371 32.209 48.557 70.923 48.557 116.145 0 45.547-16.186 84.424-48.557 116.632-32.37 32.208-71.166 48.312-116.388 48.312l-424.56-.488c-2.929-.976-5.125-2.766-6.589-5.368s-2.193-4.882-2.193-6.834z"/></svg>
                 </div>
                 <h4>SoundCloud</h4>
                 <span>Streaming</span>
@@ -1036,6 +1152,30 @@
         </div>
     </section>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Gallery image">
+        </div>
+        <button class="lightbox-nav lightbox-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">9</span></div>
+    </div>
+
     <footer>
         <div class="footer-content">
             <img src="assets/logo-wordmark.png" alt="Parachord" class="footer-logo">
@@ -1108,6 +1248,62 @@
                 button.disabled = false;
                 setTimeout(() => button.textContent = original, 2000);
             }
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCurrent = document.getElementById('lightbox-current');
+        const lightboxTotal = document.getElementById('lightbox-total');
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const galleryImages = Array.from(galleryItems).map(img => img.src);
+        let currentIndex = 0;
+
+        lightboxTotal.textContent = galleryImages.length;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImg.src = galleryImages[currentIndex];
+            lightboxCurrent.textContent = currentIndex + 1;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentIndex];
+            lightboxCurrent.textContent = currentIndex + 1;
+        }
+
+        function showNext() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentIndex];
+            lightboxCurrent.textContent = currentIndex + 1;
+        }
+
+        galleryItems.forEach((img, index) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => openLightbox(index));
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+        document.querySelector('.lightbox-prev').addEventListener('click', showPrev);
+        document.querySelector('.lightbox-next').addEventListener('click', showNext);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') showPrev();
+            if (e.key === 'ArrowRight') showNext();
         });
     </script>
 </body>
