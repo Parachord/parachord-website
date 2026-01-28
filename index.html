@@ -257,6 +257,115 @@
             letter-spacing: 0.1em;
         }
 
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-close svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-nav svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+        }
+
+        .lightbox-prev {
+            left: 1rem;
+        }
+
+        .lightbox-next {
+            right: 1rem;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
         /* Concept Section */
         .concept {
             padding: 6rem 2rem;
@@ -1035,6 +1144,30 @@
         </div>
     </section>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Gallery image">
+        </div>
+        <button class="lightbox-nav lightbox-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">9</span></div>
+    </div>
+
     <footer>
         <div class="footer-content">
             <img src="assets/logo-wordmark.png" alt="Parachord" class="footer-logo">
@@ -1107,6 +1240,62 @@
                 button.disabled = false;
                 setTimeout(() => button.textContent = original, 2000);
             }
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCurrent = document.getElementById('lightbox-current');
+        const lightboxTotal = document.getElementById('lightbox-total');
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const galleryImages = Array.from(galleryItems).map(img => img.src);
+        let currentIndex = 0;
+
+        lightboxTotal.textContent = galleryImages.length;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImg.src = galleryImages[currentIndex];
+            lightboxCurrent.textContent = currentIndex + 1;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentIndex];
+            lightboxCurrent.textContent = currentIndex + 1;
+        }
+
+        function showNext() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentIndex];
+            lightboxCurrent.textContent = currentIndex + 1;
+        }
+
+        galleryItems.forEach((img, index) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => openLightbox(index));
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+        document.querySelector('.lightbox-prev').addEventListener('click', showPrev);
+        document.querySelector('.lightbox-next').addEventListener('click', showNext);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') showPrev();
+            if (e.key === 'ArrowRight') showNext();
         });
     </script>
 </body>
