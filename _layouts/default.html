@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}Parachord</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="{{ '/assets/icon128.png' | relative_url }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark: #1e1b4b;
+            --darker: #0f0d24;
+            --light: #f8f8f8;
+            --muted: rgba(255,255,255,0.6);
+            --accent: #ec4899;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 13, 36, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            height: 26px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--light);
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+            min-height: calc(100vh - 160px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--darker);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            height: 22px;
+            filter: brightness(0) invert(1);
+            opacity: 0.5;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        {{ content_for_layout_styles }}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ '/' | relative_url }}">
+            <img src="{{ '/assets/logo-wordmark.png' | relative_url }}" alt="Parachord" class="logo">
+        </a>
+        <div class="nav-links">
+            <a href="{{ '/' | relative_url }}#features">Features</a>
+            <a href="{{ '/' | relative_url }}#plugins">Plugins</a>
+            <a href="{{ '/blog/' | relative_url }}" {% if page.url contains '/blog' %}class="active"{% endif %}>Blog</a>
+            <a href="{{ '/' | relative_url }}#signup">Updates</a>
+        </div>
+    </nav>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <img src="{{ '/assets/logo-wordmark.png' | relative_url }}" alt="Parachord" class="footer-logo">
+            <div class="footer-links">
+                <a href="https://github.com/Parachord/parachord-website/issues" target="_blank">Issues</a>
+                <a href="https://github.com/Parachord/parachord-website/discussions" target="_blank">Community</a>
+            </div>
+            <span class="footer-copy">&copy; 2026 Parachord &middot; MIT License &middot; Open Source</span>
+        </div>
+    </footer>
+</body>
+</html>
