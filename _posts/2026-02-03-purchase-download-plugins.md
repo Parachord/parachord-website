@@ -75,17 +75,7 @@ Streaming services decide what quality to deliver based on your subscription tie
 
 ## Benefits for Artists
 
-This is where we get excited. **Artists can make significantly more money from purchases than streams alone.**
-
-The math is stark:
-
-| Revenue Model | Artist Earnings (approximate) |
-|--------------|-------------------------------|
-| Stream | $0.003 - $0.005 per play |
-| Album Purchase | $5 - $8 per sale |
-| Bandcamp Purchase | ~$7 per $10 sale (after fees) |
-
-A single album purchase on Bandcamp can equal **1,500+ streams** in artist revenue.
+This is where we get excited. **Artists can make significantly more money from purchases than streams alone.** Why not do both?!
 
 ### Direct Support
 
