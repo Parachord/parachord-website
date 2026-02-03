@@ -79,7 +79,7 @@ Here's where it gets clever. When you're looking at a playlist or album, we don'
 
 **Background Processing**: Tracks further down the list resolve at lower priority, filling in as resources allow.
 
-This scheduler-based approach was a direct response to a pain point in Tomahawk, where you sometimes had to wait for all tracks above you in a list to resolve before getting to the one you wanted. Now, what's visible gets priority.
+This scheduler-based approach was a direct response to a pain point in previous implementations of the concept, where you sometimes had to wait for all tracks above you in a list to resolve before getting to the one you wanted. Now, what's visible gets priority.
 
 ## Caching
 
@@ -196,10 +196,11 @@ We're continuing to refine the resolution system. Some areas we're exploring:
 
 - **Smarter caching**: Predictively caching based on listening patterns
 - **Quality preferences**: Letting users prefer high-bitrate sources when available
+- **Blocklisting bad results**: Taking input about bad results (particularly from YouTube, Bandcamp and Soundcloud) that may not actually be the song they are purported to be
 - **Resolution explanations**: Showing users *why* a particular source was chosen
 
 The goal is always the same: you think about music, not sources. Parachord handles the rest.
 
 ---
 
-*Have questions about the technical details? Find us on [GitHub](https://github.com/parachord) or join our Discord.*
+
