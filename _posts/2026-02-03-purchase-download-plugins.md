@@ -8,7 +8,7 @@ category: "Features"
 
 One of the best ways to support the artists you love is to actually *buy* the music you discover and stream in Parachord. Today, we extended the plug-in architecture to easily buy tracks and albums easily from within the app - no matter what source it is playing back from.
 
-![Buy Button](/assets/Buy Button.png)
+![Buy Button](/assets/buy-button.png)
 
 ## Why This Matters
 
