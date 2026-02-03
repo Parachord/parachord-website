@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "New Feature: Purchase and Download Music Directly in Parachord"
+title: "New Feature: Purchase and Download Music Directly from Parachord"
 date: 2026-02-03
 author: "J Herskowitz"
 category: "Features"
