@@ -4,6 +4,9 @@ description: Your music is everywhere... now you don't have to be.
 url: "https://parachord.com"
 baseurl: ""
 
+# Social preview image (used for Open Graph / Twitter Cards)
+image: /assets/home.png
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
