@@ -6,7 +6,11 @@ author: "Parachord Team"
 category: "Features"
 ---
 
-We've just shipped something we're really excited about: Parachord now includes a full **MCP (Model Context Protocol) server**. This means your AI assistant can now directly interact with your music library, create playlists, control playback, and more.
+Parachord has always been about removing friction between you and your music. Our AI assistant **Shuffleupagus** takes that further—you can generate playlists, get recommendations, ask for details about what's currently playing, see what your friends have been listening to, and control playback, all through natural language conversation right inside the app.
+
+But what if you're not in Parachord? What if you're already deep in a conversation with Claude or ChatGPT, working on something else, and want to control your music without switching apps?
+
+That's why we've built an **MCP server** into Parachord.
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2rem 0;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/hMZyNU68njU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -25,9 +29,9 @@ Instead of AI being limited to generating text responses, MCP enables AI to:
 
 It's the difference between an AI that can *tell you* how to create a playlist and one that can *actually create it*.
 
-## What This Means for Parachord
+## Bringing Shuffleupagus Capabilities to Any AI
 
-With our MCP server, any MCP-compatible AI assistant can now:
+With our MCP server, any MCP-compatible AI assistant can now do what Shuffleupagus does—but from outside Parachord:
 
 - **Search your library** - "Find all the jazz albums I've collected"
 - **Create playlists** - "Make me a playlist of upbeat songs for running"
@@ -38,19 +42,11 @@ With our MCP server, any MCP-compatible AI assistant can now:
 
 The AI has access to the same resolution pipeline that powers Parachord itself. When it creates a playlist, those tracks get resolved across all your configured sources just like anything else in your library.
 
-## Shuffleupagus vs. MCP: What's the Difference?
-
-If you've used Parachord's AI plugins, you might be wondering how MCP differs from Shuffleupagus. They serve different use cases:
-
-**Shuffleupagus** is Parachord's built-in AI assistant. It lives *inside* the app—you can generate playlists, get recommendations, ask for details about what's playing, see what your friends have been listening to, and control playback, all through natural language. Shuffleupagus is deeply integrated with Parachord's UI and designed for when you're actively using the app.
-
-**MCP** flips the relationship. Instead of AI living inside Parachord, MCP lets *external* AI assistants control Parachord from the outside. You're in Claude, ChatGPT, or another AI tool doing other work, and you can control your music without switching apps.
-
 Think of it this way:
-- **Shuffleupagus**: "I want to use AI to make a playlist" → Open Parachord
-- **MCP**: "I'm already talking to an AI and want it to handle my music" → AI controls Parachord
+- **Shuffleupagus**: You're in Parachord, using AI to interact with your music
+- **MCP**: You're in an external AI tool, and it controls Parachord for you
 
-They're complementary. Use Shuffleupagus when you're in Parachord and want AI-generated playlists. Use MCP when you want your AI assistant to manage music as part of a larger workflow.
+They're complementary. Use Shuffleupagus when you're actively in Parachord. Use MCP when you want your AI assistant to manage music as part of a larger workflow without leaving your conversation.
 
 ## How It Works
 
