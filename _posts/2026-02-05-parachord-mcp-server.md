@@ -1,20 +1,21 @@
 ---
 layout: post
-title: "Parachord Now Speaks MCP: Let Your AI Control Your Music"
+title: "Shuffleupagus & MCP: Your musical AI companion"
 date: 2026-02-05
 author: "Parachord Team"
 category: "Features"
 ---
+![Description](/assets/shuffy-post.png)
 
-Parachord has always been about removing friction between you and your music. Our AI assistant **Shuffleupagus** takes that further—you can generate playlists, get recommendations, ask for details about what's currently playing, see what your friends have been listening to, and control playback, all through natural language conversation right inside the app.
-
-But what if you're not in Parachord? What if you're already deep in a conversation with Claude or ChatGPT, working on something else, and want to control your music without switching apps?
-
-That's why we've built an **MCP server** into Parachord.
+Parachord is about removing friction between you and your music. Our (optional!) AI assistant **Shuffleupagus** - powered by any one of a number of AI plug-ins) takes that further... you can generate playlists, get recommendations, ask for details about what's currently playing, see what your friends have been listening to, and control playback, all through natural language conversation right inside the app.
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2rem 0;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/hMZyNU68njU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
+
+But what if you're not in Parachord? What if you're already deep in a conversation with Claude or ChatGPT, working on something else, and want to control your music without switching apps?
+
+That's why we've built an **MCP server** into Parachord.
 
 ## What is MCP?
 
@@ -43,7 +44,7 @@ With our MCP server, any MCP-compatible AI assistant can now do what Shuffleupag
 The AI has access to the same resolution pipeline that powers Parachord itself. When it creates a playlist, those tracks get resolved across all your configured sources just like anything else in your library.
 
 Think of it this way:
-- **Shuffleupagus**: You're in Parachord, using AI to interact with your music
+- **Shuffleupagus**: You're in Parachord, using AI plug-ins to interact with your music
 - **MCP**: You're in an external AI tool, and it controls Parachord for you
 
 They're complementary. Use Shuffleupagus when you're actively in Parachord. Use MCP when you want your AI assistant to manage music as part of a larger workflow without leaving your conversation.
@@ -75,7 +76,7 @@ All of this happens in seconds, and you never leave your conversation.
 
 ## Setting It Up
 
-If you're running Parachord, the MCP server is enabled by default on `localhost:9421`. To connect your AI assistant:
+If you're running Parachord, the MCP server is enabled by default on `localhost:9421`. To connect your external AI assistant:
 
 1. Open your AI client's MCP configuration
 2. Add Parachord as a server with the local endpoint
@@ -93,7 +94,7 @@ For Claude Desktop users, add this to your `claude_desktop_config.json`:
 }
 ```
 
-That's it. Claude can now control your music.
+That's it. Your AI clients can now control your music on your desktop for you.
 
 ## Why This Matters
 
@@ -105,19 +106,14 @@ This also opens up interesting compositional possibilities. Your AI can combine 
 
 ## Privacy Notes
 
-The MCP server runs **locally** on your machine. Your music library data doesn't leave your computer unless you explicitly choose a cloud-hosted AI service. When using local AI models, everything stays on-device.
+The MCP server runs **locally** on your machine. Your music library data doesn't leave your computer unless you explicitly choose a cloud-hosted AI service (e.g. ChatGPT, Gemini, Claude). When using local AI models (like the Ollama plug-in), everything stays on-device.
 
 For cloud AI services, the data necessary to fulfill your request gets sent—this includes search queries, track metadata, and listening history when asking for recommendations. Audio files themselves are never transmitted.
 
 ## What's Next
 
-This is our first MCP release, and we're already planning expansions:
-
-- **More granular controls** - EQ adjustments, crossfade settings, playback speed
-- **Smart home integration** - Multi-room audio control via MCP
-
 We're excited to see what people build with this. If you create something cool with Parachord's MCP server, let us know in the [forum](https://github.com/Parachord/parachord/discussions).
 
 ---
 
-MCP support is available now in Parachord 0.9.0 and later. [Get early access](#signup) if you haven't already.
+MCP support will be available in Parachord 0.6.0 and later. [Get early access](#signup) if you haven't already.
