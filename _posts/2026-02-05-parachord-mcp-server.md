@@ -97,7 +97,7 @@ This also opens up interesting compositional possibilities. Your AI can combine 
 
 The MCP server runs **locally** on your machine. Your music library data doesn't leave your computer unless you explicitly choose a cloud-hosted AI service. When using local AI models, everything stays on-device.
 
-For cloud AI services, only the data necessary to fulfill your request gets sent—typically just search queries and track metadata, not audio files or listening history.
+For cloud AI services, the data necessary to fulfill your request gets sent—this includes search queries, track metadata, and listening history when asking for recommendations. Audio files themselves are never transmitted.
 
 ## What's Next
 
