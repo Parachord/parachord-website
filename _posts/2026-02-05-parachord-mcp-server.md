@@ -114,8 +114,6 @@ For cloud AI services, the data necessary to fulfill your request gets sent—th
 This is our first MCP release, and we're already planning expansions:
 
 - **More granular controls** - EQ adjustments, crossfade settings, playback speed
-- **Listening context** - Let AI understand your mood based on recent plays
-- **Social features** - "See what my friends are listening to and queue something similar"
 - **Smart home integration** - Multi-room audio control via MCP
 
 We're excited to see what people build with this. If you create something cool with Parachord's MCP server, let us know in the [forum](https://github.com/Parachord/parachord/discussions).
