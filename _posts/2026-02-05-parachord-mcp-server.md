@@ -42,9 +42,9 @@ The AI has access to the same resolution pipeline that powers Parachord itself. 
 
 If you've used Parachord's AI plugins, you might be wondering how MCP differs from Shuffleupagus. They serve different use cases:
 
-**Shuffleupagus** is Parachord's built-in AI playlist generator. It lives *inside* the app—you open Parachord, describe what you want to hear, and it generates a playlist. Shuffleupagus is focused on one thing: creating great playlists from natural language prompts. It's deeply integrated with the UI and optimized for that specific workflow.
+**Shuffleupagus** is Parachord's built-in AI assistant. It lives *inside* the app—you can generate playlists, get recommendations, ask for details about what's playing, see what your friends have been listening to, and control playback, all through natural language. Shuffleupagus is deeply integrated with Parachord's UI and designed for when you're actively using the app.
 
-**MCP** flips the relationship. Instead of AI living inside Parachord, MCP lets *external* AI assistants control Parachord from the outside. You're in Claude, ChatGPT, or another AI tool doing other work, and you can control your music without switching apps. MCP also exposes more than just playlist creation—playback control, library search, queue management, and more.
+**MCP** flips the relationship. Instead of AI living inside Parachord, MCP lets *external* AI assistants control Parachord from the outside. You're in Claude, ChatGPT, or another AI tool doing other work, and you can control your music without switching apps.
 
 Think of it this way:
 - **Shuffleupagus**: "I want to use AI to make a playlist" → Open Parachord
