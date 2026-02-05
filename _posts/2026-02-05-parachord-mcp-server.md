@@ -53,7 +53,7 @@ They're complementary. Use Shuffleupagus when you're actively in Parachord. Use 
 
 Parachord's MCP server exposes a set of **tools** that AI assistants can call:
 
-| Tool | What it does |
+|Tool  | What it does |
 |------|--------------|
 | `search` | Search your library by artist, album, track, or any combination |
 | `play` | Start playback of a track, album, or playlist |
@@ -116,4 +116,4 @@ We're excited to see what people build with this. If you create something cool w
 
 ---
 
-MCP support will be available in Parachord 0.6.0 and later. [Get early access](#signup) if you haven't already.
+MCP support will be available in Parachord 0.6.0 and later. [Sign up for early access](https://parachord.com/#signup) if you haven't already.
