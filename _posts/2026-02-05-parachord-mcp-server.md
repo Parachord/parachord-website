@@ -82,7 +82,7 @@ If you're running Parachord, the MCP server is enabled by default on `localhost:
 2. Add Parachord as a server with the local endpoint
 3. Start asking for music
 
-For Claude Desktop users, add this to your `claude_desktop_config.json`:
+For example, for Claude Desktop users, add this to your `claude_desktop_config.json`:
 
 ```json
 {
