@@ -7,7 +7,7 @@ category: "Features"
 ---
 ![Description](/assets/shuffy-post.png)
 
-Parachord is about removing friction between you and your music. Our (optional!) AI assistant **Shuffleupagus** - powered by any one of a number of AI plug-ins) takes that further... you can generate playlists, get recommendations, ask for details about what's currently playing, see what your friends have been listening to, and control playback, all through natural language conversation right inside the app.
+Parachord is about removing friction between you and your music. Our (optional!) AI assistant **Shuffleupagus** - powered by any one of a number of AI plug-ins - takes that further... you can generate playlists, get recommendations, ask for details about what's currently playing, see what your friends have been listening to, and control playback, all through natural language conversation right inside the app.
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2rem 0;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/hMZyNU68njU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
