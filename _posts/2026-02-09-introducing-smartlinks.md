@@ -54,8 +54,6 @@ The same link works for everyone. Parachord users get the full integrated experi
 
 Creating a smartlink is simple. In Parachord, right-click any track, album, or playlist and choose **Share as Smartlink**. You get a `go.parachord.com` URL that you can paste anywhere.
 
-You can also generate smartlinks from the browser extension when you're on a supported music site. See something on Bandcamp you want to share? The extension can create a smartlink for it in one click -- making it accessible to friends regardless of whether *they* use Bandcamp.
-
 ## Why This Matters
 
 Music sharing has been broken for years. Every streaming service has its own link format, its own walled garden. Sending someone a Spotify link when they don't have Spotify is like faxing someone who doesn't have a fax machine.
