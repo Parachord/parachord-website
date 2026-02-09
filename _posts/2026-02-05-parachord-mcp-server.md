@@ -28,6 +28,8 @@ Instead of AI being limited to generating text responses, MCP enables AI to:
 - Access local files and services
 - Perform actions on your behalf
 
+![Claude MCP](/assets/claude-mcp.png)
+
 It's the difference between an AI that can *tell you* how to create a playlist and one that can *actually create it*.
 
 ## Bringing Shuffleupagus Capabilities to Any AI
