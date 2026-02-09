@@ -51,7 +51,7 @@ The same link works for everyone. Parachord users get the full integrated experi
 
 ## Creating Smartlinks
 
-Creating a smartlink is simple. In Parachord, right-click any track, album, or playlist and choose **Share as Smartlink**. You get a `go.parachord.com` URL that you can paste anywhere.
+Creating a smartlink is simple. In Parachord, right-click any track and choose **Publish as Smartlink**. You get a `go.parachord.com` URL that you can paste anywhere.
 
 ## Why This Matters
 
