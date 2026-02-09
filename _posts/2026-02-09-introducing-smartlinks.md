@@ -12,19 +12,19 @@ Smartlinks fix this.
 
 ## What Are Smartlinks?
 
-A Parachord smartlink is a single, shareable URL that represents a song, album, or playlist -- independent of any particular streaming service. When someone opens it, they get a clean embedded player that shows what the music is and lets them listen right there:
+A Parachord smartlink is a single, shareable URL that represents a song, album, or playlist -- independent of any particular streaming service. When someone opens it, they get a clean, universal link page that shows what the music is and lets them open it in whichever streaming service they use:
 
 <div style="display: flex; justify-content: center; margin: 2rem 0;">
 <iframe src="https://go.parachord.com/4cfb2ff7/embed" width="400" height="152" frameborder="0" style="border-radius: 8px;" allow="encrypted-media"></iframe>
 </div>
 
-No account required. No app to install. Just a link that works in any browser, on any device.
+No account required. No app to install. Just a link that works in any browser, on any device, with direct links to Spotify, Apple Music, YouTube, Bandcamp, and more.
 
-You can embed smartlinks in blogs, social posts, newsletters, or anywhere else you share music. They look good, they work everywhere, and they respect the listener's choice of how to listen.
+You can embed smartlinks in blogs, social posts, newsletters, or anywhere else you share music. They look good, they work everywhere, and they let the listener choose their preferred service.
 
 ## The Magic: It Just Plays
 
-Here's where it gets interesting. If the person clicking your smartlink has Parachord running on their machine, something different happens. Instead of just showing a web embed, the music **starts playing in Parachord itself** -- resolved through their own configured sources, at their preferred quality, with their own plugin priorities.
+Here's where it gets interesting. If the person clicking your smartlink has Parachord running on their machine, something different happens. Instead of just showing the link page, the music **starts playing in Parachord itself** -- resolved through their own configured sources, at their preferred quality, with their own plugin priorities.
 
 No extra steps. No "open in app" button to click. It just plays.
 
@@ -46,9 +46,9 @@ And because the resolution pipeline caches results, the second time you play tha
 
 ## For Everyone Else
 
-Not everyone has Parachord (yet). That's fine. When someone without Parachord opens a smartlink, they get the embedded web player -- a lightweight, good-looking player that works in any browser. They can listen right there, or use links to open the track in their preferred streaming service.
+Not everyone has Parachord (yet). That's fine. When someone without Parachord opens a smartlink, they get the universal link page -- a clean, good-looking landing page that identifies the song and gives them direct links to open it on Spotify, Apple Music, YouTube, Bandcamp, Tidal, and other services.
 
-The same link works for everyone. Parachord users get the full integrated experience. Everyone else gets a clean web player. Nobody gets a broken link.
+The same link works for everyone. Parachord users get the full integrated experience. Everyone else gets a one-click path to their preferred service. Nobody gets a broken link.
 
 ## Creating Smartlinks
 
