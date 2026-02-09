@@ -14,9 +14,7 @@ Smartlinks fix this.
 
 A Parachord smartlink is a single, shareable URL that represents a song, album, or playlist -- independent of any particular streaming service. When someone opens it, they get a clean, universal link page that shows what the music is and lets them open it in whichever streaming service they use:
 
-<div style="display: flex; justify-content: center; margin: 2rem 0;">
-<iframe src="https://go.parachord.com/4cfb2ff7/embed" width="400" height="152" frameborder="0" style="border-radius: 8px;" allow="encrypted-media"></iframe>
-</div>
+<iframe src="https://go.parachord.com/7e18120e/embed" width="400" height="152" frameborder="0" style="border-radius: 8px;" allow="encrypted-media"></iframe>
 
 No account required. No app to install. Just a link that works in any browser, on any device, with direct links to Spotify, Apple Music, YouTube, Bandcamp, and more.
 
