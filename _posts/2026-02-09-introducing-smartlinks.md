@@ -45,7 +45,7 @@ And because the resolution pipeline caches results, the second time you play tha
 
 ## For Everyone Else
 
-Not everyone has Parachord (yet). That's fine. When someone without Parachord opens a smartlink, they get the universal link page -- a clean, good-looking landing page that identifies the song and gives them direct links to open it on Spotify, Apple Music, YouTube, Bandcamp, Tidal, and other services.
+Not everyone has Parachord (actually, almost no one has it yet). That's fine. When someone without Parachord opens a smartlink, they get the universal link page -- a clean, good-looking landing page that identifies the song and gives them direct links to open it on Spotify, Apple Music, YouTube, Bandcamp, Tidal, and other services.
 
 The same link works for everyone. Parachord users get the full integrated experience. Everyone else gets a one-click path to their preferred service. Nobody gets a broken link.
 
