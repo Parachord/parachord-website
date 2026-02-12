@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Open Source and the Rise of Personal Apps"
+title: "Parchord, Open Source and the Rise of Personal Apps"
 date: 2026-02-12
 author: "J Herskowitz"
 category: "Philosophy"
@@ -12,10 +12,11 @@ Parachord is open source. The [full source code](https://github.com/Parachord/pa
 
 ## The "Personal App" Movement
 
-There's a category of software emerging that doesn't fit neatly into the traditional buckets of "consumer SaaS" or "self-hosted enterprise tool." People are calling them **personal apps**—software designed to be *yours*. Not in the sense that you pay a subscription for access, but in the sense that you actually control how it works, what data it has, and what services it talks to.
+There's a category of software emerging that doesn't fit neatly into the traditional buckets of "consumer SaaS" or "self-hosted enterprise tool." People are calling them **personal apps**—software designed to be *yours*. Not in the sense that you pay a subscription for access, but in the sense that you built it to solve a very specific and personal use case, you actually control how it works, what data it has, and what services it talks to.
 
 Personal apps share a few common traits:
 
+- **They aren't designed to be businesses.** The goal isn't to raise money, make money or acheive a finacial "exit". They are designed to solve your personal pain points or improve/automate your own workflows. 
 - **They run on your machine.** Your data stays local unless you explicitly choose to share it.
 - **They're open source or source-available.** You can see what the code does. No black boxes.
 - **They connect to services through *your* accounts.** The app doesn't sit in the middle. You bring your own credentials.
@@ -25,13 +26,13 @@ This isn't a rejection of cloud services. It's a rethinking of *who controls the
 
 ## Bring Your Own Key
 
-The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock-in that comes with it), the application lets each user authenticate with their own accounts and API keys.
+The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock-in that comes with it), the application lets each user authenticate with their own accounts and API keys. It also enables personal apps to exist when many companies are [further restricting commercial access to their APIs] (https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security).
 
-In Parachord, this shows up everywhere. When you connect Spotify, you're not just logging in with your Spotify user account—you're registering your own Spotify Developer app and using *your own* API credentials. That means Parachord isn't designed as a third-party app requesting access on your behalf through some shared client ID. It's *your* app, talking directly to Spotify's API, with no middleman. The same goes for Apple Music, ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/)—those are all *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
+In Parachord, this BYOK models shows up everywhere. When you connect Spotify, you're not just logging in with your Spotify user account—you're registering your own Spotify Developer app and using *your own* API credentials. That means Parachord isn't designed as a third-party app requesting access on your behalf through some shared client ID. It's *your* app, talking directly to Spotify's API, with no middleman. The same goes for Apple Music, ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/)—those are all *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
 
 This isn't just a privacy nicety. It changes the economics and incentive structure of the software entirely:
 
-- **No per-user API costs for us to subsidize.** I don't need to limit features to paid tiers to cover third-party API or hosting bills - because there aren't any.
+- **No per-user API costs for to subsidize.** I don't need to limit features to paid tiers to cover third-party API or hosting bills - because there aren't any (with the small exception of the [smartlinks](https://parachord.com/blog/2026/02/09/introducing-smartlinks/) - which are currently running on a free Cloudflare plan).
 - **No platform risk.** If a service changes its API terms, your direct relationship with them is what matters—not ours.
 - **No vendor lock-in.** Parachord doesn't own your playlists, your listening history, or your social graph. You do. Export anything as standard [XSPF](https://en.wikipedia.org/wiki/XML_Shareable_Playlist_Format) and take it wherever you want.
 - **Honest software.** When there's no incentive to keep you locked in, the only thing that keeps you using the app is whether it's actually good.
@@ -40,7 +41,7 @@ This isn't just a privacy nicety. It changes the economics and incentive structu
 
 Open source isn't just about transparency (though that matters). For a personal app, it's *structural*. It's the mechanism that ensures the app actually works the way the BYOK promise implies.
 
-If Parachord were closed source, you'd have to take our word for it that your Spotify credentials aren't being logged, that your listening data isn't being shipped to a third party without your permission, that the plugin system isn't doing something unexpected. Open source means you don't have to trust us—you can verify.
+If Parachord were closed source, you'd have to take my word for it that your Spotify credentials aren't being logged, that your listening data isn't being shipped to a third party without your permission, that the plugin system isn't doing something unexpected. Open source means you don't have to trust—you can verify.
 
 It also means the software can outlive any single maintainer's interest. Parachord's [plugin system](/blog/2026/01/22/deep-dive-plugin-system/) uses an open, documented SDK. If a music service launches tomorrow that we haven't built a plugin for, you (or someone in the community) can build one. The architecture is designed for this. A `.axe` plugin file is just a JavaScript module with a declared interface. The barrier to contribution is intentionally low.
 
@@ -48,7 +49,7 @@ And it means that if you disagree with a decision I make—about defaults, about
 
 ## The Rough Edges Are Part of the Deal
 
-Let me be honest about something: personal apps built by small teams will have bugs. Parachord has been a one-person project up to this point. I can't test every edge case on every platform, with every combination of plugins and accounts and system configurations. While builds exists for Linux and Windows, I've never even tried to run them because I don't have easy access to those platform.
+Let me be honest about something: I built this for me. I have very specific desires around enabling and fostering music data portability across the edges of the silos the commercial enterprises in the music space have created. I'm sharing it in the event you share some of my pet peeves and desire to enable social media experiences that don't require me to convince everyone to use the same services I do. Parachord has been a one-person project up to this point. I can't test every edge case on every platform, with every combination of plugins and accounts and system configurations. I spent a good amount of time testing fresh Mac installs on a 2020 Macbook running Tahoe - and it Works for Me™ - but I literally have no idea how it will do on any other platform (there are builds available for Windows and Linux but... 🤷‍♂️).
 
 In the old model, that's a dead end. You file a bug report, you wait, and maybe it gets fixed in six months if enough other people have the same issue. With a closed-source app from a small team, your only option is patience.
 
@@ -70,7 +71,7 @@ This doesn't mean every app should work this way. Plenty of software benefits fr
 
 ## What This Means for Parachord
 
-I'm building Parachord as a personal app because music listening *is* personal. Your taste, your library, your preferred sources, your friends, your history—these aren't things that should live inside someone else's walled garden.
+I'm building Parachord as a personal app because music listening *is* personal. Your taste, your library, your preferred sources, your friends, your desired social experiences around listening to music, your history—these aren't things that should live inside someone else's walled garden.
 
 Being open source keeps us honest. The BYOK model keeps the economics simple. And the plugin architecture means Parachord can grow with the ecosystem rather than trying to own it.
 
