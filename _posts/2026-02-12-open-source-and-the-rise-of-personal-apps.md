@@ -16,7 +16,7 @@ There's a category of software emerging that doesn't fit neatly into the traditi
 
 Personal apps share a few common traits:
 
-- **They aren't designed to be businesses.** The goal isn't to raise money, make money or acheive a finacial "exit". They are designed to solve your personal pain points or improve/automate your own workflows. 
+- **They aren't designed to be businesses.** The goal isn't to raise money, make money or acheive a financial "exit". They are designed to solve your personal pain points or improve/automate your own workflows. 
 - **They run on your machine.** Your data stays local unless you explicitly choose to share it.
 - **They're open source or source-available.** You can see what the code does. No black boxes.
 - **They connect to services through *your* accounts.** The app doesn't sit in the middle. You bring your own credentials.
@@ -49,7 +49,7 @@ And it means that if you disagree with a decision I make—about defaults, about
 
 ## The Rough Edges Are Part of the Deal
 
-Let me be honest about something: I built this for me. I have very specific desires around enabling and fostering music data portability across the edges of the silos the commercial enterprises in the music space have created. I'm sharing it in the event you share some of my pet peeves and desire to enable social media experiences that don't require me to convince everyone to use the same services I do. Parachord has been a one-person project up to this point. I can't test every edge case on every platform, with every combination of plugins and accounts and system configurations. I spent a good amount of time testing fresh Mac installs on a 2020 Macbook running Tahoe - and it Works for Me™ - but I literally have no idea how it will do on any other platform (there are builds available for Windows and Linux but... 🤷‍♂️).
+Let me be honest about something: I built this for me. I have very specific desires around enabling and fostering music data portability across the edges of the silos the commercial enterprises in the music space have created. I'm sharing it in the event others may share some of my pet peeves and desire to enable social media experiences that don't require us to convince everyone to use the same music services we do. Parachord has been a one-person project up to this point. I can't test every edge case on every platform, with every combination of plugins and accounts and system configurations. I spent a good amount of time testing fresh Mac installs on a 2020 Macbook running Tahoe - and it Works for Me™ - but I literally have no idea how it will do on any other platform. There are builds available for Windows and Linux but... 🤷‍♂️. I have no idea if they even open, let along work. If someone tries it, I'd love to know.
 
 In the old model, that's a dead end. You file a bug report, you wait, and maybe it gets fixed in six months if enough other people have the same issue. With a closed-source app from a small team, your only option is patience.
 
