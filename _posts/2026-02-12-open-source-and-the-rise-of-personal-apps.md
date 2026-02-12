@@ -6,7 +6,7 @@ author: "J Herskowitz"
 category: "Philosophy"
 ---
 
-To overstate the obvious, there's a big shift happening in how people think about software. After a decade of centralized platforms owning every layer of our digital lives, a growing number of developers and users are asking a simple question: *what if I just ran this myself?*
+To understate the obvious, there's a big shift happening in how people think about software. After a decade of centralized platforms owning every layer of our digital lives, a growing number of developers and users are asking a simple question: *what if I just ran this myself?*
 
 Parachord is open source. The [full source code](https://github.com/Parachord/parachord) is available under the MIT License. You can read it, build it, fork it, contribute to it. That was a deliberate choice from day one, and it reflects something bigger than a licensing preference. It reflects a belief about where software is heading.
 
@@ -16,7 +16,7 @@ There's a category of software emerging that doesn't fit neatly into the traditi
 
 Personal apps share a few common traits:
 
-- **They aren't designed to be businesses.** The goal isn't to raise money, make money or acheive a financial "exit". They are designed to solve your personal pain points or improve/automate your own workflows. 
+- **They aren't designed to be businesses.** The goal isn't to raise money, make money or achieve a financial "exit". They are designed to solve your personal pain points or improve/automate your own workflows. 
 - **They run on your machine.** Your data stays local unless you explicitly choose to share it.
 - **They're open source or source-available.** You can see what the code does. No black boxes.
 - **They connect to services through *your* accounts.** The app doesn't sit in the middle. You bring your own credentials.
