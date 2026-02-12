@@ -29,7 +29,7 @@ Want to prioritize your local files? Done. Prefer Bandcamp when available to sup
 
 ## What's Next
 
-We're currently in active development and will be opening up early access soon. If you want to be among the first to try Parachord, sign up for our mailing list.
+Parachord is available now. [Download it from GitHub](https://github.com/Parachord/parachord/releases) for macOS, Windows, or Linux.
 
 The future of music listening isn't about choosing one service. It's about having them all work together.
 

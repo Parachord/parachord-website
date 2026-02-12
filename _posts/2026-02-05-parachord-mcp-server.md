@@ -118,4 +118,4 @@ We're excited to see what people build with this. If you create something cool w
 
 ---
 
-MCP support will be available in Parachord 0.6.0 and later. [Sign up for early access](https://parachord.com/#signup) if you haven't already.
+MCP support is available in Parachord 0.6.0 and later. [Download Parachord](https://github.com/Parachord/parachord/releases) to get started.

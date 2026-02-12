@@ -61,4 +61,4 @@ Smartlinks take the Parachord philosophy -- your music is everywhere, now you do
 
 ---
 
-Smartlinks are available now. [Sign up for early access](https://parachord.com/#signup) to start sharing music that just works.
+Smartlinks are available now. [Download Parachord](https://github.com/Parachord/parachord/releases) to start sharing music that just works.
