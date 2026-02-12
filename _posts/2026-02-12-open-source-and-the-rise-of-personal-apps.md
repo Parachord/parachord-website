@@ -77,6 +77,8 @@ Being open source keeps us honest. The BYOK model keeps the economics simple. An
 
 If you want to brave an alpha release, you can [read the alpha guide and download a release](https://github.com/Parachord/parachord/blob/main/ALPHA_GUIDE.md). If you want to dig into the code, it's on [GitHub](https://github.com/Parachord/parachord). If you want to build a plugin, the SDK is documented and ready. If you want to just use the app and not think about any of this, that works too—it's still just a music player that plays your music from wherever it lives. I don't really know what my plans are for this from here - but I'm happy this exists again (RIP, [Tomahawk](https://github.com/tomahawk-player/tomahawk)) and that I get to use it daily.  I hope you all get a chance to check it out and [let me know what you think](https://github.com/Parachord/parachord/discussions).
 
-- J
-@jherskowitz pretty much everywhere (except X)
+Thanks for reading, 
+
+J  
+_(I'm @jherskowitz pretty much everywhere - except X)_
 
