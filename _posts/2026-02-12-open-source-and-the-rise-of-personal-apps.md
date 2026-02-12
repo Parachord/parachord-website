@@ -46,6 +46,20 @@ It also means the software can outlive any single maintainer's interest. Paracho
 
 And it means that if you disagree with a decision we make—about defaults, about UI, about which services to prioritize—you have options beyond filing a complaint. Fork it. Patch it. Submit a PR. The code is yours.
 
+## The Rough Edges Are Part of the Deal
+
+Let me be honest about something: personal apps built by small teams will have bugs. Parachord is primarily a one-person project. I can't test every edge case on every platform, with every combination of plugins and accounts and system configurations. If you're on Linux with a specific PulseAudio setup and a Qobuz account in a region I've never tested, there's a decent chance something won't work perfectly out of the box.
+
+In the old model, that's a dead end. You file a bug report, you wait, and maybe it gets fixed in six months if enough other people have the same issue. With a closed-source app from a small team, your only option is patience.
+
+But here's where open source and modern tooling change the equation. If something breaks for you, the code is right there. And you don't need to be a seasoned developer to dig in. Tools like [Claude](https://claude.ai) can read a codebase, understand what a function is supposed to do, and help you figure out why it's failing in your specific environment. Point an AI at the repo, describe your problem, and more often than not it can help you find the issue—and even draft a fix.
+
+This is genuinely new. A year or two ago, "the code is open source" was a nice-to-have for most users but a practical dead letter—reading someone else's codebase is hard, and most people reasonably don't want to spend their evening learning a new project's architecture just to fix a bug. AI coding tools have collapsed that barrier. You don't need to understand the entire resolution pipeline to fix a scrobbling issue in the Last.fm plugin. You just need to be able to describe what's wrong, and let the AI navigate the code for you.
+
+And the best part: when you fix something for yourself, that fix can go back upstream as a pull request. Your specific edge case—the one I never would have found on my own—becomes a fix for everyone. The community gets better because individuals solved their own problems. That's the open source flywheel, but now it spins faster because the friction of contributing has dropped dramatically.
+
+I'm not using "it's open source" as an excuse for shipping broken software. I care about quality and I test what I can. But I'd rather ship something useful to a hundred people and let the five who hit edge cases help fix them, than wait until it's perfect for everyone and ship to nobody.
+
 ## The Bigger Picture
 
 Parachord is a music player, but the pattern it represents is showing up everywhere. AI interfaces where you plug in your own model API keys. Note-taking apps that store everything in local Markdown files. Communication tools built on open protocols. Photo management that keeps your library on your own disk.
