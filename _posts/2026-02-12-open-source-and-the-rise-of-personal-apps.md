@@ -27,7 +27,7 @@ This isn't a rejection of cloud services. It's a rethinking of *who controls the
 
 The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock-in that comes with it), the application lets each user authenticate with their own accounts and API keys.
 
-In Parachord, this shows up everywhere. When you connect Spotify, you're authenticating with *your* Spotify account. When you enable Last.fm scrobbling, that's *your* Last.fm profile. When you use ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/), those are *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
+In Parachord, this shows up everywhere. When you connect Spotify, you're not just logging in with your Spotify user account—you're registering your own Spotify Developer app and using *your own* API credentials. That means Parachord isn't a third-party app requesting access on your behalf through some shared client ID. It's *your* app, talking directly to Spotify's API, with no middleman. The same goes for Last.fm scrobbling, ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/)—those are all *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
 
 This isn't just a privacy nicety. It changes the economics and incentive structure of the software entirely:
 
