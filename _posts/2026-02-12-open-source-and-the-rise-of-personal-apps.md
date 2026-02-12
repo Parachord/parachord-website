@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Parchord, Open Source and the Rise of Personal Apps"
+title: "Parachord, Open Source and the Rise of Personal Apps"
 date: 2026-02-12
 author: "J Herskowitz"
 category: "Philosophy"
