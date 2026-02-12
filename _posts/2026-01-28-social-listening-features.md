@@ -38,4 +38,4 @@ Social music should enhance your experience, not compromise your privacy.
 
 ---
 
-We can't wait for you to try these features. Sign up for early access to be among the first!
+We can't wait for you to try these features. [Download Parachord](https://github.com/Parachord/parachord/releases) to get started!
