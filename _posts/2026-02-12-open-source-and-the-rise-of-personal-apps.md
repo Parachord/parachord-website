@@ -26,7 +26,7 @@ This isn't a rejection of cloud services. It's a rethinking of *who controls the
 
 ## Bring Your Own Key
 
-The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock-in that comes with it), the application lets each user authenticate with their own accounts and API keys. It also enables personal apps to exist when many companies are [further restricting commercial access to their APIs] (https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security).
+The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock-in that comes with it), the application lets each user authenticate with their own accounts and API keys. It also enables personal apps to exist when many companies are [further restricting commercial access to their APIs](https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security).
 
 In Parachord, this BYOK models shows up everywhere. When you connect Spotify, you're not just logging in with your Spotify user account—you're registering your own Spotify Developer app and using *your own* API credentials. That means Parachord isn't designed as a third-party app requesting access on your behalf through some shared client ID. It's *your* app, talking directly to Spotify's API, with no middleman. The same goes for Apple Music, ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/)—those are all *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
 
@@ -75,6 +75,8 @@ I'm building Parachord as a personal app because music listening *is* personal. 
 
 Being open source keeps us honest. The BYOK model keeps the economics simple. And the plugin architecture means Parachord can grow with the ecosystem rather than trying to own it.
 
-If you want to dig into the code, it's on [GitHub](https://github.com/Parachord/parachord). If you want to build a plugin, the SDK is documented and ready. If you want to just use the app and not think about any of this, that works too—it's still just a music player that plays your music from wherever it lives.
+If you want to brave an alpha release, you can [read the alpha guide and download a release](https://github.com/Parachord/parachord/blob/main/ALPHA_GUIDE.md). If you want to dig into the code, it's on [GitHub](https://github.com/Parachord/parachord). If you want to build a plugin, the SDK is documented and ready. If you want to just use the app and not think about any of this, that works too—it's still just a music player that plays your music from wherever it lives. I don't really know what my plans are for this from here - but I'm happy this exists again (RIP, [Tomahawk](https://github.com/tomahawk-player/tomahawk)) and that I get to use it daily.  I hope you all get a chance to check it out and [let me know what you think](https://github.com/Parachord/parachord/discussions).
 
-But now you know what's underneath.
+- J
+@jherskowitz pretty much everywhere (except X)
+
