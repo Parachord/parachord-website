@@ -831,9 +831,9 @@
             max-width: 1000px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
+            text-align: center;
             gap: 1.5rem;
         }
 
@@ -845,7 +845,9 @@
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem 2rem;
         }
 
         .footer-links a {
@@ -933,10 +935,6 @@
                 gap: 0.75rem;
             }
 
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
         }
 
         @media (max-width: 500px) {
@@ -1096,15 +1094,6 @@
                 <span>Streaming</span>
             </div>
 
-            <!-- Qobuz -->
-            <div class="plugin-card" data-category="streaming">
-                <div class="plugin-tile" style="background-color: #0E7EBF;">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/></svg>
-                </div>
-                <h4>Qobuz</h4>
-                <span>Hi-Res</span>
-            </div>
-
             <!-- Local Files -->
             <div class="plugin-card" data-category="streaming">
                 <div class="plugin-tile" style="background-color: #6366f1;">
@@ -1162,7 +1151,7 @@
             <!-- ListenBrainz -->
             <div class="plugin-card" data-category="social">
                 <div class="plugin-tile" style="background-color: #353070;">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 3L3 8v8l9 5 9-5V8l-9-5z" fill-opacity="0"/><path d="M12 3l9 5-9 5-9-5 9-5z" fill="white" fill-opacity="0.9"/><path d="M3 8l9 5v8L3 16V8z" fill="white" fill-opacity="0.5"/><path d="M21 8l-9 5v8l9-5V8z" fill="white" fill-opacity="0.7"/></svg>
                 </div>
                 <h4>ListenBrainz</h4>
                 <span>Open Source</span>
@@ -1193,6 +1182,24 @@
                 </div>
                 <h4>Gemini</h4>
                 <span>AI Playlists</span>
+            </div>
+
+            <!-- Claude -->
+            <div class="plugin-card" data-category="ai">
+                <div class="plugin-tile" style="background-color: #D97757;">
+                    <svg viewBox="0 0 24 24"><path d="M4.709 15.955l4.72-2.756.08-.046 2.701-1.576 2.702-1.576c1.063-.62 1.595-.931 2.191-1.052a3.156 3.156 0 0 1 1.26 0c.597.12 1.128.431 2.192 1.052l.636.371c-.14-.2-.319-.374-.535-.5l-4.13-2.41-4.132-2.41c-1.063-.62-1.594-.93-2.191-1.051a3.156 3.156 0 0 0-1.26 0c-.596.12-1.128.431-2.191 1.052L2.82 7.463c-1.063.62-1.595.93-2.037 1.369a3.21 3.21 0 0 0-.63 1.092C0 10.41 0 10.95 0 12.028v.37c0-.77 0-1.155.1-1.505.112-.39.318-.744.601-1.032.254-.258.6-.46 1.291-.863l.218-.127 2.5-1.459v8.543zm1.418.828v-1.611l.001-5.378 2.701-1.576v6.989l-2.702 1.576zm3.573-2.085V7.709l2.701-1.576v6.989l-2.701 1.576zM24 11.601v.37c0 1.079 0 1.618-.153 2.105a3.21 3.21 0 0 1-.63 1.092c-.442.438-.974.749-2.037 1.37l-2.132 1.244-2.5 1.459-.217.126c-.692.404-1.038.606-1.292.864a3.21 3.21 0 0 0-.6 1.032c-.1.35-.1.735-.1 1.504v-.37c0-1.078 0-1.618.152-2.104a3.21 3.21 0 0 1 .63-1.093c.443-.438.975-.748 2.038-1.369l4.131-2.41 2.174-1.269c.216-.126.395-.3.535-.5l-.636.37c-1.063.621-1.595.932-2.191 1.053a3.156 3.156 0 0 1-1.26 0c-.597-.121-1.129-.432-2.192-1.053l-2.701-1.575-2.702-1.576-.08-.047-4.72-2.755 2.703-1.576 4.131 2.41 4.131 2.41c1.063.62 1.595.931 2.038 1.369.396.392.66.87.83 1.388.152.387.152.813.152 1.548l.001.556z"/></svg>
+                </div>
+                <h4>Claude</h4>
+                <span>AI Playlists</span>
+            </div>
+
+            <!-- And More -->
+            <div class="plugin-card" data-category="all">
+                <div class="plugin-tile" style="background-color: #353070;">
+                    <svg viewBox="0 0 24 24"><path d="M13 4v7h7v2h-7v7h-2v-7H4v-2h7V4h2z"/></svg>
+                </div>
+                <h4>+ and more!</h4>
+                <span>Coming Soon</span>
             </div>
         </div>
     </section>
