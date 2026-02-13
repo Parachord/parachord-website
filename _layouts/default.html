@@ -183,9 +183,9 @@
             max-width: 1000px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
+            text-align: center;
             gap: 1.5rem;
         }
 
@@ -240,10 +240,6 @@
                 display: flex;
             }
 
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
         }
 
         {{ content_for_layout_styles }}
