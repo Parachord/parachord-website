@@ -8,7 +8,7 @@ category: "Philosophy"
 
 To understate the obvious, there's a big shift happening in how people think about software. After a decade of centralized platforms owning every layer of our digital lives, a growing number of developers and users are asking a simple question: *what if I just ran this myself?*
 
-Parachord is a multi-source, pluggable, music player. Parachord is open source. The [full source code](https://github.com/Parachord/parachord) is available under the MIT License. You can read it, build it, fork it, contribute to it. That was a deliberate choice from day one, and it reflects something bigger than a licensing preference. It reflects a belief about where software is heading.
+[Parachord](https://parachord.com) is a multi-source, pluggable, music player. Parachord is open source. The [full source code](https://github.com/Parachord/parachord) is available under the MIT License. You can read it, build it, fork it, contribute to it. That was a deliberate choice from day one, and it reflects something bigger than a licensing preference. It reflects a belief about where software is heading.
 
 ## The "Personal App" Movement
 
