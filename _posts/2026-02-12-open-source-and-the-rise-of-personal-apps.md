@@ -8,11 +8,11 @@ category: "Philosophy"
 
 To understate the obvious, there's a big shift happening in how people think about software. After a decade of centralized platforms owning every layer of our digital lives, a growing number of developers and users are asking a simple question: *what if I just ran this myself?*
 
-Parachord is open source. The [full source code](https://github.com/Parachord/parachord) is available under the MIT License. You can read it, build it, fork it, contribute to it. That was a deliberate choice from day one, and it reflects something bigger than a licensing preference. It reflects a belief about where software is heading.
+Parachord is a multi-source, pluggable, music player. Parachord is open source. The [full source code](https://github.com/Parachord/parachord) is available under the MIT License. You can read it, build it, fork it, contribute to it. That was a deliberate choice from day one, and it reflects something bigger than a licensing preference. It reflects a belief about where software is heading.
 
 ## The "Personal App" Movement
 
-There's a category of software emerging that doesn't fit neatly into the traditional buckets of "consumer SaaS" or "self-hosted enterprise tool." People are calling them **personal apps**—software designed to be *yours*. Not in the sense that you pay a subscription for access, but in the sense that you built it to solve a very specific and personal use case, you actually control how it works, what data it has, and what services it talks to.
+There's a category of software emerging that doesn't fit neatly into the traditional buckets of "consumer SaaS" or "self-hosted enterprise tool." People are calling them **personal apps** — software designed to be *yours*. Not in the sense that you pay a subscription for access, but in the sense that you built it to solve a very specific and personal use case, you actually control how it works, what data it has, and what services it talks to.
 
 Personal apps share a few common traits:
 
@@ -26,9 +26,9 @@ This isn't a rejection of cloud services. It's a rethinking of *who controls the
 
 ## Bring Your Own Key
 
-The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock-in that comes with it), the application lets each user authenticate with their own accounts and API keys. It also enables personal apps to exist when many companies are [further restricting commercial access to their APIs](https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security).
+The "bring your own key" (BYOK) pattern has been gaining traction across developer tools, AI wrappers, and now media applications. The idea is straightforward: instead of funneling all users through a single vendor API account (and absorbing the cost, liability, and lock - in that comes with it), the application lets each user authenticate with their own accounts and API keys. It also enables personal apps to exist when many companies are [further restricting commercial access to their APIs](https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security).
 
-In Parachord, this BYOK models shows up everywhere. When you connect Spotify, you're not just logging in with your Spotify user account—you're registering your own Spotify Developer app and using *your own* API credentials. That means Parachord isn't designed as a third-party app requesting access on your behalf through some shared client ID. It's *your* app, talking directly to Spotify's API, with no middleman. The same goes for Apple Music, ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/)—those are all *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
+In Parachord, this BYOK models shows up everywhere. When you connect Spotify, you're not just logging in with your Spotify user account—you're registering your own Spotify Developer app and using *your own* API credentials. That means Parachord isn't designed as a third-party app requesting access on your behalf through some shared client ID. It's *your* app, talking directly to Spotify's API, with no middleman. The same goes for Apple Music, ChatGPT or Gemini for playlist generation through [Shuffleupagus](/blog/2026/02/05/parachord-mcp-server/) — those are all *your* API keys. Parachord never touches your credentials on our servers—because there are no servers in the middle.
 
 This isn't just a privacy nicety. It changes the economics and incentive structure of the software entirely:
 
