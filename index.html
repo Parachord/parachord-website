@@ -273,6 +273,92 @@
             opacity: 0.8;
         }
 
+        /* Press Section */
+        .press {
+            padding: 3rem 2rem 4rem;
+            background: var(--darker);
+        }
+
+        .press-label {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .press-items {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .press-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 500px;
+            gap: 1.25rem;
+            text-decoration: none;
+            padding: 2rem 2.5rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .press-item:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        .press-source {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .press-source img {
+            height: 28px;
+            width: 28px;
+            border-radius: 4px;
+            opacity: 0.7;
+        }
+
+        .press-source span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+        }
+
+        .press-item:hover .press-source img {
+            opacity: 1;
+        }
+
+        .press-item:hover .press-source span {
+            color: var(--light);
+        }
+
+        .press-quote {
+            font-size: 1.35rem;
+            font-style: italic;
+            color: var(--light);
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .press-author {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
         /* Gallery / Carousel Section */
         .gallery {
             padding: 4rem 2rem 6rem;
@@ -981,6 +1067,21 @@
                 <!-- Linux -->
                 <svg viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.311.001-.465.003-.653.014-1.303.056-1.946.128C6.56.55 3.81 2.04 2.15 4.56c-1.616 2.452-2.15 5.582-2.15 8.42 0 2.839.534 5.97 2.15 8.42 1.66 2.52 4.41 4.01 7.943 4.43.643.072 1.293.114 1.946.128.154.002.31.003.465.003.156 0 .311-.001.465-.003.653-.014 1.303-.056 1.946-.128 3.533-.42 6.283-1.91 7.943-4.43 1.616-2.45 2.15-5.581 2.15-8.42 0-2.838-.534-5.968-2.15-8.42C21.19 2.04 18.44.55 14.907.131c-.643-.072-1.293-.114-1.946-.128C12.815.001 12.66 0 12.504 0z"/></svg>
             </div>
+        </div>
+    </section>
+
+    <!-- Press Section -->
+    <section class="press">
+        <p class="press-label">What People Are Saying</p>
+        <div class="press-items">
+            <a href="https://www.lowpass.cc/p/parachord-music-app-tomahawk-vibe-coding" target="_blank" class="press-item">
+                <div class="press-source">
+                    <img src="assets/press-lowpass.png" alt="Lowpass">
+                    <span>Lowpass</span>
+                </div>
+                <p class="press-quote">"The next iTunes may be vibe-coded"</p>
+                <p class="press-author">Janko Roettgers</p>
+            </a>
         </div>
     </section>
 
