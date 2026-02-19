@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The parachord:// Protocol: A New Primitive for Music on the Web"
+title: "The parachord:// protocol: A New Primitive for Music on the Web"
 date: 2026-02-19
 author: "J Herskowitz"
 category: "Technical"
@@ -20,11 +20,11 @@ Parachord registers a custom URL scheme -- `parachord://` -- that lets any websi
 
 The protocol covers the full surface area of the app:
 
-- **Play a track**: `parachord://play?artist=Big%20Thief&title=Vampire%20Empire`
-- **Open an artist page**: `parachord://artist/Radiohead/biography`
-- **Open an album**: `parachord://album/Bjork/Post`
-- **Add to queue**: `parachord://queue/add?artist=Bjork&title=Hyperballad`
-- **Search**: `parachord://search?q=artist:Radiohead%20track:Karma%20Police`
+- **Play a track**: [parachord://play?artist=Big%20Thief&title=Vampire%20Empire](parachord://play?artist=Big%20Thief&title=Vampire%20Empire)
+- **Open an artist page**: [parachord://artist/Radiohead/biography](parachord://artist/Radiohead/biography)
+- **Open an album**: [parachord://album/Bjork/Post](parachord://album/Bjork/Post)
+- **Add to queue**: [parachord://queue/add?artist=Bjork&title=Hyperballad](parachord://queue/add?artist=Bjork&title=Hyperballad)
+- **Search**: [parachord://search?q=artist:Radiohead%20track:Karma%20Police](parachord://search?q=artist:Radiohead%20track:Karma%20Police)
 - **Import a playlist**: `parachord://import?title=Best%20of%202025&tracks=...`
 - **Talk to the AI DJ**: `parachord://chat?prompt=recommend%20albums%20like%20OK%20Computer`
 
