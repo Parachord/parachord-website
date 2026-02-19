@@ -21,8 +21,8 @@ Parachord registers a custom URL scheme -- `parachord://` -- that lets any websi
 The protocol covers the full surface area of the app:
 
 - **Play a track**: [parachord://play?artist=Big%20Thief&title=Vampire%20Empire](parachord://play?artist=Big%20Thief&title=Vampire%20Empire)
-- **Open an artist page**: [parachord://artist/Radiohead/biography](parachord://artist/Radiohead/biography)
-- **Open an album**: [parachord://album/Bjork/Post](parachord://album/Bjork/Post)
+- **Open an artist page**: [parachord://artist/Radiohead/](parachord://artist/Radiohead/)
+- **Open an album**: 'parachord://album/Bjork/Post'
 - **Add to queue**: [parachord://queue/add?artist=Bjork&title=Hyperballad](parachord://queue/add?artist=Bjork&title=Hyperballad)
 - **Search**: [parachord://search?q=artist:Radiohead%20track:Karma%20Police](parachord://search?q=artist:Radiohead%20track:Karma%20Police)
 - **Import a playlist**: `parachord://import?title=Best%20of%202025&tracks=...`
