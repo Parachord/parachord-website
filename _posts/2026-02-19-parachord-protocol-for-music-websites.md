@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The parachord:// protocol: A New Primitive for Music on the Web"
+title: "The parachord:// protocol: Imagine A Potential New Primitive for Music on the Web"
 date: 2026-02-19
 author: "J Herskowitz"
 category: "Technical"
