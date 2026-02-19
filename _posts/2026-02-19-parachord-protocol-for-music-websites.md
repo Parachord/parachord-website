@@ -6,7 +6,7 @@ author: "J Herskowitz"
 category: "Technical"
 ---
 
-Here's a scenario. You're reading a glowing album review on your favorite music blog. The writer is describing a track as "the best shoegaze opener since Loveless." You want to hear it. Right now. So you open a new tab, search for it on whatever streaming service you use, hope you spelled it right, find the track, and hit play. By the time the music starts, you've lost the thread of the review entirely.
+Here's a scenario. You're reading a glowing album review on your favorite music blog. The writer is describing a track as "the best indie rock album opener since Geese's 'Trinidad'." You want to hear it. Right now. So you open a new tab, search for it on whatever streaming service you use, hope you spelled it right, find the track, and hit play. By the time the music starts, you've lost the thread of the review entirely.
 
 This is the broken loop at the center of every music website on the internet. Words about music live in one place. The music itself lives in another. And you -- the reader, the listener -- are the middleware stitching them together manually, every single time.
 
