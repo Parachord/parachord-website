@@ -22,11 +22,11 @@ The protocol covers the full surface area of the app:
 
 - **Play a track**: [parachord://play?artist=Big%20Thief&title=Vampire%20Empire](parachord://play?artist=Big%20Thief&title=Vampire%20Empire)
 - **Open an artist page**: [parachord://artist/Radiohead/](parachord://artist/Radiohead/)
-- **Open an album**: 'parachord://album/Bjork/Post'
+- **Open an album**: `parachord://album/Bjork/Post`
 - **Add to queue**: [parachord://queue/add?artist=Bjork&title=Hyperballad](parachord://queue/add?artist=Bjork&title=Hyperballad)
 - **Search**: [parachord://search?q=artist:Radiohead%20track:Karma%20Police](parachord://search?q=artist:Radiohead%20track:Karma%20Police)
 - **Import a playlist**: `parachord://import?title=Best%20of%202025&tracks=...`
-- **Talk to the AI DJ**: `parachord://chat?prompt=recommend%20albums%20like%20OK%20Computer`
+- **Talk to the AI DJ**: [parachord://chat?prompt=recommend%20albums%20like%20OK%20Computer](parachord://chat?prompt=recommend%20albums%20like%20OK%20Computer)
 
 When a user clicks one of these links on a web page and has Parachord running, the track plays through their own configured sources -- local files, Spotify, Bandcamp, YouTube, whatever they have set up -- resolved through the same [pipeline](/blog/2026/02/03/how-content-resolution-works/) that powers all of Parachord's playback.
 
