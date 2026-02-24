@@ -1149,13 +1149,13 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                         <p>Define the playlist directly in HTML using the <code>data-tracks</code> attribute with a JSON array of track objects.</p>
                         <div class="demo-preview">
                             <p class="demo-preview-label">Live Preview</p>
-                            <div class="parachord-button-demo" onclick="handleButtonDemo('Late Night Drive')">
+                            <div class="parachord-button-demo" onclick="handleButtonDemo('The Fall of Fort Equinox (2025)')">
                                 <div class="pb-icon">
                                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                                 </div>
                                 <div class="pb-text">
                                     <span class="pb-label">Send to Parachord</span>
-                                    <span class="pb-title">Late Night Drive</span>
+                                    <span class="pb-title">The Fall of Fort Equinox (2025)</span>
                                 </div>
                             </div>
                         </div>
@@ -1168,14 +1168,14 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 <pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://parachord.com/button.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
 
 <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"parachord-button"</span>
-     <span class="attr">data-title</span>=<span class="str">"Late Night Drive"</span>
-     <span class="attr">data-creator</span>=<span class="str">"The Music Blog"</span>
+     <span class="attr">data-title</span>=<span class="str">"The Fall of Fort Equinox (2025)"</span>
+     <span class="attr">data-creator</span>=<span class="str">"J Herskowitz"</span>
      <span class="attr">data-tracks</span>=<span class="str">'[
-       {"title":"Teardrop","artist":"Massive Attack","album":"Mezzanine"},
-       {"title":"Roads","artist":"Portishead","album":"Dummy"},
-       {"title":"Only Shallow","artist":"My Bloody Valentine","album":"Loveless"},
-       {"title":"Sour Times","artist":"Portishead","album":"Dummy"},
-       {"title":"Unfinished Sympathy","artist":"Massive Attack","album":"Blue Lines"}
+       {"title":"Separate Houses","artist":"Press Club"},
+       {"title":"Los Angeles","artist":"Big Thief"},
+       {"title":"Just Be Simple","artist":"MJ Lenderman"},
+       {"title":"Cobra","artist":"Geese"},
+       {"title":"Spill the Juice","artist":"Slothrust"}
      ]'</span><span class="tag">&gt;</span>
 <span class="tag">&lt;/div&gt;</span></code></pre>
                         </div>
@@ -1186,13 +1186,13 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                         <p>Point to a hosted XSPF playlist file instead of inline track data. Parachord fetches and imports the playlist.</p>
                         <div class="demo-preview">
                             <p class="demo-preview-label">Live Preview</p>
-                            <div class="parachord-button-demo" onclick="handleButtonDemo('Best of 2025')">
+                            <div class="parachord-button-demo" onclick="handleButtonDemo('The Fall of Fort Equinox (2025)')">
                                 <div class="pb-icon">
                                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                                 </div>
                                 <div class="pb-text">
                                     <span class="pb-label">Send to Parachord</span>
-                                    <span class="pb-title">Best of 2025</span>
+                                    <span class="pb-title">The Fall of Fort Equinox (2025)</span>
                                 </div>
                             </div>
                         </div>
@@ -1205,7 +1205,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 <pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://parachord.com/button.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
 
 <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"parachord-button"</span>
-     <span class="attr">data-xspf-url</span>=<span class="str">"https://example.com/playlists/best-of-2025.xspf"</span><span class="tag">&gt;</span>
+     <span class="attr">data-xspf-url</span>=<span class="str">"https://go.parachord.com/1582a6b6.xspf"</span><span class="tag">&gt;</span>
 <span class="tag">&lt;/div&gt;</span></code></pre>
                         </div>
 
@@ -1230,13 +1230,12 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                             </div>
 <pre><code><span class="comment">// Send a playlist directly</span>
 <span class="fn">Parachord</span>.<span class="fn">sendPlaylist</span>({
-  <span class="prop">title</span>: <span class="str">"Staff Picks - February 2026"</span>,
-  <span class="prop">creator</span>: <span class="str">"Indie Music Review"</span>,
+  <span class="prop">title</span>: <span class="str">"The Fall of Fort Equinox (2025)"</span>,
+  <span class="prop">creator</span>: <span class="str">"J Herskowitz"</span>,
   <span class="prop">tracks</span>: [
-    { <span class="prop">title</span>: <span class="str">"Karma Police"</span>, <span class="prop">artist</span>: <span class="str">"Radiohead"</span>, <span class="prop">album</span>: <span class="str">"OK Computer"</span> },
-    { <span class="prop">title</span>: <span class="str">"Hyperballad"</span>, <span class="prop">artist</span>: <span class="str">"Bjork"</span>, <span class="prop">album</span>: <span class="str">"Post"</span> },
-    { <span class="prop">title</span>: <span class="str">"Two Headed Boy"</span>, <span class="prop">artist</span>: <span class="str">"Neutral Milk Hotel"</span>,
-      <span class="prop">album</span>: <span class="str">"In the Aeroplane Over the Sea"</span> }
+    { <span class="prop">title</span>: <span class="str">"Separate Houses"</span>, <span class="prop">artist</span>: <span class="str">"Press Club"</span> },
+    { <span class="prop">title</span>: <span class="str">"Los Angeles"</span>, <span class="prop">artist</span>: <span class="str">"Big Thief"</span> },
+    { <span class="prop">title</span>: <span class="str">"Just Be Simple"</span>, <span class="prop">artist</span>: <span class="str">"MJ Lenderman"</span> }
   ]
 });</code></pre>
                         </div>
@@ -1250,7 +1249,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                                 <button class="code-copy" onclick="copyCode(this)">Copy</button>
                             </div>
 <pre><code><span class="comment">// Send a hosted XSPF playlist URL</span>
-<span class="fn">Parachord</span>.<span class="fn">sendXspfUrl</span>(<span class="str">"https://example.com/playlist.xspf"</span>);</code></pre>
+<span class="fn">Parachord</span>.<span class="fn">sendXspfUrl</span>(<span class="str">"https://go.parachord.com/1582a6b6.xspf"</span>);</code></pre>
                         </div>
                     </div>
 
