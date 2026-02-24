@@ -182,3 +182,5 @@ The full protocol schema is documented on [GitHub](https://github.com/Parachord/
 ---
 
 The `parachord://` protocol is available in all current releases. [Download Parachord](https://github.com/Parachord/parachord/releases) to start using it, or explore the [embeddable button docs](https://github.com/Parachord/parachord/blob/main/docs/protocol-schema.md#embeddable-send-to-parachord-button) to see how it could work on your site.
+
+**Want to see it in action?** Check out the [interactive demos page](/demos/) for working examples of every integration pattern described above -- protocol links, action buttons, the embeddable widget, the JavaScript API, and more.
