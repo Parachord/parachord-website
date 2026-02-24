@@ -1,0 +1,1391 @@
+---
+layout: null
+title: Demos
+description: Working examples of Parachord protocol links, embeddable buttons, and JavaScript integrations.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demos | Parachord</title>
+    <meta name="description" content="Working examples of Parachord protocol links, embeddable buttons, and JavaScript integrations.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://parachord.com/demos/">
+    <meta property="og:title" content="Demos | Parachord">
+    <meta property="og:description" content="Working examples of Parachord protocol links, embeddable buttons, and JavaScript integrations.">
+    <meta property="og:image" content="https://parachord.com/assets/home.png">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://parachord.com/demos/">
+    <meta name="twitter:title" content="Demos | Parachord">
+    <meta name="twitter:description" content="Working examples of Parachord protocol links, embeddable buttons, and JavaScript integrations.">
+    <meta name="twitter:image" content="https://parachord.com/assets/home.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="{{ '/assets/icon128.png' | relative_url }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark: #1e1b4b;
+            --darker: #0f0d24;
+            --light: #f8f8f8;
+            --muted: rgba(255,255,255,0.6);
+            --accent: #ec4899;
+            --code-bg: #161230;
+            --code-border: rgba(255,255,255,0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 13, 36, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            height: 26px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--light);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--light);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 13, 36, 0.98);
+            backdrop-filter: blur(12px);
+            z-index: 99;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+            min-height: calc(100vh - 160px);
+        }
+
+        /* Page Header */
+        .demos-header {
+            padding: 4rem 2rem;
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .demos-header-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .demos-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .demos-header h1 strong {
+            font-weight: 700;
+        }
+
+        .demos-header p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        /* Table of Contents */
+        .demos-toc {
+            padding: 2rem 2rem 0;
+            background: var(--darker);
+        }
+
+        .demos-toc-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .toc-link {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--muted);
+            padding: 0.5rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .toc-link:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: var(--light);
+        }
+
+        /* Demo Sections */
+        .demos-content {
+            padding: 3rem 2rem 4rem;
+            background: var(--darker);
+        }
+
+        .demos-content-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            margin-bottom: 4rem;
+            padding-top: 1rem;
+        }
+
+        .demo-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .demo-section > p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .demo-section > p a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .demo-section > p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Demo Block */
+        .demo-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .demo-block h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--light);
+        }
+
+        .demo-block > p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Live Preview Area */
+        .demo-preview {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-preview-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 1rem;
+        }
+
+        /* Protocol links styling */
+        .demo-preview a.protocol-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.4rem 0;
+            transition: color 0.2s;
+        }
+
+        .demo-preview a.protocol-link:hover {
+            color: #f472b6;
+        }
+
+        .demo-preview a.protocol-link svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .protocol-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        /* Button demos */
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .demo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .demo-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .demo-btn-play {
+            background: var(--accent);
+            color: white;
+        }
+
+        .demo-btn-play:hover {
+            box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3);
+        }
+
+        .demo-btn-queue {
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
+        }
+
+        .demo-btn-queue:hover {
+            box-shadow: 0 8px 24px rgba(255,255,255,0.1);
+        }
+
+        .demo-btn-explore {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light);
+        }
+
+        .demo-btn-explore:hover {
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 8px 24px rgba(255,255,255,0.05);
+        }
+
+        /* Smartlink embed */
+        .smartlink-embed {
+            display: flex;
+            justify-content: center;
+        }
+
+        .smartlink-embed iframe {
+            border-radius: 8px;
+            max-width: 100%;
+        }
+
+        /* Embeddable button mock */
+        .parachord-button-demo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .parachord-button-demo:hover {
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .parachord-button-demo .pb-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .parachord-button-demo .pb-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .parachord-button-demo .pb-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parachord-button-demo .pb-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+        }
+
+        .parachord-button-demo .pb-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* Review article demo */
+        .review-demo {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .review-demo a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(236, 72, 153, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .review-demo a:hover {
+            border-color: var(--accent);
+        }
+
+        /* AI Chat demo */
+        .chat-prompts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .chat-prompt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 100px;
+            padding: 0.5rem 1rem;
+            color: #c084fc;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+            width: fit-content;
+        }
+
+        .chat-prompt-btn:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .chat-prompt-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        /* Playback control buttons */
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .control-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--light);
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .control-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Volume slider demo */
+        .volume-demo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .volume-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .volume-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem 0.75rem;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            color: var(--muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .volume-btn:hover {
+            background: rgba(255,255,255,0.12);
+            color: var(--light);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--code-border);
+        }
+
+        .code-lang {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .code-copy {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--muted);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .code-copy:hover {
+            color: var(--light);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .code-copy.copied {
+            color: #34d399;
+            border-color: #34d399;
+        }
+
+        .code-block pre {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .code-block pre code {
+            font-family: inherit;
+        }
+
+        /* Syntax colors */
+        .code-block .tag { color: #f472b6; }
+        .code-block .attr { color: #c084fc; }
+        .code-block .str { color: #34d399; }
+        .code-block .comment { color: rgba(255,255,255,0.3); }
+        .code-block .kw { color: #c084fc; }
+        .code-block .fn { color: #60a5fa; }
+        .code-block .prop { color: #f472b6; }
+        .code-block .url { color: #38bdf8; }
+
+        /* Note callout */
+        .demo-note {
+            background: rgba(168, 85, 247, 0.08);
+            border-left: 3px solid rgba(168, 85, 247, 0.4);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .demo-note strong {
+            color: var(--light);
+        }
+
+        .demo-note code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            background: rgba(255,255,255,0.08);
+            padding: 0.15em 0.4em;
+            border-radius: 3px;
+        }
+
+        /* Inline code */
+        .demos-content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            background: rgba(255,255,255,0.08);
+            padding: 0.15em 0.4em;
+            border-radius: 3px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--darker);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            height: 22px;
+            filter: brightness(0) invert(1);
+            opacity: 0.5;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        .footer-links a svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .demo-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .code-block pre {
+                font-size: 0.72rem;
+            }
+
+            .smartlink-embed iframe {
+                width: 100%;
+                height: 152px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ '/' | relative_url }}">
+            <img src="{{ '/assets/logo-wordmark.png' | relative_url }}" alt="Parachord" class="logo">
+        </a>
+        <div class="nav-links">
+            <a href="{{ '/' | relative_url }}#features">Features</a>
+            <a href="{{ '/' | relative_url }}#plugins">Plugins</a>
+            <a href="{{ '/blog/' | relative_url }}">Blog</a>
+            <a href="{{ '/demos/' | relative_url }}" class="active">Demos</a>
+            <a href="{{ '/' | relative_url }}#download">Download</a>
+        </div>
+        <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="{{ '/' | relative_url }}#features">Features</a>
+        <a href="{{ '/' | relative_url }}#plugins">Plugins</a>
+        <a href="{{ '/blog/' | relative_url }}">Blog</a>
+        <a href="{{ '/demos/' | relative_url }}">Demos</a>
+        <a href="{{ '/' | relative_url }}#download">Download</a>
+    </div>
+
+    <main>
+        <section class="demos-header">
+            <div class="demos-header-inner">
+                <p class="section-title">Integrations</p>
+                <h1>Protocol <strong>Demos</strong></h1>
+                <p>Working examples of <code>parachord://</code> protocol links, embeddable buttons, and the JavaScript API. Copy any snippet to add Parachord integration to your site.</p>
+            </div>
+        </section>
+
+        <div class="demos-toc">
+            <div class="demos-toc-inner">
+                <a href="#protocol-links" class="toc-link">Protocol Links</a>
+                <a href="#inline-review" class="toc-link">Inline Review Links</a>
+                <a href="#action-buttons" class="toc-link">Action Buttons</a>
+                <a href="#playback-controls" class="toc-link">Playback Controls</a>
+                <a href="#ai-chat" class="toc-link">AI Chat Prompts</a>
+                <a href="#embeddable-button" class="toc-link">Embeddable Button</a>
+                <a href="#javascript-api" class="toc-link">JavaScript API</a>
+                <a href="#smartlink-embed" class="toc-link">Smartlink Embed</a>
+            </div>
+        </div>
+
+        <section class="demos-content">
+            <div class="demos-content-inner">
+
+                <!-- 1. Protocol Links -->
+                <div class="demo-section" id="protocol-links">
+                    <h2>Protocol Links</h2>
+                    <p>The simplest integration: standard <code>&lt;a&gt;</code> tags with <code>parachord://</code> URLs. When a user with Parachord installed clicks one, the app handles it directly. For users without Parachord, the link is a no-op.</p>
+
+                    <div class="demo-block">
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="protocol-links-list">
+                                <a href="parachord://play?artist=Big%20Thief&title=Vampire%20Empire" class="protocol-link">
+                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    Play "Vampire Empire" by Big Thief
+                                </a>
+                                <a href="parachord://artist/Radiohead" class="protocol-link">
+                                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Open Radiohead artist page
+                                </a>
+                                <a href="parachord://album/Bjork/Post" class="protocol-link">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+                                    Open "Post" by Bjork
+                                </a>
+                                <a href="parachord://queue/add?artist=Bjork&title=Hyperballad" class="protocol-link">
+                                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    Add "Hyperballad" to queue
+                                </a>
+                                <a href="parachord://search?q=shoegaze" class="protocol-link">
+                                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Search "shoegaze"
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="comment">&lt;!-- Play a track --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://play?artist=Big%20Thief&amp;title=Vampire%20Empire"</span><span class="tag">&gt;</span>
+  Play "Vampire Empire" by Big Thief
+<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- Open an artist page --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://artist/Radiohead"</span><span class="tag">&gt;</span>Open Radiohead<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- Open an album --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://album/Bjork/Post"</span><span class="tag">&gt;</span>Open "Post" by Bjork<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- Add to queue --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://queue/add?artist=Bjork&amp;title=Hyperballad"</span><span class="tag">&gt;</span>
+  Add "Hyperballad" to Queue
+<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- Search --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://search?q=shoegaze"</span><span class="tag">&gt;</span>Search "shoegaze"<span class="tag">&lt;/a&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Inline Review Links -->
+                <div class="demo-section" id="inline-review">
+                    <h2>Inline Review Links</h2>
+                    <p>Protocol links work naturally inside running text. A music blog can make every track and artist mention clickable without disrupting the reading experience.</p>
+
+                    <div class="demo-block">
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="review-demo">
+                                <p>The album's centerpiece is <a href="parachord://play?artist=Big%20Thief&title=Vampire%20Empire">Vampire Empire</a>, a sprawling seven-minute track that builds from whispered acoustic guitar to a full-band crescendo. If you're new to <a href="parachord://artist/Big%20Thief">Big Thief</a>, start here. Fans of the band's earlier work will hear echoes of <a href="parachord://play?artist=Big%20Thief&title=Not">Not</a> and <a href="parachord://play?artist=Big%20Thief&title=Masterpiece">Masterpiece</a> in the dynamic shifts.</p>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;p&gt;</span>
+  The album's centerpiece is
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://play?artist=Big%20Thief&amp;title=Vampire%20Empire"</span><span class="tag">&gt;</span>
+    Vampire Empire<span class="tag">&lt;/a&gt;</span>,
+  a sprawling seven-minute track that builds from whispered acoustic
+  guitar to a full-band crescendo. If you're new to
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://artist/Big%20Thief"</span><span class="tag">&gt;</span>Big Thief<span class="tag">&lt;/a&gt;</span>,
+  start here.
+<span class="tag">&lt;/p&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Action Buttons -->
+                <div class="demo-section" id="action-buttons">
+                    <h2>Action Buttons</h2>
+                    <p>Recommendation sites can offer direct actions for each track: play immediately, add to queue for later, or explore the artist's full catalog in Parachord.</p>
+
+                    <div class="demo-block">
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="demo-buttons">
+                                <a href="parachord://play?artist=Arooj%20Aftab&title=Mohabbat" class="demo-btn demo-btn-play">
+                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    Play Now
+                                </a>
+                                <a href="parachord://queue/add?artist=Arooj%20Aftab&title=Mohabbat" class="demo-btn demo-btn-queue">
+                                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    Add to Queue
+                                </a>
+                                <a href="parachord://artist/Arooj%20Aftab" class="demo-btn demo-btn-explore">
+                                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Explore Artist
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="str">"location.href='parachord://play?artist=Arooj%20Aftab&amp;title=Mohabbat'"</span><span class="tag">&gt;</span>
+  Play Now
+<span class="tag">&lt;/button&gt;</span>
+
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="str">"location.href='parachord://queue/add?artist=Arooj%20Aftab&amp;title=Mohabbat'"</span><span class="tag">&gt;</span>
+  Add to Queue
+<span class="tag">&lt;/button&gt;</span>
+
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="str">"location.href='parachord://artist/Arooj%20Aftab'"</span><span class="tag">&gt;</span>
+  Explore Artist
+<span class="tag">&lt;/button&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Playback Controls -->
+                <div class="demo-section" id="playback-controls">
+                    <h2>Playback Controls</h2>
+                    <p>Protocol URLs cover the full playback surface: pause, resume, skip, previous, shuffle, and volume. These can be used from web dashboards, Stream Deck integrations, or automation tools.</p>
+
+                    <div class="demo-block">
+                        <h3>Transport Controls</h3>
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="control-buttons">
+                                <div class="control-item">
+                                    <a href="parachord://control/previous" class="control-btn" title="Previous">
+                                        <svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+                                    </a>
+                                    <span class="control-label">Prev</span>
+                                </div>
+                                <div class="control-item">
+                                    <a href="parachord://control/pause" class="control-btn" title="Pause">
+                                        <svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                                    </a>
+                                    <span class="control-label">Pause</span>
+                                </div>
+                                <div class="control-item">
+                                    <a href="parachord://control/resume" class="control-btn" title="Resume">
+                                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    </a>
+                                    <span class="control-label">Play</span>
+                                </div>
+                                <div class="control-item">
+                                    <a href="parachord://control/skip" class="control-btn" title="Skip">
+                                        <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                                    </a>
+                                    <span class="control-label">Skip</span>
+                                </div>
+                                <div class="control-item">
+                                    <a href="parachord://shuffle/on" class="control-btn" title="Shuffle On">
+                                        <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                                    </a>
+                                    <span class="control-label">Shuffle</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://control/previous"</span><span class="tag">&gt;</span>Previous<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://control/pause"</span><span class="tag">&gt;</span>Pause<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://control/resume"</span><span class="tag">&gt;</span>Play<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://control/skip"</span><span class="tag">&gt;</span>Skip<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://shuffle/on"</span><span class="tag">&gt;</span>Shuffle On<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://shuffle/off"</span><span class="tag">&gt;</span>Shuffle Off<span class="tag">&lt;/a&gt;</span></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="demo-block">
+                        <h3>Volume</h3>
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="volume-demo">
+                                <div class="volume-links">
+                                    <a href="parachord://volume/0" class="volume-btn">Mute</a>
+                                    <a href="parachord://volume/25" class="volume-btn">25%</a>
+                                    <a href="parachord://volume/50" class="volume-btn">50%</a>
+                                    <a href="parachord://volume/75" class="volume-btn">75%</a>
+                                    <a href="parachord://volume/100" class="volume-btn">100%</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://volume/0"</span><span class="tag">&gt;</span>Mute<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://volume/25"</span><span class="tag">&gt;</span>25%<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://volume/50"</span><span class="tag">&gt;</span>50%<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://volume/75"</span><span class="tag">&gt;</span>75%<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://volume/100"</span><span class="tag">&gt;</span>100%<span class="tag">&lt;/a&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. AI Chat Prompts -->
+                <div class="demo-section" id="ai-chat">
+                    <h2>AI Chat Prompts</h2>
+                    <p>Open Parachord's AI DJ with a pre-filled prompt. A review site could place a "Discover More Like This" button at the end of every review. The user sees a confirmation dialog before any prompt is sent.</p>
+
+                    <div class="demo-block">
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="chat-prompts">
+                                <a href="parachord://chat" class="chat-prompt-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Open AI DJ
+                                </a>
+                                <a href="parachord://chat?prompt=play%20something%20chill" class="chat-prompt-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    "Play something chill"
+                                </a>
+                                <a href="parachord://chat?prompt=recommend%20albums%20like%20OK%20Computer" class="chat-prompt-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    "Recommend albums like OK Computer"
+                                </a>
+                                <a href="parachord://chat?prompt=find%20me%20something%20that%20sounds%20like%20this%20album%20but%20more%20experimental" class="chat-prompt-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    "Find me something more experimental"
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="comment">&lt;!-- Open AI DJ chat panel --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://chat"</span><span class="tag">&gt;</span>Open AI DJ<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- Pre-filled prompts (user sees confirmation before sending) --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://chat?prompt=play%20something%20chill"</span><span class="tag">&gt;</span>
+  Play something chill
+<span class="tag">&lt;/a&gt;</span>
+
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"parachord://chat?prompt=recommend%20albums%20like%20OK%20Computer"</span><span class="tag">&gt;</span>
+  Recommend albums like OK Computer
+<span class="tag">&lt;/a&gt;</span></code></pre>
+                        </div>
+
+                        <div class="demo-note">
+                            <strong>Security note:</strong> When a <code>prompt</code> parameter is provided, Parachord shows a confirmation dialog before sending the message to the AI. This prevents external sources from silently injecting prompts. Max 500 characters.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Embeddable Button -->
+                <div class="demo-section" id="embeddable-button">
+                    <h2>Embeddable "Send to Parachord" Button</h2>
+                    <p>The drop-in widget for sending playlists to Parachord. Include one script tag, add a <code>div</code> with data attributes, and the button handles everything: detecting Parachord, sending via WebSocket if running, or falling back to a <code>parachord://import</code> protocol URL.</p>
+
+                    <div class="demo-block">
+                        <h3>Inline Tracks (Data Attributes)</h3>
+                        <p>Define the playlist directly in HTML using the <code>data-tracks</code> attribute with a JSON array of track objects.</p>
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="parachord-button-demo" onclick="handleButtonDemo('Late Night Drive')">
+                                <div class="pb-icon">
+                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                </div>
+                                <div class="pb-text">
+                                    <span class="pb-label">Send to Parachord</span>
+                                    <span class="pb-title">Late Night Drive</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://parachord.com/button.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"parachord-button"</span>
+     <span class="attr">data-title</span>=<span class="str">"Late Night Drive"</span>
+     <span class="attr">data-creator</span>=<span class="str">"The Music Blog"</span>
+     <span class="attr">data-tracks</span>=<span class="str">'[
+       {"title":"Teardrop","artist":"Massive Attack","album":"Mezzanine"},
+       {"title":"Roads","artist":"Portishead","album":"Dummy"},
+       {"title":"Only Shallow","artist":"My Bloody Valentine","album":"Loveless"},
+       {"title":"Sour Times","artist":"Portishead","album":"Dummy"},
+       {"title":"Unfinished Sympathy","artist":"Massive Attack","album":"Blue Lines"}
+     ]'</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="demo-block">
+                        <h3>Hosted XSPF URL</h3>
+                        <p>Point to a hosted XSPF playlist file instead of inline track data. Parachord fetches and imports the playlist.</p>
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="parachord-button-demo" onclick="handleButtonDemo('Best of 2025')">
+                                <div class="pb-icon">
+                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                </div>
+                                <div class="pb-text">
+                                    <span class="pb-label">Send to Parachord</span>
+                                    <span class="pb-title">Best of 2025</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://parachord.com/button.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"parachord-button"</span>
+     <span class="attr">data-xspf-url</span>=<span class="str">"https://example.com/playlists/best-of-2025.xspf"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+
+                        <div class="demo-note">
+                            <strong>User confirmation required.</strong> Because import can be triggered by external sources, Parachord shows a confirmation dialog before fetching a remote URL or saving imported tracks. Inline tracks are capped at 500 tracks / 100KB encoded.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. JavaScript API -->
+                <div class="demo-section" id="javascript-api">
+                    <h2>JavaScript API</h2>
+                    <p>For sites that need programmatic control, <code>button.js</code> exposes a global <code>Parachord</code> object with methods for sending playlists, creating buttons dynamically, and checking connection status.</p>
+
+                    <div class="demo-block">
+                        <h3>Send a Playlist</h3>
+                        <p>Send a playlist directly to Parachord from JavaScript. The method handles WebSocket detection and protocol URL fallback automatically.</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">JavaScript</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="comment">// Send a playlist directly</span>
+<span class="fn">Parachord</span>.<span class="fn">sendPlaylist</span>({
+  <span class="prop">title</span>: <span class="str">"Staff Picks - February 2026"</span>,
+  <span class="prop">creator</span>: <span class="str">"Indie Music Review"</span>,
+  <span class="prop">tracks</span>: [
+    { <span class="prop">title</span>: <span class="str">"Karma Police"</span>, <span class="prop">artist</span>: <span class="str">"Radiohead"</span>, <span class="prop">album</span>: <span class="str">"OK Computer"</span> },
+    { <span class="prop">title</span>: <span class="str">"Hyperballad"</span>, <span class="prop">artist</span>: <span class="str">"Bjork"</span>, <span class="prop">album</span>: <span class="str">"Post"</span> },
+    { <span class="prop">title</span>: <span class="str">"Two Headed Boy"</span>, <span class="prop">artist</span>: <span class="str">"Neutral Milk Hotel"</span>,
+      <span class="prop">album</span>: <span class="str">"In the Aeroplane Over the Sea"</span> }
+  ]
+});</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="demo-block">
+                        <h3>Send a Hosted XSPF URL</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">JavaScript</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="comment">// Send a hosted XSPF playlist URL</span>
+<span class="fn">Parachord</span>.<span class="fn">sendXspfUrl</span>(<span class="str">"https://example.com/playlist.xspf"</span>);</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="demo-block">
+                        <h3>Create a Button Programmatically</h3>
+                        <p>Dynamically create and insert a styled button element. Useful for recommendation engines that generate playlists on the fly.</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">JavaScript</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="comment">// Create a button and insert it into the DOM</span>
+<span class="kw">const</span> btn = <span class="fn">Parachord</span>.<span class="fn">createButton</span>({
+  <span class="prop">title</span>: <span class="str">"My Playlist"</span>,
+  <span class="prop">tracks</span>: [
+    { <span class="prop">title</span>: <span class="str">"Song Name"</span>, <span class="prop">artist</span>: <span class="str">"Artist Name"</span> }
+  ]
+}, { <span class="prop">label</span>: <span class="str">"Open in Parachord"</span> });
+
+<span class="kw">document</span>.<span class="fn">getElementById</span>(<span class="str">'my-container'</span>).<span class="fn">appendChild</span>(btn);</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="demo-block">
+                        <h3>Check Connection Status</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">JavaScript</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="comment">// Check if Parachord is running locally</span>
+<span class="kw">if</span> (<span class="fn">Parachord</span>.<span class="prop">isConnected</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Parachord is running!"</span>);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Smartlink Embed -->
+                <div class="demo-section" id="smartlink-embed">
+                    <h2>Smartlink Embed</h2>
+                    <p>Smartlinks are universal, shareable URLs that represent a song, album, or playlist independent of any streaming service. They can be embedded as iframes in blogs, newsletters, and social posts.</p>
+
+                    <div class="demo-block">
+                        <div class="demo-preview">
+                            <p class="demo-preview-label">Live Preview</p>
+                            <div class="smartlink-embed">
+                                <iframe src="https://go.parachord.com/ebc91109/embed" width="400" height="152" frameborder="0" style="border-radius: 8px;" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">HTML</span>
+                                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                            </div>
+<pre><code><span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="str">"https://go.parachord.com/ebc91109/embed"</span>
+  <span class="attr">width</span>=<span class="str">"400"</span>
+  <span class="attr">height</span>=<span class="str">"152"</span>
+  <span class="attr">frameborder</span>=<span class="str">"0"</span>
+  <span class="attr">style</span>=<span class="str">"border-radius: 8px;"</span>
+  <span class="attr">allow</span>=<span class="str">"encrypted-media"</span><span class="tag">&gt;&lt;/iframe&gt;</span></code></pre>
+                        </div>
+
+                        <div class="demo-note">
+                            <strong>How it works:</strong> Users with Parachord get instant playback through their configured sources. Everyone else sees a clean landing page with links to Spotify, Apple Music, YouTube, Bandcamp, and more. Create smartlinks by right-clicking any track in Parachord and choosing <strong>Publish as Smartlink</strong>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Schema Reference Link -->
+                <div class="demo-section" style="margin-bottom: 0; text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06);">
+                    <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        These demos cover the most common integration patterns. The full protocol supports navigation, history, playlists, library, friend views, and more.
+                    </p>
+                    <a href="https://github.com/Parachord/parachord/blob/main/docs/protocol-schema.md" target="_blank" style="display: inline-block; background: var(--accent); color: white; padding: 0.9rem 2.5rem; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 4px; transition: transform 0.2s, box-shadow 0.2s;">Full Protocol Schema</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <img src="{{ '/assets/logo-wordmark.png' | relative_url }}" alt="Parachord" class="footer-logo">
+            <div class="footer-links">
+                <a href="https://github.com/Parachord/parachord" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
+                <a href="https://github.com/Parachord/parachord/issues" target="_blank">Issues</a>
+                <a href="https://github.com/Parachord/parachord/discussions" target="_blank">Forum</a>
+                <a href="https://join.slack.com/t/parachord/shared_invite/zt-3p81slpg5-_KYJLUwV3Kc~RCC1zQaipA" target="_blank">Slack</a>
+            </div>
+            <span class="footer-copy">&copy; 2026 Parachord &middot; MIT License &middot; Open Source</span>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Copy code to clipboard
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('pre code');
+            const text = code.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Button demo handler
+        function handleButtonDemo(title) {
+            alert('This would send the playlist "' + title + '" to Parachord.\n\nWith Parachord running, the button.js widget detects it via WebSocket and sends the playlist directly. Without Parachord, it falls back to opening a parachord://import protocol URL.');
+        }
+    </script>
+</body>
+</html>
