@@ -1228,14 +1228,16 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                         <p>Define the playlist directly in HTML using the <code>data-tracks</code> attribute with a JSON array of track objects.</p>
                         <div class="demo-preview">
                             <p class="demo-preview-label">Live Preview</p>
-                            <div class="parachord-button-demo" onclick="handleButtonDemo('The Fall of Fort Equinox (2025)')">
-                                <div class="pb-icon">
-                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                </div>
-                                <div class="pb-text">
-                                    <span class="pb-label">Send to Parachord</span>
-                                    <span class="pb-title">The Fall of Fort Equinox (2025)</span>
-                                </div>
+                            <div class="parachord-button"
+                                 data-title="The Fall of Fort Equinox (2025)"
+                                 data-creator="J Herskowitz"
+                                 data-tracks='[
+                                   {"title":"Separate Houses","artist":"Press Club"},
+                                   {"title":"Los Angeles","artist":"Big Thief"},
+                                   {"title":"Just Be Simple","artist":"MJ Lenderman"},
+                                   {"title":"Cobra","artist":"Geese"},
+                                   {"title":"Spill the Juice","artist":"Slothrust"}
+                                 ]'>
                             </div>
                         </div>
 
@@ -1265,14 +1267,8 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                         <p>Point to a hosted XSPF playlist file instead of inline track data. Parachord fetches and imports the playlist.</p>
                         <div class="demo-preview">
                             <p class="demo-preview-label">Live Preview</p>
-                            <div class="parachord-button-demo" onclick="handleButtonDemo('The Fall of Fort Equinox (2025)')">
-                                <div class="pb-icon">
-                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                </div>
-                                <div class="pb-text">
-                                    <span class="pb-label">Send to Parachord</span>
-                                    <span class="pb-title">The Fall of Fort Equinox (2025)</span>
-                                </div>
+                            <div class="parachord-button"
+                                 data-xspf-url="https://go.parachord.com/1582a6b6.xspf">
                             </div>
                         </div>
 
@@ -1425,6 +1421,8 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         </div>
     </footer>
 
+    <script src="https://go.parachord.com/button.js"></script>
+
     <script>
         // Hamburger menu toggle
         const hamburger = document.getElementById('hamburger');
@@ -1459,11 +1457,6 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
                     button.classList.remove('copied');
                 }, 2000);
             });
-        }
-
-        // Button demo handler
-        function handleButtonDemo(title) {
-            alert('This would send the playlist "' + title + '" to Parachord.\n\nWith Parachord running, the button.js widget detects it via WebSocket and sends the playlist directly. Without Parachord, it falls back to opening a parachord://import protocol URL.');
         }
     </script>
 </body>
