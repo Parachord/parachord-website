@@ -18,6 +18,7 @@ exclude:
   - CNAME
   - Gemfile
   - Gemfile.lock
+  - docs/
 
 # Collections
 collections:
