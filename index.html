@@ -448,35 +448,24 @@
 
         .press-source {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            height: 120px;
+            height: 64px;
         }
 
         .press-source img,
         .press-source .press-icon-svg {
-            height: 64px;
+            max-height: 100%;
+            max-width: 180px;
             width: auto;
-            max-width: 120px;
+            height: auto;
             object-fit: contain;
             border-radius: 6px;
             opacity: 0.7;
         }
 
-        .press-source span {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
         .press-item:hover .press-source img,
         .press-item:hover .press-source .press-icon-svg { opacity: 1; }
-        .press-item:hover .press-source span { color: var(--text); }
 
         .press-quote {
             font-size: 0.8rem;
@@ -1251,26 +1240,23 @@
 
     <!-- ── Press ── -->
     <section class="press fade-section">
-        <p class="press-label">What People Are Saying</p>
+        <p class="press-label">What People Are Saying About Parachord</p>
         <div class="press-items">
             <a href="https://www.theverge.com/column/881256/parachord-vibe-coded-music-streaming-app" target="_blank" class="press-item">
                 <div class="press-source">
-                     <img src="assets/press-theverge.png" alt="The Verge" style="height: 48px;">
-                    <span>The Verge</span>
+                    <img src="assets/press-theverge.png" alt="The Verge">
                 </div>
                 <p class="press-quote">"The next iTunes may be vibe-coded"</p>
             </a>
             <a href="https://musically.com/2026/02/20/the-spirit-of-tomahawk-lives-on-in-music-project-parachord/" target="_blank" class="press-item">
                 <div class="press-source">
-                    <img src="assets/press-musically.png" alt="Music Ally" style="height: 120px;">
-                    <span>Music Ally</span>
+                    <img src="assets/press-musically.png" alt="Music Ally">
                 </div>
                 <p class="press-quote">"The spirit of Tomahawk lives on in music project Parachord"</p>
             </a>
             <a href="https://www.pcmag.com/news/a-beloved-music-streaming-app-is-back-thanks-to-claude-code" target="_blank" class="press-item">
                 <div class="press-source">
-                    <img src="assets/press-pcmag.png" alt="PCMag" style="height: 120px;">
-                    <span>PCMag</span>
+                    <img src="assets/press-pcmag.png" alt="PCMag">
                 </div>
                 <p class="press-quote">"Parachord is a new all-in-one music-streaming app that pulls all your content into one interface, so you don't have to jump between platforms to listen to your favorite songs."</p>
             </a>
@@ -1283,7 +1269,7 @@
             <span class="section-label">Plugging The Big Idea</span>
             <h2>Stop chasing music across platforms.</h2>
             <h3>Given metadata about a <strong>song</strong>, <strong>album</strong>, or <strong>playlist</strong>, Parachord finds the best available source for <strong class="gradient-word">you</strong> and just plays it.</h3>
-            <p>A new kind of music player that invites all your streams, downloads, playlists, recommendations and friends to the same party. It's about time they all mingle.</p>
+            
         </div>
     </section>
 
