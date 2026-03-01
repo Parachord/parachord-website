@@ -27,7 +27,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="{{ '/assets/icon128.png' | relative_url }}">
 
@@ -39,13 +39,13 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         :root {
-            --dark: #1e1b4b;
-            --darker: #0f0d24;
-            --light: #f8f8f8;
-            --muted: rgba(255,255,255,0.6);
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --bg-subtle: #1a1a1a;
+            --text: #f5f5f5;
+            --text-muted: rgba(255,255,255,0.5);
+            --gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #f97316);
             --accent: #ec4899;
-            --code-bg: #161230;
-            --code-border: rgba(255,255,255,0.08);
         }
 
         html {
@@ -53,26 +53,28 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         body {
-            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--darker);
-            color: var(--light);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* ── Navigation ── */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 1.25rem 2rem;
+            padding: 1.25rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(15, 13, 36, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.04);
         }
 
         .logo {
@@ -86,21 +88,22 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .nav-links a {
-            color: var(--muted);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             transition: color 0.2s;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: var(--light);
+            color: var(--text);
         }
 
-        /* Hamburger Menu */
+        /* ── Hamburger Menu ── */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -116,7 +119,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             display: block;
             width: 100%;
             height: 2px;
-            background: var(--light);
+            background: var(--text);
             border-radius: 2px;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
@@ -133,7 +136,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             transform: translateY(-7px) rotate(-45deg);
         }
 
-        /* Mobile Menu Overlay */
+        /* ── Mobile Menu Overlay ── */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -141,8 +144,8 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 13, 36, 0.98);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(16px);
             z-index: 99;
             flex-direction: column;
             justify-content: center;
@@ -159,10 +162,11 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .mobile-menu a {
-            color: var(--light);
+            color: var(--text);
             text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             transition: color 0.2s;
@@ -172,16 +176,16 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             color: var(--accent);
         }
 
-        /* Main Content */
+        /* ── Main Content ── */
         main {
             padding-top: 80px;
             min-height: calc(100vh - 160px);
         }
 
-        /* Page Header */
+        /* ── Page Header ── */
         .demos-header {
-            padding: 4rem 2rem;
-            background: var(--dark);
+            padding: 4rem 2rem 3.5rem;
+            background: var(--bg-subtle);
             text-align: center;
         }
 
@@ -190,34 +194,37 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             margin: 0 auto;
         }
 
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
+        .section-label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: var(--accent);
-            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: inline-block;
         }
 
         .demos-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
+            font-weight: 800;
+            line-height: 1.2;
             margin-bottom: 1rem;
         }
 
-        .demos-header h1 strong {
-            font-weight: 700;
-        }
-
         .demos-header p {
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 1.1rem;
         }
 
-        /* Table of Contents */
+        /* ── Table of Contents ── */
         .demos-toc {
             padding: 2rem 2rem 0;
-            background: var(--darker);
+            background: var(--bg);
         }
 
         .demos-toc-inner {
@@ -232,9 +239,10 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         .toc-link {
             display: inline-block;
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: var(--muted);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-muted);
             padding: 0.5rem 1.25rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -246,14 +254,14 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .toc-link:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: var(--light);
+            border-color: rgba(255,255,255,0.15);
+            color: var(--text);
         }
 
-        /* Demo Sections */
+        /* ── Demo Sections ── */
         .demos-content {
             padding: 3rem 2rem 4rem;
-            background: var(--darker);
+            background: var(--bg);
         }
 
         .demos-content-inner {
@@ -267,15 +275,16 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .demo-section h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
         .demo-section > p {
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
             line-height: 1.7;
@@ -290,35 +299,37 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             text-decoration: underline;
         }
 
-        /* Demo Block */
+        /* ── Demo Block ── */
         .demo-block {
             margin-bottom: 2.5rem;
         }
 
         .demo-block h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
-            color: var(--light);
+            color: var(--text);
         }
 
         .demo-block > p {
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 1rem;
             line-height: 1.6;
         }
 
-        /* Live Preview Area */
+        /* ── Live Preview Area ── */
         .demo-preview {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
 
         .demo-preview-label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -327,7 +338,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             margin-bottom: 1rem;
         }
 
-        /* Protocol links styling */
+        /* ── Protocol Links ── */
         .demo-preview a.protocol-link {
             display: inline-flex;
             align-items: center;
@@ -359,7 +370,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             gap: 0.25rem;
         }
 
-        /* Button demos */
+        /* ── Button Demos ── */
         .demo-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -372,9 +383,9 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             align-items: center;
             gap: 0.5rem;
             padding: 0.65rem 1.25rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem;
             font-weight: 700;
-            font-family: inherit;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             border-radius: 4px;
@@ -395,7 +406,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .demo-btn-play {
-            background: var(--accent);
+            background: var(--gradient);
             color: white;
         }
 
@@ -405,7 +416,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 
         .demo-btn-queue {
             background: rgba(255,255,255,0.1);
-            color: var(--light);
+            color: var(--text);
         }
 
         .demo-btn-queue:hover {
@@ -415,7 +426,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         .demo-btn-explore {
             background: transparent;
             border: 1px solid rgba(255,255,255,0.2);
-            color: var(--light);
+            color: var(--text);
         }
 
         .demo-btn-explore:hover {
@@ -423,7 +434,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             box-shadow: 0 8px 24px rgba(255,255,255,0.05);
         }
 
-        /* Smartlink embed */
+        /* ── Smartlink Embed ── */
         .smartlink-embed {
             display: flex;
             justify-content: center;
@@ -439,7 +450,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             align-items: center;
             gap: 16px;
             padding: 16px;
-            background: #1a1a1a;
+            background: var(--bg-subtle);
             border-radius: 8px;
             max-width: 400px;
             height: 152px;
@@ -513,19 +524,19 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             color: #fff;
         }
 
-        /* Embeddable button mock */
+        /* ── Embeddable Button Mock ── */
         .parachord-button-demo {
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-elevated) 100%);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 8px;
             padding: 0.75rem 1.25rem;
             cursor: pointer;
             transition: border-color 0.2s, box-shadow 0.2s;
             text-decoration: none;
-            color: var(--light);
+            color: var(--text);
         }
 
         .parachord-button-demo:hover {
@@ -560,7 +571,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--muted);
+            color: var(--text-muted);
         }
 
         .parachord-button-demo .pb-title {
@@ -568,7 +579,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             font-weight: 700;
         }
 
-        /* Review article demo */
+        /* ── Review Article Demo ── */
         .review-demo {
             font-size: 0.95rem;
             line-height: 1.8;
@@ -586,7 +597,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             border-color: var(--accent);
         }
 
-        /* AI Chat demo */
+        /* ── AI Chat Demo ── */
         .chat-prompts {
             display: flex;
             flex-direction: column;
@@ -623,7 +634,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             flex-shrink: 0;
         }
 
-        /* Playback control buttons */
+        /* ── Playback Control Buttons ── */
         .control-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -640,7 +651,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50%;
-            color: var(--light);
+            color: var(--text);
             text-decoration: none;
             transition: background 0.2s, border-color 0.2s;
         }
@@ -658,7 +669,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 
         .control-label {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: var(--text-muted);
             text-align: center;
         }
 
@@ -669,7 +680,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             gap: 0.3rem;
         }
 
-        /* Volume slider demo */
+        /* ── Volume Controls ── */
         .volume-demo {
             display: flex;
             align-items: center;
@@ -689,7 +700,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 4px;
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 0.75rem;
             font-weight: 600;
             text-decoration: none;
@@ -698,13 +709,13 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 
         .volume-btn:hover {
             background: rgba(255,255,255,0.12);
-            color: var(--light);
+            color: var(--text);
         }
 
-        /* Code Block */
+        /* ── Code Block ── */
         .code-block {
-            background: var(--code-bg);
-            border: 1px solid var(--code-border);
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 8px;
             overflow: hidden;
             margin-bottom: 1rem;
@@ -716,7 +727,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             align-items: center;
             padding: 0.5rem 1rem;
             background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid var(--code-border);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
         .code-lang {
@@ -730,7 +741,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         .code-copy {
             background: none;
             border: 1px solid rgba(255,255,255,0.15);
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 0.65rem;
             font-weight: 600;
             padding: 0.25rem 0.6rem;
@@ -741,7 +752,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .code-copy:hover {
-            color: var(--light);
+            color: var(--text);
             border-color: rgba(255,255,255,0.3);
         }
 
@@ -764,7 +775,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             font-family: inherit;
         }
 
-        /* Syntax colors */
+        /* ── Syntax Highlighting ── */
         .code-block .tag { color: #f472b6; }
         .code-block .attr { color: #c084fc; }
         .code-block .str { color: #34d399; }
@@ -774,20 +785,20 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         .code-block .prop { color: #f472b6; }
         .code-block .url { color: #38bdf8; }
 
-        /* Note callout */
+        /* ── Note Callout ── */
         .demo-note {
-            background: rgba(168, 85, 247, 0.08);
-            border-left: 3px solid rgba(168, 85, 247, 0.4);
+            background: rgba(139,92,246,0.06);
+            border-left: 3px solid rgba(139,92,246,0.3);
             border-radius: 0 8px 8px 0;
             padding: 1rem 1.25rem;
             margin-bottom: 1.5rem;
             font-size: 0.85rem;
-            color: var(--muted);
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
         .demo-note strong {
-            color: var(--light);
+            color: var(--text);
         }
 
         .demo-note code {
@@ -798,7 +809,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             border-radius: 3px;
         }
 
-        /* Inline code */
+        /* ── Inline Code ── */
         .demos-content code {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.8em;
@@ -807,11 +818,11 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
             border-radius: 3px;
         }
 
-        /* Footer */
+        /* ── Footer ── */
         footer {
             padding: 3rem 2rem;
-            background: var(--darker);
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: var(--bg);
+            border-top: 1px solid rgba(255,255,255,0.04);
         }
 
         .footer-content {
@@ -827,7 +838,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         .footer-logo {
             height: 22px;
             filter: brightness(0) invert(1);
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .footer-links {
@@ -838,9 +849,10 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .footer-links a {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.35);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.75rem;
             font-weight: 600;
             transition: color 0.2s;
             display: inline-flex;
@@ -849,7 +861,7 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .footer-links a:hover {
-            color: var(--light);
+            color: var(--text);
         }
 
         .footer-links a svg {
@@ -859,11 +871,11 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
         }
 
         .footer-copy {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.25);
         }
 
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 700px) {
             .nav-links {
                 display: none;
@@ -895,15 +907,15 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 </head>
 <body>
     <nav>
-        <a href="{{ '/' | relative_url }}">
+        <a href="/">
             <img src="{{ '/assets/logo-wordmark.png' | relative_url }}" alt="Parachord" class="logo">
         </a>
         <div class="nav-links">
-            <a href="{{ '/' | relative_url }}#features">Features</a>
-            <a href="{{ '/' | relative_url }}#plugins">Plugins</a>
-            <a href="{{ '/blog/' | relative_url }}">Blog</a>
-            <a href="{{ '/demos/' | relative_url }}" class="active">Demos</a>
-            <a href="{{ '/' | relative_url }}#download">Download</a>
+            <a href="/#features">Features</a>
+            <a href="/#plugins">Plugins</a>
+            <a href="/blog/">Blog</a>
+            <a href="/demos/" class="active">Demos</a>
+            <a href="/#download">Download</a>
         </div>
         <div class="hamburger" id="hamburger" aria-label="Toggle menu">
             <span></span>
@@ -913,18 +925,18 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
     </nav>
 
     <div class="mobile-menu" id="mobile-menu">
-        <a href="{{ '/' | relative_url }}#features">Features</a>
-        <a href="{{ '/' | relative_url }}#plugins">Plugins</a>
-        <a href="{{ '/blog/' | relative_url }}">Blog</a>
-        <a href="{{ '/demos/' | relative_url }}">Demos</a>
-        <a href="{{ '/' | relative_url }}#download">Download</a>
+        <a href="/#features">Features</a>
+        <a href="/#plugins">Plugins</a>
+        <a href="/blog/">Blog</a>
+        <a href="/demos/" class="active">Demos</a>
+        <a href="/#download">Download</a>
     </div>
 
     <main>
         <section class="demos-header">
             <div class="demos-header-inner">
-                <p class="section-title">Integrations</p>
-                <h1>Protocol <strong>Demos</strong></h1>
+                <span class="section-label">Integrations</span>
+                <h1>Protocol Demos</h1>
                 <p>Working examples of <code>parachord://</code> protocol links, embeddable buttons, and the JavaScript API. Copy any snippet to add Parachord integration to your site.</p>
                 <p style="margin-top: 1rem;"><a href="{{ '/blog/2026/02/19/parachord-protocol-for-music-websites/' | relative_url }}" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">Read the blog post &rarr;</a></p>
             </div>
@@ -1398,10 +1410,10 @@ description: Working examples of Parachord protocol links, embeddable buttons, a
 
                 <!-- Full Schema Reference Link -->
                 <div class="demo-section" style="margin-bottom: 0; text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06);">
-                    <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
                         These demos cover the most common integration patterns. The full protocol supports navigation, history, playlists, library, friend views, and more.
                     </p>
-                    <a href="https://github.com/Parachord/parachord/blob/main/docs/protocol-schema.md" target="_blank" style="display: inline-block; background: var(--accent); color: white; padding: 0.9rem 2.5rem; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 4px; transition: transform 0.2s, box-shadow 0.2s;">Full Protocol Schema</a>
+                    <a href="https://github.com/Parachord/parachord/blob/main/docs/protocol-schema.md" target="_blank" style="display: inline-block; background: var(--gradient); color: white; padding: 0.9rem 2.5rem; text-decoration: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s;">Full Protocol Schema</a>
                 </div>
 
             </div>

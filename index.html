@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parachord</title>
     <meta name="description" content="Your music is everywhere... now you don't have to be.">
 
@@ -22,7 +22,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="assets/icon128.png">
 
@@ -34,10 +34,12 @@
         }
 
         :root {
-            --dark: #1e1b4b;
-            --darker: #0f0d24;
-            --light: #f8f8f8;
-            --muted: rgba(255,255,255,0.6);
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --bg-subtle: #1a1a1a;
+            --text: #f5f5f5;
+            --text-muted: rgba(255,255,255,0.5);
+            --gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #f97316);
             --accent: #ec4899;
         }
 
@@ -46,31 +48,33 @@
         }
 
         body {
-            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--darker);
-            color: var(--light);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Navigation - more transparent */
+        /* ── Navigation ── */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 1.25rem 2rem;
+            padding: 1.25rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: transparent;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         nav.scrolled {
-            background: rgba(15, 13, 36, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.04);
         }
 
         .logo {
@@ -84,20 +88,22 @@
         }
 
         .nav-links a {
-            color: var(--muted);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             transition: color 0.2s;
         }
 
-        .nav-links a:hover {
-            color: var(--light);
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
         }
 
-        /* Hamburger Menu */
+        /* ── Hamburger Menu ── */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -113,7 +119,7 @@
             display: block;
             width: 100%;
             height: 2px;
-            background: var(--light);
+            background: var(--text);
             border-radius: 2px;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
@@ -130,7 +136,7 @@
             transform: translateY(-7px) rotate(-45deg);
         }
 
-        /* Mobile Menu Overlay */
+        /* ── Mobile Menu Overlay ── */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -138,8 +144,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 13, 36, 0.98);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(16px);
             z-index: 99;
             flex-direction: column;
             justify-content: center;
@@ -156,10 +162,11 @@
         }
 
         .mobile-menu a {
-            color: var(--light);
+            color: var(--text);
             text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             transition: color 0.2s;
@@ -169,133 +176,251 @@
             color: var(--accent);
         }
 
-        /* Hero Section - Screenshot visible behind frosted glass */
+        /* ── Hero — Split Layout ── */
         .hero {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             align-items: center;
-            text-align: center;
-            padding: 6rem 2rem 4rem;
+            padding: 7rem 4rem 2rem;
             position: relative;
             overflow: hidden;
+            gap: 2rem;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('assets/home.png');
-            background-size: 80%;
-            background-position: center 60%;
-            background-repeat: no-repeat;
-            filter: brightness(0.5);
-        }
-
-        .hero-bg::after {
+        .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg,
-                rgba(15, 13, 36, 0.4) 0%,
-                rgba(15, 13, 36, 0.5) 40%,
-                rgba(15, 13, 36, 0.9) 100%);
+            top: 10%;
+            right: 5%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.05) 50%, transparent 70%);
+            pointer-events: none;
         }
 
-        .hero-content {
+        .hero-left {
             position: relative;
             z-index: 1;
-            max-width: 600px;
-            background: rgba(15, 13, 36, 0.5);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            max-width: 640px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem 0.4rem 0.75rem;
+            background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.08);
-            padding: 3rem 4rem;
-            box-shadow: 0 30px 100px rgba(0,0,0,0.4);
+            border-radius: 100px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.1s;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.25s;
+        }
+
+        .hero h1 .gradient-word,
+        .gradient-word {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .hero-subhead {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
+            color: var(--text);
+            max-width: 440px;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.35s;
         }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--muted);
-            max-width: 400px;
-            margin: 0 auto 2rem;
-            font-weight: 400;
+        .hero .tagline {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 440px;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.45s;
         }
 
-        .hero-cta {
-            display: inline-block;
-            background: var(--accent);
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.55s;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient);
             color: white;
-            padding: 0.9rem 2.5rem;
+            padding: 0.85rem 2rem;
             text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .hero-cta:hover {
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+            box-shadow: 0 8px 30px rgba(236,72,153,0.3);
         }
 
-        .platforms {
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--text);
+            padding: 0.85rem 2rem;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .hero .platforms {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 1.25rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.65s;
         }
 
-        .platforms svg {
-            width: 22px;
-            height: 22px;
+        .hero .platforms svg {
+            width: 20px;
+            height: 20px;
             fill: white;
-            opacity: 0.5;
+            opacity: 0.35;
             transition: opacity 0.2s;
         }
 
-        .platforms svg:hover {
-            opacity: 0.8;
+        .hero .platforms svg:hover {
+            opacity: 0.7;
         }
 
-        /* Press Section */
+        .hero-right {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+            /* Allow the image to bleed off the right edge */
+            margin-right: -4rem;
+            height: 80vh;
+            max-height: 720px;
+            min-height: 480px;
+        }
+
+        .hero-screenshot {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: left top;
+            border-radius: 16px 0 0 16px;
+            box-shadow:
+                -8px 20px 80px rgba(0,0,0,0.6),
+                0 0 120px rgba(139,92,246,0.12),
+                0 0 60px rgba(236,72,153,0.06);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Press Section ── */
         .press {
-            padding: 3rem 2rem 4rem;
-            background: var(--darker);
+            padding: 2.5rem 2rem 3.5rem;
+            background: var(--bg);
         }
 
         .press-label {
             text-align: center;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: var(--muted);
-            margin-bottom: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 1.5rem;
         }
 
         .press-items {
             display: flex;
-            flex-direction: row;
             justify-content: center;
             gap: 1.5rem;
             flex-wrap: wrap;
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
         }
 
@@ -305,145 +430,543 @@
             align-items: center;
             text-align: center;
             max-width: 280px;
+            flex: 1;
+            min-width: 240px;
             gap: 0.75rem;
             text-decoration: none;
-            padding: 1.25rem 1.5rem;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            transition: background 0.2s, border-color 0.2s;
+            padding: 1.5rem;
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            transition: border-color 0.3s, transform 0.2s;
         }
 
         .press-item:hover {
-            background: rgba(255,255,255,0.04);
             border-color: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
         }
 
         .press-source {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.6rem;
+            justify-content: center;
+            gap: 0.5rem;
+            height: 120px;
         }
 
-        .press-source img {
-            height: 22px;
-            width: 22px;
-            border-radius: 4px;
+        .press-source img,
+        .press-source .press-icon-svg {
+            height: 64px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+            border-radius: 6px;
             opacity: 0.7;
         }
 
         .press-source span {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--muted);
-            letter-spacing: 0.02em;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        .press-item:hover .press-source img {
-            opacity: 1;
-        }
-
-        .press-item:hover .press-source span {
-            color: var(--light);
-        }
+        .press-item:hover .press-source img,
+        .press-item:hover .press-source .press-icon-svg { opacity: 1; }
+        .press-item:hover .press-source span { color: var(--text); }
 
         .press-quote {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-style: italic;
-            color: var(--light);
-            font-weight: 300;
-            line-height: 1.4;
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.5;
         }
 
-        .press-author {
-            font-size: 0.7rem;
-            color: var(--muted);
-        }
-
-        /* Gallery / Carousel Section */
-        .gallery {
-            padding: 4rem 2rem 2rem;
-            background: var(--darker);
-            overflow: hidden;
-        }
-
-        .gallery-label {
+        /* ── Concept Section ── */
+        .concept {
+            padding: 4rem 2rem;
             text-align: center;
-            font-size: 0.75rem;
-            font-weight: 600;
+            background: var(--bg-subtle);
+        }
+
+        .concept-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: var(--muted);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .concept h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .concept h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .concept h3 strong {
+            color: var(--text);
+        }
+
+        .concept p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── Features Section ── */
+        .features {
+            padding: 4rem 2rem;
+            background: var(--bg);
+        }
+
+        .features-header {
+            text-align: center;
             margin-bottom: 2rem;
         }
 
-        .gallery-cta {
-            text-align: center;
-            margin-top: 2.5rem;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .gallery-track {
-            display: flex;
-            gap: 1.5rem;
-            animation: scroll 40s linear infinite;
-            width: max-content;
-        }
-
-        .gallery-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .gallery-item {
-            flex-shrink: 0;
-            width: 400px;
-            height: 250px;
-            background: var(--dark);
-            border-radius: 12px;
+        .feature {
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .feature:hover {
+            border-color: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+        }
+
+        .feature-screenshot {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: filter 0.3s, transform 0.3s;
+        }
+
+        .feature-screenshot:hover {
+            filter: brightness(1.15);
+            transform: scale(1.03);
+        }
+
+        .feature-body {
+            padding: 1.75rem;
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .feature h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── Plugins Section ── */
+        .plugins {
+            padding: 4rem 2rem;
+            background: var(--bg-subtle);
+        }
+
+        .plugins-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .plugins-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .plugins-header h2 strong {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .plugins-header p {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .plugin-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .plugin-filter {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-muted);
+            padding: 0.5rem 1.25rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 100px;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .gallery-item:hover {
-            transform: scale(1.02);
-            border-color: rgba(255,255,255,0.2);
+        .plugin-filter:hover {
+            border-color: rgba(255,255,255,0.25);
+            color: var(--text);
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .plugin-filter.active {
+            background: var(--gradient);
+            border-color: transparent;
+            color: white;
         }
 
-        .gallery-item.placeholder {
-            background: linear-gradient(135deg, var(--dark) 0%, rgba(168, 85, 247, 0.1) 100%);
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .gallery-item.placeholder span {
+        .plugin-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: default;
+            transition: transform 0.2s;
+        }
+
+        .plugin-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .plugin-card.hidden {
+            display: none;
+        }
+
+        .plugin-tile {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            transition: box-shadow 0.2s;
+        }
+
+        .plugin-card:hover .plugin-tile {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .plugin-tile svg {
+            width: 48px;
+            height: 48px;
+            fill: white;
+        }
+
+        .plugin-card h4 {
+            margin-top: 0.75rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .plugin-card span {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* ── Experiences Section ── */
+        .experiences {
+            padding: 4rem 2rem;
+            background: var(--bg);
+        }
+
+        .experiences-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .experiences-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 800;
+        }
+
+        .experiences-header h2 strong {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .exp-item {
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .exp-item:hover {
+            border-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .exp-item h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exp-item h3 svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .exp-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── Download Section ── */
+        .download {
+            padding: 4rem 2rem;
+            background: var(--bg-subtle);
+            text-align: center;
+        }
+
+        .download-inner {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .download h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .download > .download-inner > p:first-of-type {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            padding: 0.9rem 2.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem;
-            color: var(--muted);
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        /* Lightbox */
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(236,72,153,0.3);
+        }
+
+        .download-all-link {
+            display: none;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.45);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .download-all-link:hover {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .download-platforms {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.8rem;
+        }
+
+        .download-platforms span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .download-platforms svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255,255,255,0.35);
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--bg);
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            height: 22px;
+            filter: brightness(0) invert(1);
+            opacity: 0.4;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        .footer-links a svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .footer-copy {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.25);
+        }
+
+        /* ── Lightbox ── */
         .lightbox {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -472,7 +995,7 @@
             max-height: 85vh;
             object-fit: contain;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         }
 
         .lightbox-close {
@@ -481,7 +1004,7 @@
             right: 1rem;
             width: 48px;
             height: 48px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.08);
             border: none;
             border-radius: 50%;
             cursor: pointer;
@@ -493,7 +1016,7 @@
         }
 
         .lightbox-close:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.15);
         }
 
         .lightbox-close svg {
@@ -508,7 +1031,7 @@
             transform: translateY(-50%);
             width: 56px;
             height: 56px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.08);
             border: none;
             border-radius: 50%;
             cursor: pointer;
@@ -519,7 +1042,7 @@
         }
 
         .lightbox-nav:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.15);
         }
 
         .lightbox-nav svg {
@@ -528,456 +1051,78 @@
             stroke: white;
         }
 
-        .lightbox-prev {
-            left: 1rem;
-        }
-
-        .lightbox-next {
-            right: 1rem;
-        }
+        .lightbox-prev { left: 1rem; }
+        .lightbox-next { right: 1rem; }
 
         .lightbox-counter {
             position: absolute;
             bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 0.85rem;
         }
 
-        /* Concept Section */
-        .concept {
-            padding: 6rem 2rem;
-            text-align: center;
-            background: var(--dark);
+        /* ── Scroll Animations ── */
+        .fade-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        .concept-inner {
-            max-width: 700px;
-            margin: 0 auto;
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 2.5rem 2rem;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .hero-left {
+                max-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.5rem, 8vw, 4.5rem);
+            }
+
+            .hero .tagline {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .hero .platforms {
+                justify-content: center;
+            }
+
+            .hero-right {
+                order: -1;
+                margin-right: 0;
+                height: 50vh;
+                max-height: 440px;
+                min-height: 320px;
+                width: 100%;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-screenshot {
+                border-radius: 16px;
+                object-position: left center;
+            }
         }
 
-        .concept h2 {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 300;
-            line-height: 1.3;
-            margin-bottom: 1.5rem;
-        }
-
-        .concept h2 strong {
-            font-weight: 700;
-        }
-
-        .concept p {
-            color: var(--muted);
-            font-size: 1.05rem;
-            line-height: 1.8;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 2rem 2rem 6rem;
-            background: var(--darker);
-        }
-
-        .features-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .feature {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .feature:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 1.25rem;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-        }
-
-        .feature h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .feature p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        /* Plugins Marketplace Section */
-        .plugins {
-            padding: 6rem 2rem;
-            background: var(--dark);
-        }
-
-        .plugins-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .plugins-header h2 {
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-        }
-
-        .plugins-header h2 strong {
-            font-weight: 700;
-        }
-
-        .plugins-header p {
-            color: var(--muted);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* Filter Tabs */
-        .plugin-filters {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .plugin-filter {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: var(--muted);
-            padding: 0.5rem 1.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            font-family: inherit;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            border-radius: 100px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .plugin-filter:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: var(--light);
-        }
-
-        .plugin-filter.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-
-        /* Plugin Grid - matching app's ResolverCard style */
-        .plugins-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .plugin-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: default;
-            transition: transform 0.2s;
-        }
-
-        .plugin-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .plugin-card.hidden {
-            display: none;
-        }
-
-        /* Colored square tile matching app's 120x120 cards */
-        .plugin-tile {
-            width: 100px;
-            height: 100px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.2s;
-        }
-
-        .plugin-card:hover .plugin-tile {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .plugin-tile svg {
-            width: 48px;
-            height: 48px;
-            fill: white;
-        }
-
-        .feature-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--accent);
-            stroke-width: 1.5;
-            fill: none;
-        }
-
-        .exp-item h3 svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--accent);
-            stroke-width: 2;
-            fill: none;
-            flex-shrink: 0;
-        }
-
-        .plugin-card h4 {
-            margin-top: 0.75rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--light);
-            text-align: center;
-        }
-
-        .plugin-card span {
-            font-size: 0.7rem;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Experiences Section */
-        .experiences {
-            padding: 6rem 2rem;
-            background: var(--darker);
-        }
-
-        .experiences-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .experiences-header h2 {
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 300;
-        }
-
-        .experiences-header h2 strong {
-            font-weight: 700;
-        }
-
-        .exp-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .exp-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 1.75rem;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .exp-item:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .exp-item h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .exp-item p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        /* Download Section */
-        .download {
-            padding: 6rem 2rem;
-            background: var(--dark);
-            text-align: center;
-        }
-
-        .download-inner {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .download h2 {
-            font-size: 1.75rem;
-            font-weight: 300;
-            margin-bottom: 0.75rem;
-        }
-
-        .download h2 strong {
-            font-weight: 700;
-        }
-
-        .download > p {
-            color: var(--muted);
-            margin-bottom: 2rem;
-        }
-
-        .download-btn {
-            display: inline-block;
-            margin-top: 2rem;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            border: none;
-            border-radius: 4px;
-            padding: 1rem 2.5rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            font-family: inherit;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .download-btn:hover {
-            background: #d6368a;
-        }
-
-        .download-all-link {
-            display: none;
-            margin-top: 0.75rem;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.5);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        .download-all-link:hover {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .download-platforms {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.8rem;
-        }
-
-        .download-platforms span {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .download-platforms svg {
-            width: 16px;
-            height: 16px;
-            fill: rgba(255,255,255,0.4);
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            background: var(--darker);
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 1.5rem;
-        }
-
-        .footer-logo {
-            height: 22px;
-            filter: brightness(0) invert(1);
-            opacity: 0.5;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem 2rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.4);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--light);
-        }
-
-        .footer-links a svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        .footer-copy {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
-        }
-
-        /* Responsive */
         @media (max-width: 900px) {
             .features-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -997,14 +1142,12 @@
                 display: flex;
             }
 
-            .hero-content {
-                padding: 2.5rem 2rem;
-                margin: 0 1rem;
+            .hero {
+                padding: 5rem 1.5rem 1.5rem;
             }
 
-            .gallery-item {
-                width: 300px;
-                height: 188px;
+            .hero h1 {
+                font-size: clamp(2rem, 10vw, 3.5rem);
             }
 
             .features-grid {
@@ -1035,19 +1178,27 @@
                 flex-direction: column;
                 gap: 0.75rem;
             }
-
         }
 
         @media (max-width: 500px) {
             .plugins-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-primary, .btn-secondary {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <nav>
-        <img src="assets/logo-wordmark.png" alt="Parachord" class="logo">
+        <a href="/"><img src="assets/logo-wordmark.svg" alt="Parachord" class="logo"></a>
         <div class="nav-links">
             <a href="#features">Features</a>
             <a href="#plugins">Plugins</a>
@@ -1070,124 +1221,220 @@
         <a href="#download">Download</a>
     </div>
 
+    <!-- ── Hero ── -->
     <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <img src="assets/logo-wordmark.png" alt="Parachord" width="300">
-            <p class="tagline">Your music is everywhere... <br>now you don't have to be.</p>
-            <a href="https://github.com/Parachord/parachord/releases" class="hero-cta" id="hero-download" target="_blank">Download</a>
+        <div class="hero-left">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Beta Now Available
+            </div>
+            <h1>Your Music<br>Is <span class="gradient-word">Everywhere.</span></h1>
+            <p class="hero-subhead">Now you don't have to be.</p>
+            <p class="tagline">A new kind of music player that invites all your streams, local audio files, and playlists scattered across multiple services to the same party. It's about time they mingle.</p>
+            <div class="hero-ctas">
+                <a href="https://github.com/Parachord/parachord/releases" class="btn-primary" id="hero-download" target="_blank">Download Beta</a>
+                <a href="https://github.com/Parachord/parachord" class="btn-secondary" target="_blank">Source Code</a>
+            </div>
             <div class="platforms">
                 <!-- macOS -->
                 <svg viewBox="0 0 24 24"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg>
                 <!-- Windows -->
                 <svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
-                <!-- Linux -->
-                <svg viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.311.001-.465.003-.653.014-1.303.056-1.946.128C6.56.55 3.81 2.04 2.15 4.56c-1.616 2.452-2.15 5.582-2.15 8.42 0 2.839.534 5.97 2.15 8.42 1.66 2.52 4.41 4.01 7.943 4.43.643.072 1.293.114 1.946.128.154.002.31.003.465.003.156 0 .311-.001.465-.003.653-.014 1.303-.056 1.946-.128 3.533-.42 6.283-1.91 7.943-4.43 1.616-2.45 2.15-5.581 2.15-8.42 0-2.838-.534-5.968-2.15-8.42C21.19 2.04 18.44.55 14.907.131c-.643-.072-1.293-.114-1.946-.128C12.815.001 12.66 0 12.504 0z"/></svg>
+                <!-- Linux (Tux) -->
+                <svg viewBox="0 0 24 24"><path d="M12.503 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.261-2.468 2.828-2.468 4.817 0 2.236 1.262 3.26 3.39 3.943.655.21 1.39.359 2.128.48-.107.283-.184.579-.184.895 0 .973.527 1.774 1.314 2.24-.32.2-.533.52-.533.893 0 .596.492 1.045 1.097 1.2.322.082.672.114 1.04.114.377 0 .735-.04 1.056-.127.604-.163 1.082-.62 1.082-1.205 0-.364-.207-.676-.517-.874.78-.467 1.303-1.263 1.303-2.23 0-.32-.08-.62-.19-.907.742-.12 1.48-.27 2.14-.483 2.127-.683 3.39-1.707 3.39-3.943 0-1.99-1.583-3.556-2.469-4.817-.748-1.067-.973-1.928-1.05-3.02-.064-1.491 1.057-5.965-3.17-6.298-.164-.013-.324-.021-.48-.021h-.006l.001.003zm-1.654 4.094c.58 0 1.05.47 1.05 1.05 0 .44-.271.816-.655.973a1.064 1.064 0 0 1-.395.076c-.58 0-1.05-.47-1.05-1.05 0-.58.47-1.05 1.05-1.05zm3.307 0c.58 0 1.05.47 1.05 1.05 0 .58-.47 1.05-1.05 1.05a1.06 1.06 0 0 1-.395-.077c-.384-.156-.654-.532-.654-.972 0-.58.47-1.05 1.05-1.05zm-1.652 1.928c.262 0 .508.12.66.328a.56.56 0 0 1 .066.548c-.123.307-.462.6-.728.6-.264 0-.604-.293-.727-.6a.559.559 0 0 1 .066-.548.787.787 0 0 1 .66-.328h.003z"/></svg>
             </div>
+        </div>
+        <div class="hero-right">
+            <img src="assets/hero.png" alt="Parachord App" class="hero-screenshot">
         </div>
     </section>
 
-    <!-- Press Section -->
-    <section class="press">
+    <!-- ── Press ── -->
+    <section class="press fade-section">
         <p class="press-label">What People Are Saying</p>
         <div class="press-items">
-            <a href="https://www.lowpass.cc/p/parachord-music-app-tomahawk-vibe-coding" target="_blank" class="press-item">
+            <a href="https://www.theverge.com/column/881256/parachord-vibe-coded-music-streaming-app" target="_blank" class="press-item">
                 <div class="press-source">
-                    <img src="assets/press-lowpass.png" alt="Lowpass">
-                    <span>Lowpass</span>
+                     <img src="assets/press-theverge.png" alt="The Verge" style="height: 48px;">
+                    <span>The Verge</span>
                 </div>
                 <p class="press-quote">"The next iTunes may be vibe-coded"</p>
-                <p class="press-author">Janko Roettgers</p>
             </a>
             <a href="https://musically.com/2026/02/20/the-spirit-of-tomahawk-lives-on-in-music-project-parachord/" target="_blank" class="press-item">
                 <div class="press-source">
-                    <img src="assets/press-musically.png" alt="Music Ally">
+                    <img src="assets/press-musically.png" alt="Music Ally" style="height: 120px;">
                     <span>Music Ally</span>
                 </div>
                 <p class="press-quote">"The spirit of Tomahawk lives on in music project Parachord"</p>
-                <p class="press-author">Stuart Dredge</p>
             </a>
             <a href="https://www.pcmag.com/news/a-beloved-music-streaming-app-is-back-thanks-to-claude-code" target="_blank" class="press-item">
                 <div class="press-source">
-                    <img src="assets/press-pcmag.png" alt="PCMag">
+                    <img src="assets/press-pcmag.png" alt="PCMag" style="height: 120px;">
                     <span>PCMag</span>
                 </div>
                 <p class="press-quote">"Parachord is a new all-in-one music-streaming app that pulls all your content into one interface, so you don't have to jump between platforms to listen to your favorite songs."</p>
-                <p class="press-author">Tyler Hayes</p>
             </a>
         </div>
     </section>
 
-    <section class="concept">
+    <!-- ── Concept ── -->
+    <section class="concept fade-section">
         <div class="concept-inner">
-            <p class="section-title">Plugging The Big Idea</p>
-            <h2>Stop chasing music across platforms.</h2><br><h3> Given metadata about a <strong>song</strong>, <strong>album</strong>, or <strong>playlist</strong>, Parachord finds the best available source for <strong>you</strong> and just plays it.</h3><br>
+            <span class="section-label">Plugging The Big Idea</span>
+            <h2>Stop chasing music across platforms.</h2>
+            <h3>Given metadata about a <strong>song</strong>, <strong>album</strong>, or <strong>playlist</strong>, Parachord finds the best available source for <strong class="gradient-word">you</strong> and just plays it.</h3>
             <p>A new kind of music player that invites all your streams, downloads, playlists, recommendations and friends to the same party. It's about time they all mingle.</p>
         </div>
     </section>
 
-    <!-- Screenshot Gallery -->
-    <section class="gallery">
-        <p class="gallery-label">See It In Action</p>
-        <div class="gallery-track">
-            <div class="gallery-item"><img src="assets/content-resolution.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/artist-page.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/friends-2.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/collection.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/critical-darlings.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/home.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/history.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/playlists.png" alt="Album view"></div>
-            <div class="gallery-item"><img src="assets/recommended-artists.png" alt="Album view"></div>
-
-        </div>
-        <div class="gallery-cta">
-            <a href="https://www.youtube.com/playlist?list=PLKIAXRUWOTo62Fy835ZhTtQfzXnqaiVXV" target="_blank" class="hero-cta">View Demo Screencasts</a>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
+    <!-- ── Features ── -->
+    <section class="features fade-section" id="features">
         <div class="features-header">
-            <p class="section-title">Features</p>
+            <span class="section-label">Features</span>
         </div>
 
         <div class="features-grid">
-            
-
             <div class="feature">
-                <div class="feature-icon">
-                     <svg viewBox="0 0 24 24"><path d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z"/></svg>
+                <img src="assets/content-resolution.png" alt="Multi-source Content Resolution" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                    </div>
+                    <h3>Multi-Source Content Resolution</h3>
+                    <p>Given metadata about a song, album, or playlist, Parachord finds the best available source across all your connected services and just plays it.</p>
                 </div>
-                <h3>Plug-Ins for Everything</h3>
-                <p>Connect your own streaming services, download stores, metatdata providers, recommendation engines - discover music the way <i>you</i> want.</p>
             </div>
 
             <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                <img src="assets/friends-2.png" alt="Friends & Listen Along" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                    </div>
+                    <h3>Friends & Listen Along</h3>
+                    <p>Real human curation. See what friends are playing (in whatever apps they use!), browse their libraries, and listen along in real-time. Music is better together.</p>
                 </div>
-                <h3>Friends & Listen Along</h3>
-                <p>Real human curation. See what friends are playing (in whatever apps they use!), browse their libraries, and listen along in real-time. Music is better together.</p>
             </div>
 
             <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                <img src="assets/sync.png" alt="Sync" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                    </div>
+                    <h3>Sync Your Library & Favorites</h3>
+                    <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
                 </div>
-                <h3>Import & Sync Your Library</h3>
-                <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
             </div>
 
-        
+            <div class="feature">
+                <img src="assets/AI.png" alt="Shuffleupagus AI" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+                    </div>
+                    <h3>Shuffleupagus AI</h3>
+                    <p>AI-powered music recommendations from the engines you choose - ChatGPT, Claude, Gemini, or all of them at once. Your taste, amplified.</p>
+                </div>
+            </div>
 
+            <div class="feature">
+                <img src="assets/applemusic-import.png" alt="Music Service Interoperability" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+                    </div>
+                    <h3>Music Service Interoperability</h3>
+                    <p>Someone shared a Spotify link but you use Apple Music? Use the browser extension to easily import and play it from your sources. Parachord translates between services so you can play anything from anywhere.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/embed.png" alt="Smartlinks & Embeds" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-4.072a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757"/><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 010-11.314l4.243-4.243a2 2 0 012.828 0L17.657 5.343"/></svg>
+                    </div>
+                    <h3>Smartlinks & Embeds</h3>
+                    <p>Embeddable buttons and smartlinks for artists, labels, and blogs. Let fans play music from their preferred service, right from your site.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/freshdrops.png" alt="New Releases" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+                    </div>
+                    <h3>New Releases</h3>
+                    <p>Stay on top of what's dropping. Fresh releases from your favorite artists and curated charts, aggregated across all your connected services.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/recommended-artists.png" alt="Recommendations" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                    </div>
+                    <h3>Recommendations</h3>
+                    <p>Discover new music through personalized recommendations — by artist or by song. Powered by your listening history and refined by the engines you trust.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/spinoffs.png" alt="Smart Queue Management & Spin-Offs" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+                    </div>
+                    <h3>Smart Queue Management & Spin-Offs</h3>
+                    <p>Full control over what plays next. Drag, reorder, and spin off new playlists from your queue on the fly. Your listening session becomes a living playlist.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/critical-darlings.png" alt="Critical Darlings" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                    </div>
+                    <h3>Critical Darlings</h3>
+                    <p>The most acclaimed albums from across the web - collected and presented to you with overviews of what the critics are saying.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/buy-button.png" alt="Bandcamp Buy Buttons" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+                    </div>
+                    <h3>Bandcamp Buy Buttons</h3>
+                    <p>Support the artists you love. Bandcamp purchase links can in the Now Playing view - regardless of where you are streaming it from, so you can buy music directly without leaving Parachord.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/search.png" alt="Search & Browse" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/><path d="M10.5 7.5v6m3-3h-6"/></svg>
+                    </div>
+                    <h3>Search & Browse</h3>
+                    <p>Explore artist pages, biographies, discographies, EPs, singles, and related artists. Deep-dive into any artist's catalog with rich metadata from multiple sources.</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2.5rem;">
+            <a href="#" class="btn-primary" id="open-video-lightbox">View Demo Screencasts</a>
         </div>
     </section>
 
-    <!-- Plugins Marketplace Section -->
-    <section class="plugins" id="plugins">
+    <!-- ── Plugins Marketplace ── -->
+    <section class="plugins fade-section" id="plugins">
         <div class="plugins-header">
-            <p class="section-title">Marketplace</p>
+            <span class="section-label">Marketplace</span>
             <h2>Plug in <strong>everything</strong></h2>
             <p>Connect your favorite services, metadata providers, and recommendation engines.</p>
         </div>
@@ -1328,20 +1575,20 @@
             </div>
 
             <!-- And More -->
-            <div class="plugin-card" data-category="all">
+            <a href="https://github.com/Parachord/parachord-plugins" target="_blank" class="plugin-card" data-category="all" style="text-decoration: none; color: inherit;">
                 <div class="plugin-tile" style="background-color: #353070;">
                     <svg viewBox="0 0 24 24"><path d="M13 4v7h7v2h-7v7h-2v-7H4v-2h7V4h2z"/></svg>
                 </div>
                 <h4>+ and more!</h4>
-                <span>Coming Soon</span>
-            </div>
+                <span>Build Your Own</span>
+            </a>
         </div>
     </section>
 
-    <!-- Experiences Section -->
-    <section class="experiences" id="experiences">
+    <!-- ── Experiences ── -->
+    <section class="experiences fade-section" id="experiences">
         <div class="experiences-header">
-            <p class="section-title">Why Parachord</p>
+            <span class="section-label">Why Parachord</span>
             <h2>Experiences you can't get <strong>anywhere else</strong></h2>
         </div>
 
@@ -1357,17 +1604,17 @@
             </div>
 
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Break through the paralysis of choice</h3>
+                <h3><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> Break through the paralysis of choice</h3>
                 <p>See what friends are playing and just hitch a ride while they drive the aux.</p>
             </div>
 
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> Your recommendations engines</h3>
+                <h3><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> Your recommendation engines</h3>
                 <p>Plug in Last.fm, ListenBrainz, or AI engines. It's up to you which ones - or all of them. Get suggestions from sources you trust, not black-box algorithms.</p>
             </div>
 
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg> Translatation layer</h3>
+                <h3><svg viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg> Translation layer</h3>
                 <p>Someone sent you a Spotify link but you use YouTube? Paste it in. Parachord plays it from your sources - not theirs.</p>
             </div>
 
@@ -1378,23 +1625,23 @@
         </div>
     </section>
 
-    <!-- Download Section -->
-    <section class="download" id="download">
+    <!-- ── Download ── -->
+    <section class="download fade-section" id="download">
         <div class="download-inner">
-            <p class="section-title">Get Parachord</p>
-            <h2><strong>Download</strong> Parachord</h2>
+            <span class="section-label">Get Parachord</span>
+            <h2>Download Parachord</h2>
             <p>Free, open source, and yours to keep.</p>
             <a href="https://github.com/Parachord/parachord/releases" class="download-btn" id="section-download" target="_blank">Download on GitHub</a>
             <a href="https://github.com/Parachord/parachord/releases" class="download-all-link" id="all-releases-link" target="_blank"></a>
             <div class="download-platforms">
                 <span><svg viewBox="0 0 24 24"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg> macOS</span>
                 <span><svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg> Windows</span>
-                <span><svg viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.311.001-.465.003-.653.014-1.303.056-1.946.128C6.56.55 3.81 2.04 2.15 4.56c-1.616 2.452-2.15 5.582-2.15 8.42 0 2.839.534 5.97 2.15 8.42 1.66 2.52 4.41 4.01 7.943 4.43.643.072 1.293.114 1.946.128.154.002.31.003.465.003.156 0 .311-.001.465-.003.653-.014 1.303-.056 1.946-.128 3.533-.42 6.283-1.91 7.943-4.43 1.616-2.45 2.15-5.581 2.15-8.42 0-2.838-.534-5.968-2.15-8.42C21.19 2.04 18.44.55 14.907.131c-.643-.072-1.293-.114-1.946-.128C12.815.001 12.66 0 12.504 0z"/></svg> Linux</span>
+                <span><svg viewBox="0 0 24 24"><path d="M12.503 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.261-2.468 2.828-2.468 4.817 0 2.236 1.262 3.26 3.39 3.943.655.21 1.39.359 2.128.48-.107.283-.184.579-.184.895 0 .973.527 1.774 1.314 2.24-.32.2-.533.52-.533.893 0 .596.492 1.045 1.097 1.2.322.082.672.114 1.04.114.377 0 .735-.04 1.056-.127.604-.163 1.082-.62 1.082-1.205 0-.364-.207-.676-.517-.874.78-.467 1.303-1.263 1.303-2.23 0-.32-.08-.62-.19-.907.742-.12 1.48-.27 2.14-.483 2.127-.683 3.39-1.707 3.39-3.943 0-1.99-1.583-3.556-2.469-4.817-.748-1.067-.973-1.928-1.05-3.02-.064-1.491 1.057-5.965-3.17-6.298-.164-.013-.324-.021-.48-.021h-.006l.001.003zm-1.654 4.094c.58 0 1.05.47 1.05 1.05 0 .44-.271.816-.655.973a1.064 1.064 0 0 1-.395.076c-.58 0-1.05-.47-1.05-1.05 0-.58.47-1.05 1.05-1.05zm3.307 0c.58 0 1.05.47 1.05 1.05 0 .58-.47 1.05-1.05 1.05a1.06 1.06 0 0 1-.395-.077c-.384-.156-.654-.532-.654-.972 0-.58.47-1.05 1.05-1.05zm-1.652 1.928c.262 0 .508.12.66.328a.56.56 0 0 1 .066.548c-.123.307-.462.6-.728.6-.264 0-.604-.293-.727-.6a.559.559 0 0 1 .066-.548.787.787 0 0 1 .66-.328h.003z"/></svg> Linux</span>
             </div>
         </div>
     </section>
 
-    <!-- Lightbox -->
+    <!-- ── Lightbox ── -->
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" aria-label="Close">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
@@ -1418,9 +1665,23 @@
         <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">9</span></div>
     </div>
 
+    <!-- ── Video Lightbox ── -->
+    <div class="lightbox" id="video-lightbox">
+        <button class="lightbox-close" id="video-lightbox-close" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="lightbox-content" style="width: 90vw; max-width: 1100px; aspect-ratio: 16/9;">
+            <iframe id="video-lightbox-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 12px;"></iframe>
+        </div>
+    </div>
+
+    <!-- ── Footer ── -->
     <footer>
         <div class="footer-content">
-            <img src="assets/logo-wordmark.png" alt="Parachord" class="footer-logo">
+            <img src="assets/logo-wordmark.svg" alt="Parachord" class="footer-logo">
             <div class="footer-links">
                 <a href="https://github.com/Parachord/parachord" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
                 <a href="https://github.com/Parachord/parachord/issues" target="_blank">Issues</a>
@@ -1428,12 +1689,12 @@
                 <a href="https://join.slack.com/t/parachord/shared_invite/zt-3p81slpg5-_KYJLUwV3Kc~RCC1zQaipA" target="_blank">Slack</a>
                 <a href="https://github.com/Parachord/parachord/blob/main/docs/PRIVACY_POLICY.md" target="_blank">Privacy Policy</a>
             </div>
-            <span class="footer-copy">© 2026 Parachord · MIT License · Open Source</span>
+            <span class="footer-copy">&copy; 2026 Parachord &middot; MIT License &middot; Open Source</span>
         </div>
     </footer>
 
     <script>
-        // Navigation scroll
+        // Navigation scroll detection
         const nav = document.querySelector('nav');
         window.addEventListener('scroll', () => {
             nav.classList.toggle('scrolled', window.scrollY > 50);
@@ -1449,7 +1710,6 @@
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         });
 
-        // Close mobile menu when clicking a link
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -1465,10 +1725,8 @@
         filters.forEach(filter => {
             filter.addEventListener('click', () => {
                 const category = filter.dataset.filter;
-
                 filters.forEach(f => f.classList.remove('active'));
                 filter.classList.add('active');
-
                 cards.forEach(card => {
                     if (category === 'all' || card.dataset.category === category) {
                         card.classList.remove('hidden');
@@ -1479,20 +1737,20 @@
             });
         });
 
-        // Lightbox
+        // Lightbox — wired to feature screenshots
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxCurrent = document.getElementById('lightbox-current');
         const lightboxTotal = document.getElementById('lightbox-total');
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        const galleryImages = Array.from(galleryItems).map(item => item.querySelector('img').src);
+        const featureScreenshots = document.querySelectorAll('.feature-screenshot');
+        const featureImages = Array.from(featureScreenshots).map(img => img.src);
         let currentIndex = 0;
 
-        lightboxTotal.textContent = galleryImages.length;
+        lightboxTotal.textContent = featureImages.length;
 
         function openLightbox(index) {
-            currentIndex = index;
-            lightboxImg.src = galleryImages[currentIndex];
+            currentIndex = index % featureImages.length;
+            lightboxImg.src = featureImages[currentIndex];
             lightboxCurrent.textContent = currentIndex + 1;
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1504,19 +1762,22 @@
         }
 
         function showPrev() {
-            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-            lightboxImg.src = galleryImages[currentIndex];
+            currentIndex = (currentIndex - 1 + featureImages.length) % featureImages.length;
+            lightboxImg.src = featureImages[currentIndex];
             lightboxCurrent.textContent = currentIndex + 1;
         }
 
         function showNext() {
-            currentIndex = (currentIndex + 1) % galleryImages.length;
-            lightboxImg.src = galleryImages[currentIndex];
+            currentIndex = (currentIndex + 1) % featureImages.length;
+            lightboxImg.src = featureImages[currentIndex];
             lightboxCurrent.textContent = currentIndex + 1;
         }
 
-        galleryItems.forEach((item, index) => {
-            item.addEventListener('click', () => openLightbox(index));
+        featureScreenshots.forEach((img, index) => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openLightbox(index);
+            });
         });
 
         document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
@@ -1528,11 +1789,55 @@
         });
 
         document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') showPrev();
-            if (e.key === 'ArrowRight') showNext();
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            }
+            if (videoLightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeVideoLightbox();
+            }
         });
+
+        // Video Lightbox
+        const videoLightbox = document.getElementById('video-lightbox');
+        const videoIframe = document.getElementById('video-lightbox-iframe');
+        const playlistUrl = 'https://www.youtube.com/embed/Vc8AswEs5f8?list=PLKIAXRUWOTo62Fy835ZhTtQfzXnqaiVXV&autoplay=1';
+
+        function openVideoLightbox() {
+            videoIframe.src = playlistUrl;
+            videoLightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoLightbox() {
+            videoLightbox.classList.remove('active');
+            videoIframe.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('open-video-lightbox').addEventListener('click', (e) => {
+            e.preventDefault();
+            openVideoLightbox();
+        });
+
+        document.getElementById('video-lightbox-close').addEventListener('click', closeVideoLightbox);
+
+        videoLightbox.addEventListener('click', (e) => {
+            if (e.target === videoLightbox) closeVideoLightbox();
+        });
+
+        // Scroll animations (IntersectionObserver)
+        const fadeSections = document.querySelectorAll('.fade-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeSections.forEach(section => observer.observe(section));
 
         // OS detection and auto-download link
         (function () {
@@ -1544,9 +1849,6 @@
 
             var isAppleSilicon = false;
             if (os === 'mac') {
-                // Safari on Apple Silicon exposes ARM in the UA; for other
-                // browsers we fall back to Apple Silicon as the default since
-                // the vast majority of modern Macs use it.
                 isAppleSilicon = !/Intel/i.test(ua);
             }
 
@@ -1571,18 +1873,15 @@
                             return /Intel/i.test(a.name);
                         });
                     }
-                    // Fallback to any .dmg
                     if (!match && dmgAssets.length) match = dmgAssets[0];
                 } else if (os === 'windows') {
                     exeAssets = assets.filter(function (a) {
                         return /\.(exe|msi)$/i.test(a.name);
                     });
-                    // Prefer Setup exe
                     match = exeAssets.find(function (a) {
                         return /Setup/i.test(a.name);
                     });
                     if (!match && exeAssets.length) match = exeAssets[0];
-                    // Also check for .nupkg-less NSIS
                     if (!match) {
                         match = assets.find(function (a) {
                             return /\.exe$/i.test(a.name);
@@ -1592,7 +1891,6 @@
                     linuxAssets = assets.filter(function (a) {
                         return /\.(AppImage|deb|snap|rpm)$/i.test(a.name);
                     });
-                    // Prefer AppImage
                     match = linuxAssets.find(function (a) {
                         return /\.AppImage$/i.test(a.name);
                     });
@@ -1635,8 +1933,6 @@
                     if (match) {
                         updateButtons(match.url, osLabels[os]);
                     } else {
-                        // No matching asset for this OS — link to the release page
-                        // directly but still label it with the OS name
                         var tagUrl = release.html_url || releasesUrl;
                         updateButtons(tagUrl, osLabels[os]);
                     }
