@@ -1673,8 +1673,8 @@
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
-        <div class="lightbox-content" style="width: 90vw; max-width: 1100px; height: 85vh;">
-            <iframe id="video-lightbox-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 12px; background: #fff;"></iframe>
+        <div class="lightbox-content" style="width: 90vw; max-width: 1100px; aspect-ratio: 16/9;">
+            <iframe id="video-lightbox-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 12px;"></iframe>
         </div>
     </div>
 
@@ -1802,7 +1802,7 @@
         // Video Lightbox
         const videoLightbox = document.getElementById('video-lightbox');
         const videoIframe = document.getElementById('video-lightbox-iframe');
-        const playlistUrl = 'https://www.youtube.com/playlist?list=PLKIAXRUWOTo62Fy835ZhTtQfzXnqaiVXV';
+        const playlistUrl = 'https://www.youtube.com/embed/videoseries?list=PLKIAXRUWOTo62Fy835ZhTtQfzXnqaiVXV&autoplay=1';
 
         function openVideoLightbox() {
             videoIframe.src = playlistUrl;
