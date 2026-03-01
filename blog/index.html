@@ -13,7 +13,7 @@ description: News, updates, and insights from the Parachord team.
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="{{ '/assets/icon128.png' | relative_url }}">
 
@@ -25,10 +25,12 @@ description: News, updates, and insights from the Parachord team.
         }
 
         :root {
-            --dark: #1e1b4b;
-            --darker: #0f0d24;
-            --light: #f8f8f8;
-            --muted: rgba(255,255,255,0.6);
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --bg-subtle: #1a1a1a;
+            --text: #f5f5f5;
+            --text-muted: rgba(255,255,255,0.5);
+            --gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #f97316);
             --accent: #ec4899;
         }
 
@@ -37,26 +39,28 @@ description: News, updates, and insights from the Parachord team.
         }
 
         body {
-            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--darker);
-            color: var(--light);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* ── Navigation ── */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 1.25rem 2rem;
+            padding: 1.25rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(15, 13, 36, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.04);
         }
 
         .logo {
@@ -70,30 +74,104 @@ description: News, updates, and insights from the Parachord team.
         }
 
         .nav-links a {
-            color: var(--muted);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             transition: color 0.2s;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: var(--light);
+            color: var(--text);
         }
 
-        /* Main Content */
+        /* ── Hamburger Menu ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ── Mobile Menu Overlay ── */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(16px);
+            z-index: 99;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            color: var(--text);
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+        }
+
+        /* ── Main Content ── */
         main {
             padding-top: 80px;
             min-height: calc(100vh - 160px);
         }
 
-        /* Blog Header */
+        /* ── Blog Header ── */
         .blog-header {
-            padding: 4rem 2rem;
-            background: var(--dark);
+            padding: 4rem 2rem 3.5rem;
+            background: var(--bg-subtle);
             text-align: center;
         }
 
@@ -102,34 +180,37 @@ description: News, updates, and insights from the Parachord team.
             margin: 0 auto;
         }
 
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
+        .section-label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: var(--accent);
-            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: inline-block;
         }
 
         .blog-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
+            font-weight: 800;
+            line-height: 1.2;
             margin-bottom: 1rem;
         }
 
-        .blog-header h1 strong {
-            font-weight: 700;
-        }
-
         .blog-header p {
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 1.1rem;
         }
 
-        /* Blog Posts Grid */
+        /* ── Blog Posts Grid ── */
         .blog-posts {
             padding: 4rem 2rem;
-            background: var(--darker);
+            background: var(--bg);
         }
 
         .blog-posts-inner {
@@ -143,9 +224,9 @@ description: News, updates, and insights from the Parachord team.
             gap: 2rem;
         }
 
-        /* Post Card */
+        /* ── Post Card ── */
         .post-card {
-            background: rgba(255,255,255,0.02);
+            background: var(--bg-elevated);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 16px;
             overflow: hidden;
@@ -153,8 +234,7 @@ description: News, updates, and insights from the Parachord team.
         }
 
         .post-card:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.12);
             transform: translateY(-4px);
         }
 
@@ -167,7 +247,7 @@ description: News, updates, and insights from the Parachord team.
         .post-card-image {
             width: 100%;
             height: 160px;
-            background: linear-gradient(135deg, var(--dark) 0%, rgba(168, 85, 247, 0.2) 100%);
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, rgba(139, 92, 246, 0.2) 50%, rgba(236, 72, 153, 0.15) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -176,10 +256,8 @@ description: News, updates, and insights from the Parachord team.
         .post-card-image svg {
             width: 48px;
             height: 48px;
-            stroke: var(--accent);
-            stroke-width: 1.5;
-            fill: none;
-            opacity: 0.5;
+            fill: var(--accent);
+            opacity: 0.4;
         }
 
         .post-card-content {
@@ -188,10 +266,11 @@ description: News, updates, and insights from the Parachord team.
 
         .post-card-category {
             display: inline-block;
-            background: rgba(236, 72, 153, 0.15);
-            color: var(--accent);
+            background: var(--gradient);
+            color: white;
             padding: 0.25rem 0.75rem;
-            font-size: 0.65rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -200,16 +279,17 @@ description: News, updates, and insights from the Parachord team.
         }
 
         .post-card h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             line-height: 1.3;
             margin-bottom: 0.75rem;
-            color: var(--light);
+            color: var(--text);
         }
 
         .post-card p {
             font-size: 0.9rem;
-            color: var(--muted);
+            color: var(--text-muted);
             line-height: 1.6;
             margin-bottom: 1rem;
         }
@@ -236,7 +316,7 @@ description: News, updates, and insights from the Parachord team.
             fill: none;
         }
 
-        /* Empty State */
+        /* ── Empty State ── */
         .no-posts {
             text-align: center;
             padding: 4rem 2rem;
@@ -256,47 +336,51 @@ description: News, updates, and insights from the Parachord team.
         .no-posts-icon svg {
             width: 36px;
             height: 36px;
-            stroke: var(--muted);
+            stroke: var(--text-muted);
             stroke-width: 1.5;
             fill: none;
         }
 
         .no-posts h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
         .no-posts p {
-            color: var(--muted);
+            color: var(--text-muted);
         }
 
-        /* CTA Button */
+        /* ── CTA Button ── */
         .blog-cta {
-            display: inline-block;
-            background: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient);
             color: white;
-            padding: 0.9rem 2.5rem;
+            padding: 0.85rem 2rem;
             text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 2rem;
         }
 
         .blog-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+            box-shadow: 0 8px 30px rgba(236,72,153,0.3);
         }
 
-        /* Footer */
+        /* ── Footer ── */
         footer {
             padding: 3rem 2rem;
-            background: var(--darker);
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: var(--bg);
+            border-top: 1px solid rgba(255,255,255,0.04);
         }
 
         .footer-content {
@@ -312,7 +396,7 @@ description: News, updates, and insights from the Parachord team.
         .footer-logo {
             height: 22px;
             filter: brightness(0) invert(1);
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .footer-links {
@@ -323,9 +407,10 @@ description: News, updates, and insights from the Parachord team.
         }
 
         .footer-links a {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.35);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.75rem;
             font-weight: 600;
             transition: color 0.2s;
             display: inline-flex;
@@ -334,7 +419,7 @@ description: News, updates, and insights from the Parachord team.
         }
 
         .footer-links a:hover {
-            color: var(--light);
+            color: var(--text);
         }
 
         .footer-links a svg {
@@ -344,42 +429,62 @@ description: News, updates, and insights from the Parachord team.
         }
 
         .footer-copy {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.25);
         }
 
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 700px) {
             .nav-links {
                 display: none;
             }
 
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
             .posts-grid {
                 grid-template-columns: 1fr;
             }
-
         }
     </style>
 </head>
 <body>
     <nav>
-        <a href="{{ '/' | relative_url }}">
+        <a href="/">
             <img src="{{ '/assets/logo-wordmark.png' | relative_url }}" alt="Parachord" class="logo">
         </a>
         <div class="nav-links">
-            <a href="{{ '/' | relative_url }}#features">Features</a>
-            <a href="{{ '/' | relative_url }}#plugins">Plugins</a>
-            <a href="{{ '/blog/' | relative_url }}" class="active">Blog</a>
-            <a href="{{ '/demos/' | relative_url }}">Demos</a>
-            <a href="{{ '/' | relative_url }}#download">Download</a>
+            <a href="/#features">Features</a>
+            <a href="/#plugins">Plugins</a>
+            <a href="/blog/" class="active">Blog</a>
+            <a href="/demos/">Demos</a>
+            <a href="/#download">Download</a>
+        </div>
+        <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="/#features">Features</a>
+        <a href="/#plugins">Plugins</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/demos/">Demos</a>
+        <a href="/#download">Download</a>
+    </div>
 
     <main>
         <section class="blog-header">
             <div class="blog-header-inner">
-                <p class="section-title">Parachord Blog</p>
-                <h1>News & <strong>Updates</strong></h1>
+                <span class="section-label">Parachord Blog</span>
+                <h1>News & Updates</h1>
                 <p>Insights, announcements, and stories from the Parachord team.</p>
             </div>
         </section>
@@ -453,5 +558,25 @@ description: News, updates, and insights from the Parachord team.
             <span class="footer-copy">&copy; 2026 Parachord &middot; MIT License &middot; Open Source</span>
         </div>
     </footer>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
 </body>
 </html>
