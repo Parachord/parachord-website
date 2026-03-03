@@ -948,6 +948,11 @@
             color: rgba(255,255,255,0.25);
         }
 
+        .footer-tagline {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.2);
+        }
+
         /* ── Lightbox ── */
         .lightbox {
             position: fixed;
@@ -1079,6 +1084,11 @@
 
             .hero h1 {
                 font-size: clamp(2.5rem, 8vw, 4.5rem);
+            }
+
+            .hero .hero-subhead {
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .hero .tagline {
@@ -1676,6 +1686,7 @@
                 <a href="https://github.com/Parachord/parachord/blob/main/docs/PRIVACY_POLICY.md" target="_blank">Privacy Policy</a>
             </div>
             <span class="footer-copy">&copy; 2026 Parachord &middot; MIT License &middot; Open Source</span>
+            <span class="footer-tagline">Made with ❤️ by J Herskowitz (and cold indifference by 🤖)</span>
         </div>
     </footer>
 
@@ -1815,15 +1826,30 @@
 
         // Scroll animations (IntersectionObserver)
         const fadeSections = document.querySelectorAll('.fade-section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-        fadeSections.forEach(section => observer.observe(section));
+            fadeSections.forEach(section => observer.observe(section));
+
+            // Fallback for in-app browsers (e.g. Threads) where
+            // IntersectionObserver exists but never fires
+            setTimeout(() => {
+                fadeSections.forEach(section => {
+                    if (!section.classList.contains('visible')) {
+                        section.classList.add('visible');
+                    }
+                });
+            }, 3000);
+        } else {
+            // No IntersectionObserver support — show everything immediately
+            fadeSections.forEach(section => section.classList.add('visible'));
+        }
 
         // OS detection and auto-download link
         (function () {
