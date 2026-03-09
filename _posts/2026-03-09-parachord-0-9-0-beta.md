@@ -52,6 +52,8 @@ The Parachord browser extension is now officially published on both the [Chrome 
 
 ![Parachord Browser Extension](/assets/applemusic-import.png)
 
+![Parachord Raycast Extension](/assets/raycast.png)
+
 ## UI Polish & Bug Fixes
 
 A lot of small things that add up:
