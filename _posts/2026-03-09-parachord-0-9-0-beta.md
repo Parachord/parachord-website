@@ -28,7 +28,7 @@ You can now choose between Light, Dark, or System (which follows your OS prefere
 
 ## Fresh Drops, Now Actually Reliable
 
-Fresh Drops -- the feature that surfaces new releases from artists you listen to -- has been overhauled for reliability. Previous versions had a stale cache loop that could cause the feature to quietly stop updating between sessions. That's fixed. Full re-scans now trigger properly after 24 hours and merged with past and will build over time.
+Fresh Drops -- the feature that surfaces new releases from artists you listen to -- has been overhauled for reliability. Previous versions had a stale cache loop that could cause the feature to quietly stop updating between sessions. That's fixed. Full re-scans now trigger properly after 24 hours and will build over time.
 
 On the visual side, the filter dropdown has been replaced with pill-style buttons that are color-coded by release type: purple for EPs, pink for Singles, blue for Albums.
 
@@ -36,11 +36,11 @@ On the visual side, the filter dropdown has been replaced with pill-style button
 
 ## Faster Startup
 
-Multiple sequential calls during startup have been consolidated into a single batch IPC roundtrip. This is one of those changes that's invisible but you'll feel it -- cold starts are noticeably snappier, especially on machines with slower disk I/O. I also fixed a nasty bug where Mac users on Apple silicon were getting auto-updated to the Intel builds - which you would feel instantly and get lots of visits from the dreaded pinwheel on almost every interaction. Sorry about that!
+Multiple sequential calls during startup have been consolidated into a single batch calls. This is one of those changes that's invisible but you'll feel it -- cold starts are noticeably snappier, especially on machines with slower disk I/O. I also fixed a nasty bug where Mac users on Apple silicon were getting auto-updated to the Intel builds - which you would feel instantly and get lots of visits from the dreaded pinwheel on almost every interaction. Sorry about that!
 
 ## Spotify API Resilience
 
-Transient server errors (502, 503, 504) from the Spotify API now trigger automatic retries with exponential backoff up to 30 seconds. Token refresh has also been improved to happen proactively during playback, so you won't hit mid-session authentication failures that interrupt what you're listening to or syncing in the background.
+Transient server errors (502, 503, 504) from the Spotify API now trigger automatic retries with exponential backoff. Token refresh has also been improved to happen proactively during playback, so you won't hit mid-session authentication failures that interrupt what you're listening to or syncing in the background.
 
 ## Smarter Artist Lookups
 
@@ -48,7 +48,7 @@ MusicBrainz search results are now validated using normalized, punctuation-strip
 
 ## Browser Extension & Raycast
 
-The Parachord browser extension is now officially published on both the [Chrome Web Store](https://chromewebstore.google.com/detail/parachord/gibkgapadebfoillbakpgmgpnppjlnie) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/parachord/). The Raycast extension has been updated with security fixes and ESLint configuration in preparation for Raycast Store publishing so you will soon be able to more easily install it from the Raycast store.
+The Parachord browser extension is now officially published on both the [Chrome Web Store](https://chromewebstore.google.com/detail/parachord/gibkgapadebfoillbakpgmgpnppjlnie) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/parachord/). The Raycast extension has been updated with security fixes and documentation - so you will soon be able to more easily install it from the Raycast store.
 
 ## UI Polish & Bug Fixes
 
