@@ -1,1 +1,1 @@
-![Description](/assets/blog/my-image.png)
+![Description](/assets/blog/fresh-drops.png)
