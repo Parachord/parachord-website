@@ -50,6 +50,8 @@ MusicBrainz search results are now validated using normalized, punctuation-strip
 
 The Parachord browser extension is now officially published on both the [Chrome Web Store](https://chromewebstore.google.com/detail/parachord/gibkgapadebfoillbakpgmgpnppjlnie) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/parachord/). The Raycast extension has been updated with security fixes and documentation - so you will soon be able to more easily install it from the Raycast store.
 
+![Parachord Browser Extension](/assets/applemusic-import.png)
+
 ## UI Polish & Bug Fixes
 
 A lot of small things that add up:
