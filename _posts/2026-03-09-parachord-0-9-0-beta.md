@@ -16,19 +16,23 @@ Even better: when you're listening to an artist who's currently on tour, an "On 
 
 If an artist has upcoming concerts, then their artist page will also get a new 4th tab, On Tour, that will display them all - independent of your current location.
 
+![On Tour](/assets/ontour-artist-page.png)
+
 ## Dark Mode & Theming
 
 I joked that I wondered when I first made Parachord public how long it would take someone to request dark mode - and as expected it was one of the first feature requests that came it. Well, as I was cleaning up some UI inconsistencies I just went ahead and added full dark mode support. Over 365 hardcoded color values have been replaced with a proper design token system using CSS custom properties -- dedicated tokens for surfaces, text, borders, and accents. Every component, every focus ring, every tooltip respects the active theme.
 
 You can now choose between Light, Dark, or System (which follows your OS preference) in Settings. 
 
-
+![Dark Mode](/assets/ontour-now-playing.png)
 
 ## Fresh Drops, Now Actually Reliable
 
 Fresh Drops -- the feature that surfaces new releases from artists you listen to -- has been overhauled for reliability. Previous versions had a stale cache loop that could cause the feature to quietly stop updating between sessions. That's fixed. Full re-scans now trigger properly after 24 hours and merged with past and will build over time.
 
 On the visual side, the filter dropdown has been replaced with pill-style buttons that are color-coded by release type: purple for EPs, pink for Singles, blue for Albums.
+
+![Fresh Drops](/assets/fresh-drops.png)
 
 ## Faster Startup
 
