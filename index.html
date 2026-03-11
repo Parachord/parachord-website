@@ -1939,7 +1939,38 @@
 
             var isAppleSilicon = false;
             if (os === 'mac') {
-                isAppleSilicon = !/Intel/i.test(ua);
+                // navigator.userAgentData provides accurate arch on Chromium browsers
+                if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+                    navigator.userAgentData.getHighEntropyValues(['architecture']).then(function (values) {
+                        isAppleSilicon = values.architecture === 'arm';
+                        // Re-run asset selection once we have accurate arch info
+                        refetchAndUpdate();
+                    }).catch(function () {
+                        // Fall through to GPU-based detection
+                        isAppleSilicon = detectAppleSiliconByGPU();
+                        refetchAndUpdate();
+                    });
+                } else {
+                    // Safari and Firefox: check WebGL renderer for Apple GPU names
+                    isAppleSilicon = detectAppleSiliconByGPU();
+                }
+            }
+
+            function detectAppleSiliconByGPU() {
+                try {
+                    var canvas = document.createElement('canvas');
+                    var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (gl) {
+                        var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+                        if (dbg) {
+                            var renderer = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
+                            // Apple Silicon GPUs report as "Apple M1", "Apple M2", "Apple GPU", etc.
+                            if (/Apple (M\d|GPU)/i.test(renderer)) return true;
+                        }
+                    }
+                } catch (e) {}
+                // Default to Apple Silicon — most Macs sold since late 2020 are ARM-based
+                return true;
             }
 
             var heroBtn = document.getElementById('hero-download');
@@ -2010,22 +2041,35 @@
 
             if (os === 'unknown') return;
 
+            var cachedRelease = null;
+
+            function applyAssetSelection(release) {
+                if (!release || !release.assets) return;
+
+                var assets = release.assets.map(function (a) {
+                    return { name: a.name, url: a.browser_download_url };
+                });
+
+                var match = findAsset(assets);
+                if (match) {
+                    updateButtons(match.url, osLabels[os]);
+                } else {
+                    var tagUrl = release.html_url || releasesUrl;
+                    updateButtons(tagUrl, osLabels[os]);
+                }
+            }
+
+            function refetchAndUpdate() {
+                if (cachedRelease) {
+                    applyAssetSelection(cachedRelease);
+                }
+            }
+
             fetch('https://api.github.com/repos/Parachord/parachord/releases/latest')
                 .then(function (res) { return res.json(); })
                 .then(function (release) {
-                    if (!release || !release.assets) return;
-
-                    var assets = release.assets.map(function (a) {
-                        return { name: a.name, url: a.browser_download_url };
-                    });
-
-                    var match = findAsset(assets);
-                    if (match) {
-                        updateButtons(match.url, osLabels[os]);
-                    } else {
-                        var tagUrl = release.html_url || releasesUrl;
-                        updateButtons(tagUrl, osLabels[os]);
-                    }
+                    cachedRelease = release;
+                    applyAssetSelection(release);
                 })
                 .catch(function () {
                     // API call failed; leave default links unchanged
