@@ -6,7 +6,7 @@ author: "J Herskowitz"
 category: "Technical"
 ---
 
-So on Wednesday I woke up and thought, "I should start to scaffold out an Android app." By Saturday, I had a full app. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 144 commits in 4 days.
+So on Wednesday I woke up and thought, "I should start to scaffold out an Android app." By Saturday, I had a full app. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 146 commits in 4 days.
 
 Let me explain how that happened.
 
