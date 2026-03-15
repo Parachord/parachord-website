@@ -6,97 +6,78 @@ author: "J Herskowitz"
 category: "Technical"
 ---
 
-Parachord is a cross-platform music player that unifies Spotify, Apple Music, Bandcamp, SoundCloud, YouTube, and local files into a single interface. The desktop app -- built with Electron, React, and Tailwind -- has been in development since January 2026 and has grown into a fairly complex piece of software: a plugin-based resolver system, cascading metadata providers, real-time friend activity, Smartlinks, scrobbling, a DJ tool, and a lot more.
+So last Tuesday I woke up and thought, "I should build an Android app." By Friday, I had one. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 144 commits in 3 days.
 
-Last week I decided to build an Android version. Not a companion app. Not a remote control. A near-feature-parity native Android app. And I wanted to see how fast it could be done using Claude as a development partner.
-
-The answer: **144 commits across 3 days**.
+Let me explain how that happened.
 
 <iframe width="100%" height="515" src="https://www.youtube.com/embed/qwATG9aKK2E" title="Parachord Android Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## The Stack
+## Some Context
 
-Before writing a single line of code, I set up a [CLAUDE.md](https://github.com/Parachord/parachord-android/blob/main/CLAUDE.md) file in the repo root. This is the file that Claude reads at the start of every session to understand the project's architecture, conventions, and constraints. It documents:
+For anyone new here -- Parachord is a music player that pulls together all your music sources (Spotify, Apple Music, Bandcamp, SoundCloud, YouTube, local files) into one app. Instead of bouncing between five different players, you get one unified library, one queue, one experience. It's been a desktop app since January, and it's gotten pretty feature-rich: plugins, friend activity, scrobbling, a DJ tool, concert discovery, and more.
 
-- The resolver scoring system (two-tier: user priority + confidence score)
-- Metadata provider cascade (MusicBrainz → Last.fm → Spotify)
-- Playback routing rules (Spotify App Remote SDK, ExoPlayer for streams, MusicKit WebView for Apple Music)
-- The full design system (brand colors, dark/light theme tokens, component patterns)
-- Common mistakes to avoid (don't use `sources.firstOrNull()`, don't use blue as accent, don't bypass the resolver pipeline)
+The Android version isn't a remote control or a companion app. It's the whole thing, rebuilt natively for Android. And I built it with [Claude](https://claude.ai) as my coding partner.
 
-The tech stack is native Android: Kotlin, Jetpack Compose, Material 3, ExoPlayer (Media3), Room, Hilt, OkHttp/Retrofit, and Coil. No cross-platform framework. No shared code with the desktop app. A complete rewrite targeting Android-native patterns, but architecturally aligned with the desktop app's approach.
+## The Secret Weapon: A Really Good Briefing Doc
 
-## Day 1: Scaffold to Sound (March 11-12)
+Before writing any code, I wrote a [CLAUDE.md](https://github.com/Parachord/parachord-android/blob/main/CLAUDE.md) file -- basically a cheat sheet that Claude reads at the start of every session. It covers how the app works, what the design system looks like, what mistakes to avoid, and how all the pieces fit together. Think of it like onboarding a new developer, except the new developer can write code at 3 AM without complaining.
 
-The first commit landed at 12:49 PM on March 11. It was a full project scaffold -- Gradle configuration, Hilt dependency injection, a JS bridge layer, ExoPlayer service, Room database, and a Jetpack Compose UI shell. By the end of the day, the app had:
+This turned out to be the single most important thing I did. Without it, every conversation would start with me re-explaining how the resolver system works or why the accent color is purple, not blue. With it, Claude could just... start building.
 
-- **Spotify playback** via the App Remote SDK, including device selection logic ported from the desktop app
-- **Metadata providers** cascading through MusicBrainz, Last.fm, and Spotify
-- **Local media scanning** for on-device music files
-- **OAuth integration** for Spotify authentication
+## Day 1: Making Noise (March 11-12)
 
-Day 2 (March 12) focused on making it feel like Parachord. The desktop app's design system -- every color token, spacing value, and component pattern -- was ported to Compose theming. A left navigation drawer, 5-tab bottom navigation, swipeable tab layouts, and the signature dark mode all came together. By the end of day 2, if you squinted, it looked like Parachord.
+First commit: 12:49 PM on Tuesday. A full project skeleton -- all the Android boilerplate, the database, the UI shell. By the end of the day, the app could play music from Spotify, pull artist metadata, and scan your phone for local files.
 
-## Day 2: Features at Full Speed (March 13)
+Day 2 was about making it *look* like Parachord. I ported the whole design system over -- colors, spacing, dark mode, the navigation layout. By the end of the day, if you squinted, it was recognizable.
 
-This was the biggest single day of development. 16 commits covering:
+## Day 2: The Big Push (March 13)
 
-- **Search** with history tracking, fuzzy matching, and multi-source results
-- **Artist pages** with full discography, biography (Last.fm + Wikipedia), chronological sorting, and filter tabs
-- **Queue management** with persistence across app restarts
-- **Last.fm scrobbling** with proper timing rules and request signatures
-- **Shuffleupagus** -- Parachord's AI-powered music chat -- integrated with ChatGPT, Claude, and Gemini
-- **Dark mode** with system/light/dark toggle following the desktop's exact palette
-- **Swipe-to-delete** gestures for playlist management
-- **Playback fixes** for audio focus, skip behavior, and resolver verification
+This was the day things got wild. 16 commits in a single day covering:
 
-The pattern was consistent: I'd describe what a feature does in the desktop app, point Claude at the relevant desktop source files when needed, and it would produce the Android-native equivalent. Not a line-for-line port -- the implementations are genuinely different because the platforms are different -- but functionally equivalent.
+- Search with history and fuzzy matching
+- Full artist pages with discography, bios, and top tracks
+- Queue management that survives app restarts
+- Last.fm scrobbling
+- Shuffleupagus (our AI music chat) with support for ChatGPT, Claude, and Gemini
+- Dark mode with a proper system/light/dark toggle
+- A pile of playback fixes
 
-## Day 3: Polish and Platform Features (March 14-15)
+The workflow was simple: I'd describe what a feature does in the desktop app, sometimes share the relevant source code, and Claude would write the Android equivalent. Not a copy-paste job -- the implementations are genuinely different because the platforms are different -- but functionally the same.
 
-The final push brought the app from "it works" to "it's usable":
+## Day 3: Making It Real (March 14-15)
 
-- **Spotify library sync** -- a full sync engine with diff calculation, bidirectional updates, paginated fetching, and background scheduling via WorkManager
-- **Collection management** with filter bars, sort options, and image enrichment
-- **Pop of the Tops** charts pulling from Apple Music RSS and Last.fm
-- **Fresh Drops** new release tracking with caching and stale-while-revalidate
-- **Home page** with cards for friend activity, recent loves, charts, and recommendations
-- **Spinoff radio mode** with queue dimming and context banners
-- **Apple Music playback** via a MusicKit JS WebView bridge with Widevine DRM
-- **Playlist import** supporting Spotify, Apple Music, and XSPF URLs via deep links
-- **Friend activity** with listen-along status, context menus, and pin/unpin
-- **Home screen widget** for mini player controls
-- **Foreground service** to keep playback alive when the screen is off
-- **Edge swipe gestures** for navigation
-- **GitHub Actions CI** for automated APK builds
+The last stretch was about going from "it works on my phone" to "someone else could actually use this":
 
-## How the Process Actually Worked
+- Full Spotify library sync -- import your albums, playlists, and saved tracks
+- A home page with friend activity, charts, new releases, and recommendations
+- Apple Music playback (this one was a journey)
+- Playlist import -- paste a Spotify or Apple Music link and it just works
+- Listen-along, so you can see what your friends are playing
+- A home screen widget
+- Background playback that doesn't die when you lock your phone
+- Edge swipe gestures
 
-This wasn't "type a prompt and get an app." It was a tight feedback loop:
+47 commits on Thursday alone. I stopped counting features and started counting coffee cups.
 
-1. **I drove the architecture.** Every major decision -- using App Remote SDK vs. Web API for Spotify, WebView bridge vs. native SDK for Apple Music, Room vs. DataStore for different data types -- was mine. Claude doesn't know what trade-offs matter for your specific app.
+## What It Was Actually Like
 
-2. **CLAUDE.md was critical.** Without it, every session would start with Claude making wrong assumptions about the resolver pipeline, the color scheme, or how metadata providers should cascade. The file is essentially a contract: "here's how this app works, don't deviate."
+I want to be honest about what "building with AI" means in practice, because it's not what most people imagine.
 
-3. **Claude wrote most of the code.** I'd describe a feature, sometimes paste a snippet from the desktop app for reference, and Claude would produce the Kotlin/Compose implementation. I'd review, test on device, and course-correct. The ratio was probably 90/10 in terms of lines written.
+**I was the architect, Claude was the builder.** I decided *what* to build and *how* it should work. Claude wrote most of the actual code -- probably 90% of the lines -- but every design decision, every "should we use X or Y" choice, was mine. AI doesn't know what trade-offs matter for your app. You do.
 
-4. **Debugging was collaborative.** When Apple Music playback silently failed, when Hilt dependency cycles appeared, when the Spotify token refresh race condition surfaced -- these were problems we solved together, but I was the one who could actually run the app and see what was happening.
+**The desktop app was the spec.** This is the real cheat code. I didn't have to write requirements or draw mockups. I could just say "make it work like the desktop version" and point at the source. Having a reference implementation made everything dramatically faster.
 
-5. **The desktop app was the spec.** Having a working reference implementation made everything faster. Instead of writing requirements documents, I could say "make it work like the desktop's artist page" and Claude could look at the React component and produce the Compose equivalent.
+**Debugging was a team sport.** When something broke -- Apple Music silently failing, a dependency injection cycle, a token refresh race condition -- we figured it out together. But I was the one who could actually run the app and tap around and say "it's doing the wrong thing when I do this."
 
-## What Surprised Me
+**The bottleneck was always me.** Claude can write code way faster than I can test it. The real speed limit was the build-deploy-test cycle, especially for things like DRM playback and background services that need a real phone.
 
-**The speed was real.** 144 commits in 3 days isn't a gimmick. The app has real Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, queue management, charts, recommendations, an AI chat feature, a home screen widget, and deep link handling. These are real features that work.
+## So What Now?
 
-**Platform-native code matters.** Claude didn't try to force web patterns onto Android. The Compose UI code is idiomatic. The Room database schema is well-structured. The Hilt dependency graph makes sense. It's code I'd be comfortable maintaining.
+The Android app works. It's not released yet -- there's still polish to do and features that didn't make the 3-day cut (concerts, Smartlinks, the browser extension tie-in). But the core is solid, and building it took days instead of months.
 
-**The bottleneck was me.** Claude can generate code faster than I can test it. The actual limiting factor was the build-deploy-test cycle on a physical device, especially for features like Apple Music DRM, Spotify device handoff, and background playback that can't be tested in an emulator.
+The repo is public if you want to poke around: [github.com/Parachord/parachord-android](https://github.com/Parachord/parachord-android). The desktop app is available now at [github.com/Parachord/parachord/releases](https://github.com/Parachord/parachord/releases).
 
-## What's Next
-
-The Android app is functional but not yet released. There's still work to do on stability, edge cases, and the features that didn't make the 3-day cut (concerts, browser extension integration, Smartlinks). But the core is there -- and it took 3 days instead of 3 months.
-
-If you want to follow along, the repo is public at [github.com/Parachord/parachord-android](https://github.com/Parachord/parachord-android). The desktop app is available now at [github.com/Parachord/parachord/releases](https://github.com/Parachord/parachord/releases).
+It's a pretty surreal time to be building software.
 
 ---
 
