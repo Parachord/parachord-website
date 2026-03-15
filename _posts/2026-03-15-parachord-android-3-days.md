@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Building Parachord for Android in 3 Days"
+title: "Building Parachord for Android in a Few Days"
 date: 2026-03-15
 author: "J Herskowitz"
 category: "Technical"
 ---
 
-So last Tuesday I woke up and thought, "I should start to scaffold out an Android app." By Friday, I had a full app. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 144 commits in 3 days.
+So on Wednesday I woke up and thought, "I should start to scaffold out an Android app." By Saturday, I had a full app. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 144 commits in 4 days.
 
 Let me explain how that happened.
 
@@ -24,13 +24,13 @@ Before writing any code, I should have written a [CLAUDE.md](https://github.com/
 
 This turned out to be the single most important thing I did. Without it, every conversation would start with me re-explaining how the resolver system works or why the accent color is purple, not blue. With it, Claude could just... start building.
 
-## Day 1: Making Noise (March 11-12)
+## Days 1 & 2: Making Noise (March 11-12)
 
-First commit: 12:49 PM on Tuesday. A full project skeleton -- all the Android boilerplate, the database, the UI shell. By the end of the day, the app could play music from Spotify, pull artist metadata, and scan your phone for local files.
+First commit: 12:49 PM on Wednesday. A full project skeleton -- all the Android boilerplate, the database, the UI shell. By the end of the day, the app could play music from Spotify, pull artist metadata, and scan your phone for local files.
 
 Day 2 was about making it *look* like Parachord. I ported the whole design system over -- colors, spacing, dark mode, the navigation layout. By the end of the day, if you squinted, it was recognizable.
 
-## Day 2: The Big Push (March 13)
+## Day 3: The Big Push (March 13)
 
 This was the day things got exciting. 16 commits in a single day covering:
 
@@ -44,20 +44,24 @@ This was the day things got exciting. 16 commits in a single day covering:
 
 The workflow was simple: I'd describe what a feature does in the desktop app, sometimes share the relevant source code, and Claude would write the Android equivalent. Not a copy-paste job -- the implementations are genuinely different because the platforms are different -- but functionally the same.
 
-## Day 3: Making It Real (March 14-15)
+## Day 4: Making It Real (March 14)
 
 The last stretch was about going from "it works on my phone" to "someone else could actually use this":
 
-- Full Spotify library sync -- import your albums, playlists, and saved tracks
+- Full Spotify library sync - import your albums, playlists, and saved tracks
+- Desktop to Mobile sync (through Spotify)
 - A home page with friend activity, charts, new releases, and recommendations
 - Apple Music playback (this one was a journey)
-- Playlist import -- paste a Spotify or Apple Music link and it just works
+- Playlist import - paste a Spotify or Apple Music link and it just works
 - Listen-along, so you can see what your friends are playing
 - A home screen widget
 - Background playback that doesn't die when you lock your phone
-- Edge swipe gestures
+
 
 47 commits on Thursday alone. I stopped counting features and just powered through to get an app that would be usable before I leave on vacation tomorrow morning.
+
+## Day 5: Making it Everyday Usable
+Today was all about tweaking UX, fixing little bugs, optimizing core functionality and ensuring consistent behavior between the desktop experience and mobile
 
 ## What It Was Actually Like
 
