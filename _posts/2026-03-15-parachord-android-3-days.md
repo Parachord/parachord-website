@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Building Parachord for Android in 3 Days with Claude"
+title: "Building Parachord for Android in 3 Days"
 date: 2026-03-15
 author: "J Herskowitz"
 category: "Technical"
 ---
 
-So last Tuesday I woke up and thought, "I should build an Android app." By Friday, I had one. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 144 commits in 3 days.
+So last Tuesday I woke up and thought, "I should start to scaffold out an Android app." By Friday, I had a full app. A real one. With Spotify and Apple Music playback, library sync, scrobbling, friend activity, search, artist pages, playlists, an AI music chat, a home screen widget, and about a hundred other things. 144 commits in 3 days.
 
 Let me explain how that happened.
 
@@ -16,11 +16,11 @@ Let me explain how that happened.
 
 For anyone new here -- Parachord is a music player that pulls together all your music sources (Spotify, Apple Music, Bandcamp, SoundCloud, YouTube, local files) into one app. Instead of bouncing between five different players, you get one unified library, one queue, one experience. It's been a desktop app since January, and it's gotten pretty feature-rich: plugins, friend activity, scrobbling, a DJ tool, concert discovery, and more.
 
-The Android version isn't a remote control or a companion app. It's the whole thing, rebuilt natively for Android. And I built it with [Claude](https://claude.ai) as my coding partner.
+The Android version isn't a remote control or a companion app. It's the whole thing, rebuilt natively for Android. And I, like scores of others, built it with [Claude](https://claude.ai) as my coding partner.
 
 ## The Secret Weapon: A Really Good Briefing Doc
 
-Before writing any code, I wrote a [CLAUDE.md](https://github.com/Parachord/parachord-android/blob/main/CLAUDE.md) file -- basically a cheat sheet that Claude reads at the start of every session. It covers how the app works, what the design system looks like, what mistakes to avoid, and how all the pieces fit together. Think of it like onboarding a new developer, except the new developer can write code at 3 AM without complaining.
+Before writing any code, I should have written a [CLAUDE.md](https://github.com/Parachord/parachord-android/blob/main/CLAUDE.md) file -- basically a cheat sheet that Claude reads at the start of every session. It covers how the app works, what the design system looks like, what mistakes to avoid, and how all the pieces fit together. Think of it like onboarding a new developer, except the new developer can write code at 3 AM without complaining. I honestly didn't do that until I got frustrated and asked "why aren't you remembering what I'm telling you?!" - and it gave me the answer.
 
 This turned out to be the single most important thing I did. Without it, every conversation would start with me re-explaining how the resolver system works or why the accent color is purple, not blue. With it, Claude could just... start building.
 
@@ -32,7 +32,7 @@ Day 2 was about making it *look* like Parachord. I ported the whole design syste
 
 ## Day 2: The Big Push (March 13)
 
-This was the day things got wild. 16 commits in a single day covering:
+This was the day things got exciting. 16 commits in a single day covering:
 
 - Search with history and fuzzy matching
 - Full artist pages with discography, bios, and top tracks
@@ -57,27 +57,27 @@ The last stretch was about going from "it works on my phone" to "someone else co
 - Background playback that doesn't die when you lock your phone
 - Edge swipe gestures
 
-47 commits on Thursday alone. I stopped counting features and started counting coffee cups.
+47 commits on Thursday alone. I stopped counting features and just powered through to get an app that would be usable before I leave on vacation tomorrow morning.
 
 ## What It Was Actually Like
 
-I want to be honest about what "building with AI" means in practice, because it's not what most people imagine.
+I want to be honest about what "building with AI" means in practice, because it's not what most "regular" people imagine.
 
-**I was the architect, Claude was the builder.** I decided *what* to build and *how* it should work. Claude wrote most of the actual code -- probably 90% of the lines -- but every design decision, every "should we use X or Y" choice, was mine. AI doesn't know what trade-offs matter for your app. You do.
+**I was the architect, Claude was the builder.** I decided *what* to build and *how* it should work. Claude wrote all of the actual code - but virtually every design decision, every "should we use X or Y" choice, was mine. AI doesn't know what trade-offs matter for your app. You do.
 
-**The desktop app was the spec.** This is the real cheat code. I didn't have to write requirements or draw mockups. I could just say "make it work like the desktop version" and point at the source. Having a reference implementation made everything dramatically faster.
+**The desktop app was the spec.** This is the real cheat code. I have just spent 2 months building a product experience that works *almost* exactly how I want it to. I didn't have to write requirements or draw mockups. I could just say "make it work like the desktop version" and point at the source. Having a reference implementation made everything incredibly fast.
 
-**Debugging was a team sport.** When something broke -- Apple Music silently failing, a dependency injection cycle, a token refresh race condition -- we figured it out together. But I was the one who could actually run the app and tap around and say "it's doing the wrong thing when I do this."
+**Debugging was a team sport.** When something broke - Apple Music silently failing, a dependency injection cycle, a token refresh race condition - we figured it out together. But I was the one who could actually run the app and tap around and say "it's doing the wrong thing when I do this."
 
-**The bottleneck was always me.** Claude can write code way faster than I can test it. The real speed limit was the build-deploy-test cycle, especially for things like DRM playback and background services that need a real phone.
+**The bottleneck was always me.** Claude can obviously write code way faster than I can test it. The real speed limit was the build-deploy-test cycle, especially for things like DRM playback and background services that need a real phone.
 
 ## So What Now?
 
-The Android app works. It's not released yet -- there's still polish to do and features that didn't make the 3-day cut (concerts, Smartlinks, the browser extension tie-in). But the core is solid, and building it took days instead of months.
+The Android app works - I'm going to put it through it's paces while I explore Costa Rica. It's not released yet - there's still polish to do and a few features that didn't make the 3-day cut (concerts, Smartlinks, etc). But the core is solid, and it honestly surpised me that building it took days instead of months.
 
 The repo is public if you want to poke around: [github.com/Parachord/parachord-android](https://github.com/Parachord/parachord-android). The desktop app is available now at [github.com/Parachord/parachord/releases](https://github.com/Parachord/parachord/releases).
 
-It's a pretty surreal time to be building software.
+It's a pretty surreal time to be building software... especially for someone that is a self-proclaimed "product guy, not a developer".
 
 ---
 
