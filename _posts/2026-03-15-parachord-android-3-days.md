@@ -61,11 +61,11 @@ The last stretch was about going from "it works on my phone" to "someone else co
 47 commits on Thursday alone. I stopped counting features and just powered through to get an app that would be usable before I leave on vacation tomorrow morning.
 
 ## Day 5: Making it Everyday Usable
-Today was all about tweaking UX, fixing little bugs, optimizing core functionality and ensuring consistent behavior between the desktop experience and mobile
+Today was all about tweaking UX, fixing little bugs, optimizing core functionality and ensuring consistent behavior between the desktop experience and mobile.
 
 ## What It Was Actually Like
 
-I want to be honest about what "building with AI" means in practice, because it's not what most "regular" people imagine.
+I want to be honest about what "building with AI" means in practice for me.
 
 **I was the architect, Claude was the builder.** I decided *what* to build and *how* it should work. Claude wrote all of the actual code - but virtually every design decision, every "should we use X or Y" choice, was mine. AI doesn't know what trade-offs matter for your app. You do.
 
