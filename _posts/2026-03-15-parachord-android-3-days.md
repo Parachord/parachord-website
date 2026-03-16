@@ -20,7 +20,7 @@ The Android version isn't a remote control or a companion app. It's the whole th
 
 ## The Secret Weapon: A Really Good Briefing Doc
 
-Before writing any code, I should have written a [CLAUDE.md](https://github.com/Parachord/parachord-android/blob/main/CLAUDE.md) file -- basically a cheat sheet that Claude reads at the start of every session. It covers how the app works, what the design system looks like, what mistakes to avoid, and how all the pieces fit together. Think of it like onboarding a new developer, except the new developer can write code at 3 AM without complaining. I honestly didn't do that until I got frustrated and asked "why aren't you remembering what I'm telling you?!" - and it gave me the answer.
+Before writing any code, I should have written a [CLAUDE.md](https://github.com/Parachord/parachord-android/blob/main/CLAUDE.md) file -- basically a cheat sheet that Claude reads at the start of every session. It covers how the app works, what the design system looks like, what mistakes to avoid, and how all the pieces fit together. Think of it like onboarding a new developer, except the new developer is always ready to write code whenever you are ready to spec it. I honestly didn't do that until I got frustrated and asked "why aren't you remembering what I'm telling you?!" - and it gave me the answer.
 
 This turned out to be the single most important thing I did. Without it, every conversation would start with me re-explaining how the resolver system works or why the accent color is purple, not blue. With it, Claude could just... start building.
 
