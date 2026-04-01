@@ -1,0 +1,189 @@
+---
+layout: null
+title: Open in Parachord
+description: Redirecting to Parachord...
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open in Parachord</title>
+    <meta name="description" content="Open this link in Parachord.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://parachord.com/go/">
+    <meta property="og:title" content="Open in Parachord">
+    <meta property="og:description" content="Open this link in Parachord.">
+    <meta property="og:image" content="https://parachord.com/assets/home.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="{{ '/assets/icon128.png' | relative_url }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --bg-subtle: #1a1a1a;
+            --text: #f5f5f5;
+            --text-muted: rgba(255,255,255,0.5);
+            --gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #f97316);
+            --accent: #ec4899;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 480px;
+            padding: 48px 24px;
+        }
+
+        .logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            border-radius: 16px;
+        }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .prompt-preview {
+            background: var(--bg-subtle);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text);
+            word-break: break-word;
+            text-align: left;
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .prompt-preview::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(transparent, var(--bg-subtle));
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .open-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .download-link {
+            display: block;
+            margin-top: 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .download-link:hover {
+            color: var(--text);
+        }
+
+        .error {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ '/assets/icon128.png' | relative_url }}" alt="Parachord" class="logo">
+        <div id="content">
+            <h1>Opening in Parachord...</h1>
+            <p class="subtitle">If nothing happened, click the button below.</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var uri = params.get('uri');
+            var container = document.getElementById('content');
+
+            if (!uri || !uri.startsWith('parachord://')) {
+                container.innerHTML = '<h1>Invalid Link</h1><p class="error">This link is missing a valid Parachord URI.</p>' +
+                    '<a href="https://parachord.com" class="download-link">Go to parachord.com</a>';
+                return;
+            }
+
+            // Show prompt preview if it's a chat link
+            var chatMatch = uri.match(/^parachord:\/\/chat\?prompt=(.+)$/);
+            if (chatMatch) {
+                try {
+                    var prompt = decodeURIComponent(chatMatch[1]);
+                    var preview = document.createElement('div');
+                    preview.className = 'prompt-preview';
+                    preview.textContent = prompt;
+                    container.insertBefore(preview, container.querySelector('.subtitle'));
+                } catch(e) {}
+            }
+
+            // Add manual open button + download fallback
+            var subtitle = container.querySelector('.subtitle');
+            subtitle.insertAdjacentHTML('afterend',
+                '<a href="' + uri.replace(/"/g, '&quot;') + '" class="open-btn">Open in Parachord</a>' +
+                '<a href="https://parachord.com" class="download-link">Don\'t have Parachord? Download it here</a>'
+            );
+
+            // Auto-redirect
+            window.location.href = uri;
+        })();
+    </script>
+</body>
+</html>
