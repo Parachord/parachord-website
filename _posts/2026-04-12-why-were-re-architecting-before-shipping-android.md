@@ -34,7 +34,7 @@ For a single-source player (just ExoPlayer, just Spotify), this is well-document
 
 ### The Apple Music WebView Problem
 
-On the desktop, Apple Music playback goes through MusicKit JS in the Electron renderer — basically a web page that plays DRM audio. On Android, there is no native MusicKit SDK (Apple reserves that for iOS). So we do something... creative: we run MusicKit JS inside a headless Android WebView.
+On the desktop, Apple Music playback uses native MusicKit when available (macOS), falling back to MusicKit JS in the Electron renderer for other platforms. On Android, there is no native MusicKit SDK (Apple reserves that for iOS and macOS). So we do something... creative: we run MusicKit JS inside a headless Android WebView.
 
 This mostly works. But WebViews on Android have a critical limitation: when your app goes to the background, Android will throttle or outright suspend the WebView's JavaScript execution. If Apple Music is playing via the WebView and the user locks their screen, the JS polling loop that tracks playback position stops running. Worse, the WebView itself can get destroyed if the system needs memory.
 
