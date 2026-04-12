@@ -40,13 +40,13 @@ This mostly works. But WebViews on Android have a critical limitation: when your
 
 The solution involves playing a silent audio track through ExoPlayer alongside the WebView's DRM audio, purely to keep the foreground Service's audio focus active and the process alive. It's a hack. It works. But it's the kind of thing that makes you think carefully about architectural boundaries, because this silent-audio-keep-alive pattern has to coordinate with the actual playback state machine, the MediaSession metadata, and the notification controls — all without the user ever knowing it's happening.
 
-### Spotify: Two Apps, One Experience
+### Spotify: Remote Control Over HTTP
 
-Spotify playback on Android can go through two paths: the Spotify App Remote SDK (which controls the actual Spotify app on the user's phone) or Spotify Connect (cloud-based remote control via the Web API). Both have different latency characteristics, different state reporting mechanisms, and different failure modes.
+Spotify playback on Android works entirely through Spotify Connect — the Web API. The `SpotifyPlaybackHandler` is essentially an HTTP remote control: `GET /v1/me/player/devices` to find an active device, `PUT /v1/me/player/play` to start a track, `PUT /v1/me/player/pause` to stop it. The actual audio comes from the Spotify app (or another Spotify Connect device), not from Parachord.
 
-The App Remote SDK gives you lower latency but requires the Spotify app to be installed and sometimes needs to be "woken up" by broadcasting a media button intent — essentially faking a headphone button press to force Spotify's service to start. If that wake-up fails, you fall back to Connect, which works over the network and adds 1-2 seconds of latency to every command.
+This means every playback command has network latency. Hit play and there's a round trip to Spotify's servers before anything happens. That's manageable for play/pause, but it makes seek feel sluggish, and it makes state synchronization genuinely hard. Spotify's API doesn't push state changes to you — you have to poll. So we're running 300ms poll loops to keep the seek bar accurate, detect when a track ends, and notice if the user controls Spotify directly from another app.
 
-On top of this, both paths report playback state through polling (not push notifications), so you're running 300ms poll loops that need to be accurate enough for a seek bar but light enough to not drain the battery. Getting this right — and keeping it right across Android versions, battery modes, and Spotify app updates — took more debugging time than any other single feature.
+Those poll loops need to be accurate enough for a responsive UI but light enough to not drain the battery. And they need to keep running reliably in the background, through Doze mode, across screen-off/screen-on transitions. Getting this right — and keeping it right across Android versions and battery optimization behaviors — took more debugging time than any other single feature.
 
 ### The "Two Things Playing at Once" Problem
 
