@@ -65,7 +65,9 @@ Spotify Premium is required for Spotify playback, and an Apple Music subscriptio
 
 ## What's Next
 
-Lots. The migration from the old Android-only architecture to the shared Kotlin Multiplatform module isn't finished — the last couple of phases (the repositories, the resolver pipeline, and a few of the platform abstractions) are still in flight. Features that didn't make the first-beta cut — Apple Music library sync, YouTube, and the advanced audio features (cross-fade, gapless, loudness normalization) — are next.
+Lots. The must-haves of the Kotlin Multiplatform migration are done — Ktor, SQLDelight, Koin, and the shared module are all in place, and the business logic that needs to cross platforms already has. What's left is cleanup: moving a few of the remaining platform abstractions into the shared module and tightening the seams. Nothing on the critical path to iOS is still blocking.
+
+The bigger list is product features. The ones that didn't make the first-beta cut — Apple Music library sync, YouTube, and the advanced audio features (cross-fade, gapless, loudness normalization) — are what's next.
 
 And at some point, once the shared module is where it needs to be, iOS. That's still the reason all of this is structured the way it is.
 
