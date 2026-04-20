@@ -67,7 +67,7 @@ Spotify Premium is required for Spotify playback, and an Apple Music subscriptio
 
 Lots. The must-haves of the Kotlin Multiplatform migration are done — Ktor, SQLDelight, Koin, and the shared module are all in place, and the business logic that needs to cross platforms already has. What's left is cleanup: moving a few of the remaining platform abstractions into the shared module and tightening the seams. Nothing on the critical path to iOS is still blocking.
 
-The bigger list is fixes the bugs you all are certain to run into - I love to say that music apps are comprised entirely of corner-cases, and how you all listen will be different than how I do. After that I want to further build out sync - both to/from Apple Music as well as more complex use cases across multiple nodes and services.
+The bigger list is fixes the bugs you all are certain to run into - I love to say that music apps are comprised entirely of corner-cases, and how you all listen will be different than how I do. After that I want to further build out sync - both to/from Apple Music as well as more complex use cases across multiple nodes and services. Also, I really need a better first-time user onboarding experience for this app - but in the meantime, just head to settings and setup all your plugins.
 
 And at some point in that not too distance future, once the shared module is where it needs to be, iOS. That's still the reason all of this is structured the way it is.
 
