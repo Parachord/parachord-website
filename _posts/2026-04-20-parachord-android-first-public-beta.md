@@ -63,15 +63,15 @@ Two options:
 1. **Grab the APK directly** from the [latest release](https://github.com/Parachord/parachord-android/releases/latest) and sideload it. Android 8.0+ (API 26) required.
 2. **Join the [Parachord-Testers Google Group](https://groups.google.com/g/parachord-testers)** and you'll get automatic updates as new builds go out.
 
-Spotify Premium is required for Spotify playback, and an Apple Music subscription is required for Apple Music playback. AI features use your own API keys — Parachord doesn't run an LLM backend.
+Spotify Premium is required for Spotify playback, and an Apple Music subscription is required for Apple Music playback. AI features and concert plug-ins use your own API keys — Parachord doesn't run a backend.
 
 ## What's Next
 
 Lots. The must-haves of the Kotlin Multiplatform migration are done — Ktor, SQLDelight, Koin, and the shared module are all in place, and the business logic that needs to cross platforms already has. What's left is cleanup: moving a few of the remaining platform abstractions into the shared module and tightening the seams. Nothing on the critical path to iOS is still blocking.
 
-The bigger list is product features. The ones that didn't make the first-beta cut — Apple Music library sync, YouTube, and the advanced audio features (cross-fade, gapless, loudness normalization) — are what's next.
+The bigger list is fixes the bugs you all are certain to run into - I love to say that music apps are comprised entirely of corner-cases, and how you all listen will be different than how I do. After that I want to further build out sync - both to/from Apple Music as well as more complex use cases across multiple nodes and services.
 
-And at some point, once the shared module is where it needs to be, iOS. That's still the reason all of this is structured the way it is.
+And at some point in that not too distance future, once the shared module is where it needs to be, iOS. That's still the reason all of this is structured the way it is.
 
 But for today: it's out, it's real, and you can install it. Thanks for sticking with it.
 
