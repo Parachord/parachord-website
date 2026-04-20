@@ -26,7 +26,7 @@ A partial list of what's in this build:
 - **Scrobbling** to ListenBrainz, Last.fm, and Libre.fm, with automatic MusicBrainz ID enrichment
 - **Shuffleupagus**, the AI DJ chat — bring your own key for ChatGPT, Claude, or Gemini
 - **Discovery** — personalized recommendations blending ListenBrainz and Last.fm, Fresh Drops from artists you follow, Critical Darlings with AI-summarized review blurbs, Pop of the Tops global charts, and Weekly Jams / Weekly Exploration pulled from ListenBrainz
-- **Friends** — see what your Last.fm and ListenBrainz contacts are listening to right now, right from the sidebar
+- **Friends** — see what your Last.fm and ListenBrainz contacts are listening to right now, right from the sidebar and listen along with them
 - **Concerts** via Ticketmaster and SeatGeek, with the same "On Tour" indicator from desktop
 - **Smart links** through `go.parachord.com` with per-service listen buttons
 - **The .axe plugin system** — the same 19 plugins as desktop, running in a WebView with hot-reload
