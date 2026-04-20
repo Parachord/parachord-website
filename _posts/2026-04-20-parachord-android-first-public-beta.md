@@ -10,9 +10,13 @@ It's out. **Parachord for Android v0.4.0-beta.2** is the first public beta of th
 
 If you've been following along, this has been a minute in the making. I [built the first working Android app in four days back in March](/blog/2026/03/15/parachord-android-3-days/), then [hit pause before shipping](/blog/2026/04/12/why-were-re-architecting-before-shipping-android/) to re-architect the foundation so Android and a future iOS app could share most of their code. This beta is the first release that sits on top of that new foundation — and it's the first one I'm comfortable putting in anyone else's hands.
 
+![Home — playlists, recent listens, Discover tiles](https://github.com/Parachord/parachord-android/raw/main/docs/screenshots/home.png)
+
 ## What It Is
 
 Parachord for Android is the whole app — not a remote, not a companion, not a cut-down mobile experience. It's a unified music player that pulls Spotify, Apple Music, SoundCloud, Bandcamp, and your local files into a single library and a single queue, and plays whichever source has the best match for whatever you're trying to hear.
+
+![Now Playing — resolver chip shows the active source](https://github.com/Parachord/parachord-android/raw/main/docs/screenshots/now-playing.png)
 
 A partial list of what's in this build:
 
@@ -25,6 +29,12 @@ A partial list of what's in this build:
 - **Smart links** through `go.parachord.com` with per-service listen buttons
 - **The .axe plugin system** — the same 19 plugins as desktop, running in a WebView with hot-reload
 - **A home screen widget** and background playback that survives screen-off and Doze
+
+![Shuffleupagus — natural-language DJ chat powered by ChatGPT, Claude, or Gemini](https://github.com/Parachord/parachord-android/raw/main/docs/screenshots/shuffleupagus.png)
+
+![Concerts — Ticketmaster + SeatGeek, library-aware](https://github.com/Parachord/parachord-android/raw/main/docs/screenshots/concerts.png)
+
+![Queue — mixed Spotify + Apple Music rows in one queue](https://github.com/Parachord/parachord-android/raw/main/docs/screenshots/queue.png)
 
 ## What's Different Under the Hood
 
