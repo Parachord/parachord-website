@@ -49,13 +49,13 @@ If you hit something that looks like a bug, please [file an issue](https://githu
 Two options:
 
 1. **Grab the APK directly** from the [release page](https://github.com/Parachord/parachord-android/releases/tag/v0.4.0-beta.2) and sideload it. Android 8.0+ (API 26) required.
-2. **Join the Parachord-Testers Google Group** and you'll get automatic updates as new builds go out.
+2. **Join the [Parachord-Testers Google Group](https://groups.google.com/g/parachord-testers)** and you'll get automatic updates as new builds go out.
 
 Spotify Premium is required for Spotify playback, and an Apple Music subscription is required for Apple Music playback. AI features use your own API keys — Parachord doesn't run an LLM backend.
 
 ## What's Next
 
-Lots. The migration from the old Android-only architecture to the shared Kotlin Multiplatform module isn't finished — the last couple of phases (the repositories, the resolver pipeline, and a few of the platform abstractions) are still in flight. Features that didn't make the first-beta cut — Apple Music library sync, YouTube, the advanced audio features, Smartlinks inside the app — are next.
+Lots. The migration from the old Android-only architecture to the shared Kotlin Multiplatform module isn't finished — the last couple of phases (the repositories, the resolver pipeline, and a few of the platform abstractions) are still in flight. Features that didn't make the first-beta cut — Apple Music library sync, YouTube, and the advanced audio features (cross-fade, gapless, loudness normalization) — are next.
 
 And at some point, once the shared module is where it needs to be, iOS. That's still the reason all of this is structured the way it is.
 
