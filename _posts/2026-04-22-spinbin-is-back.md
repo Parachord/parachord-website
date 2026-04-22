@@ -14,6 +14,10 @@ Then, in early 2018, the service we depended on for actual scraping — a compan
 
 I want to tell you why it's back, and how it works now.
 
+<figure style="max-width: 520px; margin: 2rem auto;">
+  <img src="/assets/spinbin-directory.png" alt="Spinbin directory — hero, sort/filter controls, and station cards" style="width: 100%; height: auto; border-radius: 12px; display: block;" />
+</figure>
+
 ## The Missing Primitive
 
 The reason Spinbin stopped being interesting isn't just that Kimono died. It's that the *consumer side* of the loop was broken too. Tomahawk development had stopped. The idea of a music player that could resolve playback across whatever services you used — the thing that made subscribing to a scraped XSPF actually useful — disappeared. XSPF itself became an obscure format, kept alive mostly by VLC.
@@ -141,11 +145,6 @@ If you're technically curious, the "fun" part of the project was that **no two s
 The stations that *do* expose playlist data tend to be the ones you'd want to listen to anyway. Public radio and community stations tend to be culturally committed to openness in a way that commercial Top 40 stations aren't, and that turns out to be visible in their tech stacks. I dream of dates when everyone just publishes .xspfs directly from their own sites that Parachord (and any/all other player that choose to support the format) can add them.
 
 ## A Small Note on the Aesthetic
-
-<figure style="max-width: 520px; margin: 2rem auto;">
-  <img src="/assets/spinbin-directory.png" alt="Spinbin directory — hero, sort/filter controls, and station cards" style="width: 100%; height: auto; border-radius: 12px; display: block;" />
-  <figcaption style="text-align: center; font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;">The Spinbin directory — hero, sort/filter, and station cards.</figcaption>
-</figure>
 
 The [Spinbin landing page](https://jherskowitz.github.io/spinbin/) deliberately mirrors Parachord's own light-mode design — the same `#7c3aed` purple, the same card shadows, the same plugin-tile shape and size. This wasn't accidental. If Parachord is the destination for these playlists, the on-ramp should feel like part of the same world.
 
