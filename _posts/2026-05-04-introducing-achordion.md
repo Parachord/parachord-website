@@ -10,7 +10,10 @@ For a while now, when I've talked about Parachord, I've described it as one half
 
 Music discovery felt a lot more meaningful (and fun) when we weren't all trapped in our own algorithmic bubbles — locked away inside corporate silos. Achordion is part of an open community, powered by ListenBrainz, that puts listeners first — no matter how or where they listen. Connect with like-minded listeners across the globe to discover music that transcends services, platforms, and programming.
 
-<p style="max-width: 240px; margin: 1rem auto; text-align: center;"><img src="/assets/achordion-origin-story.png" alt='A three-post Threads thread by jherskowitz: "I wish someone would build a nicer front-end for ListenBrainz so that I don''t start thinking about doing it." → "I feel like 2 whole generations are missing out on a music-source-agnostic community that gets them quantified self insights (e.g. Wrapped), recommendations, curators, discussions with anyone regardless of the only listen to Bandcamp downloads, stream from YouTube, Spotify, Tidal, Apple or anyone else. The silos have broken the promise of the social web when it comes to music fandom." → "Dammit, now I''m building it...."' style="width: 100%; display: block;"><br><em style="font-size: 0.875rem; color: #6b7280;">The Achordion origin story, captured a few days before I caved.</em></p>
+![The Achordion origin story Threads thread](/assets/achordion-origin-story.png){:style="max-width: 240px; width: 100%; margin: 1rem auto; display: block;"}
+
+*The Achordion origin story, captured a few days before I caved.*
+{:style="display: block; max-width: 240px; margin: 0 auto 1rem; text-align: center; font-size: 0.875rem; color: #6b7280;"}
 
 
 ## TL;DR
