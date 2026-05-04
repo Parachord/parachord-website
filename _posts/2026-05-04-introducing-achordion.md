@@ -8,6 +8,9 @@ category: "Announcement"
 
 For a while now, when I've talked about Parachord, I've described it as one half of something. The other half just shipped: it's called **Achordion**, it lives at [achordion.xyz](https://achordion.xyz), and it's the user experience I've wanted on top of ListenBrainz data since the first time I logged in.
 
+![A three-post Threads thread: "I wish someone would build a nicer front-end for ListenBrainz so that I don't start thinking about doing it." → "I feel like 2 whole generations are missing out on a music-source-agnostic community that gets them quantified self insights (e.g. Wrapped), recommendations, curators, discussions with anyone regardless of the only listen to Bandcamp downloads, stream from YouTube, Spotify, Tidal, Apple or anyone else. The silos have broken the promise of the social web when it comes to music fandom." → "Dammit, now I'm building it...."](/assets/achordion-origin-story.png)
+*The actual origin story, captured a few days before I caved.*
+
 ## TL;DR
 
 - **Achordion is live at [achordion.xyz](https://achordion.xyz).** Sign in with a MusicBrainz account.
