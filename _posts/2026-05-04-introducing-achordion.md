@@ -20,14 +20,14 @@ For a while now, when I've talked about Parachord, I've described it as one half
 - It's a modern web-based community built on MusicBrainz + ListenBrainz — listens, stats, charts, recommendations, Year in Music, friends, the whole thing.
 - Every Play button hands a tracklist off to **Parachord** via `parachord://`. One click, plays from whichever service ranks highest in your priority order.
 - No Achordion-side profile of you. Your listens, follows, and playlists live in your ListenBrainz account, queried live on every page view.
-- It's the spiritual successor to Last.fm circa 2007, rebuilt for the streaming era on open data.
-- Open source: [github.com/jherskowitz/achordion](https://github.com/jherskowitz/achordion).
+- It's a major step towards what I always wanted Last.fm to become, rebuilt for the streaming era on open data and no corporate overlords.
+- It is also open source: [github.com/jherskowitz/achordion](https://github.com/jherskowitz/achordion).
 
 The rest of the post is the why, the what, and how the pieces fit together.
 
 ## A Quick Bit of History
 
-The shape of what I'm describing isn't new. Twenty-five years ago, [**Last.fm**](https://last.fm) more or less invented this kind of music experience — a personal listening history that builds up automatically as you play — surfaced as charts, recommendations and personalized streaming radio stations - woven into a social graph of listeners with overlapping taste. It worked because the *playback* layer was wherever you were already listening: iTunes, Winamp, Foobar, plus an Audioscrobbler plugin you'd installed in whatever client. Nobody else was paying attention to that data, because pre-streaming the data lived inside everyone's local library and stayed there. Nobody was tending to it.
+Pretty much everything I build lately has a common origin story - and this one for Achordion is no different. Twenty-five years ago, [**Last.fm**](https://last.fm) more or less invented a new sort of data-driven social music experience — a personal listening history that builds up automatically as you play — surfaced as charts, recommendations and personalized streaming radio stations - woven into a social graph of listeners with overlapping taste. It worked because the *playback* layer was wherever you were already listening: iTunes, Winamp, Foobar, plus an Audioscrobbler plugin you'd installed in whatever client. Nobody else was paying attention to that data, because pre-streaming the data lived inside everyone's local library and stayed there. Nobody was tending to it.
 
 [**MyStrands**](https://en.wikipedia.org/wiki/MyStrands) — where I spent a stretch in the late 2000s — was a direct competitor with a very similar feature set: a scrobbler, a personal listening history, charts, recommendations, similar-listener discovery, the works. There were a few others working the same shape. The whole cohort was operating on a real insight: the listening data was important, and someone needed to tend to it.
 
