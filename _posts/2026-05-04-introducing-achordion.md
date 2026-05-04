@@ -13,7 +13,7 @@ For a while now, when I've talked about Parachord, I've described it as one half
 - **Achordion is live at [achordion.xyz](https://achordion.xyz).** Sign in with a MusicBrainz account.
 - It's a modern web-based community built on MusicBrainz + ListenBrainz — listens, stats, charts, recommendations, Year in Music, friends, the whole thing.
 - Every Play button hands a tracklist off to **Parachord** via `parachord://`. One click, plays from whichever service ranks highest in your priority order.
-- Stateless by design: no Achordion database, no analytics, no profile of you. Your data lives in your ListenBrainz account.
+- No Achordion-side profile of you. Your listens, follows, and playlists live in your ListenBrainz account, queried live on every page view.
 - It's the spiritual successor to Last.fm circa 2007, rebuilt for the streaming era on open data.
 - Open source: [github.com/jherskowitz/achordion](https://github.com/jherskowitz/achordion).
 
@@ -53,7 +53,7 @@ The longer version, in four pillars:
 
 **2. One click plays it, anywhere.** Every track row, every album cover, every chart entry, every "now playing" pin in a friend's feed has a `parachord://` deep link. Click it, Parachord wakes (if it isn't running), resolves the tracklist against your authorized services, and plays. No "open in Spotify" / "open in Apple Music" forks, no service-specific fallbacks, no library mutation. The same hand-off works for tracks, albums, playlists, and full ListenBrainz Radio stations.
 
-**3. Your data stays yours.** Achordion is *stateless*. There's no Achordion database, no Achordion analytics, no Achordion-side profile of you. Sign-in is OAuth against MusicBrainz; everything else is queried live from ListenBrainz on each page view. If Achordion disappeared tomorrow, none of your data would go with it — you'd point a different ListenBrainz client at the same account and pick up where you left off.
+**3. Your data stays yours.** Achordion doesn't store your listening data. There's no Achordion-side profile of you, no record of what you've played, no record of who you follow — all of that lives in your ListenBrainz account and is queried live on each page view. The only Achordion-side state is operational: a Redis cache that memoizes public ListenBrainz API responses (so we're polite to MetaBrainz's servers) and Vercel's privacy-focused Web Analytics for aggregate page-view counts. Neither one builds a profile of you, and neither one stores anything you'd consider yours. Sign-in is OAuth against MusicBrainz. If Achordion disappeared tomorrow, none of *your* data would go with it — you'd point a different ListenBrainz client at the same account and pick up where you left off.
 
 **4. Build the open web of music.** Every "+ Add sources" tile, every breadcrumb deep-linked back to MusicBrainz, every chart entry that points users into the canonical entity page is a small nudge toward editing MB. The more people who can find a missing relationship and fix it in one click, the better the open data gets — and the better Achordion *and every other MB client* gets for free.
 
