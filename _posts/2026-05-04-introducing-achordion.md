@@ -96,6 +96,10 @@ Modern Next.js 16 / React 19 / Turbopack stack on Vercel. OAuth via MusicBrainz 
 
 None of this infrastructure is mine. The MetaBrainz Foundation runs MusicBrainz and ListenBrainz on donations and a small team. If Achordion or Parachord provide you value from the MusicBrainz / ListenBrainz data — please [support them](https://metabrainz.org/donate).
 
+## A Note on Bots
+
+Achordion blocks AI training crawlers — GPTBot, ClaudeBot, CCBot, PerplexityBot, Applebot-Extended, Google-Extended, and friends — from walking our catalog routes. Partly to keep the site healthy under crawler load, partly because piping community-contributed listening data into a training set without attribution isn't the spirit this project was built on. Datacenter and proxy ASNs are blocked at the edge, per-IP rate limits cap any one client at a few requests per second, and our [`robots.ts`](https://github.com/jherskowitz/achordion/blob/main/app/robots.ts) + [`middleware.ts`](https://github.com/jherskowitz/achordion/blob/main/middleware.ts) are auditable in the public repo.
+
 ## What's Next
 
 The shipped feature set is meant to feel like an almost-feature-complete ListenBrainz web experience on day one — every page that listenbrainz.org offers, mirrored with a fresh visual language and tighter information architecture. From here, the work is mostly making even tigher integrations with Parachord (and other scrobblers & players).
