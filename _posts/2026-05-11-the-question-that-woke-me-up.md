@@ -28,7 +28,7 @@ A: Yes, yes they can.
 
 You've shared a song with someone on the wrong service. Everyone has. You're on Spotify, they're on Apple Music. You paste the link. They squint. They copy the title, paste it into their own app, hope they get the right version. Discovery that should feel exciting starts to feel like data entry.
 
-Parachord and Achordion just shipped an integration that fixes this for everyone — for free, on the open web, whether or not you ever install Parachord.
+We've been chipping away at this from the Parachord side for a while — [Parachord smart-links]({% post_url 2026-02-09-introducing-smartlinks %}) at `go.parachord.com` give you a single URL that resolves to whichever service the listener uses. The integration that just shipped extends that work in a meaningful way: Parachord plays now feed an *open* community-curated table of recording → streaming-URL pairings that anyone can read, including [Achordion]({% post_url 2026-05-04-introducing-achordion %}) — fixing the wrong-service-link problem for everyone, on the open web, whether or not you ever install Parachord.
 
 Every time someone plays a track in Parachord, the player has already done the hard work of finding that recording on whichever streaming service the listener is set up with — Spotify, Apple Music, YouTube Music, Tidal, Bandcamp, SoundCloud, the lot. That match isn't just internal state. It's a *human-confirmed pairing*: a real listener picked the song, picked a service, pressed play, and audio came out.
 
@@ -63,6 +63,8 @@ Same Achordion link, both audiences. The Parachord crowd gets lean-back; everyon
 Multi-service "play me on the service of your choice" pages — Songlink, Linkfire, Linktree's music tier — have historically been a paid product. Useful, but those subscriptions add up, and you're routing your fans through someone else's branding for the privilege.
 
 Achordion's track and album pages *are* multi-service smart links. Every recording and every album gets a canonical URL you can paste anywhere — a bio, a newsletter, a YouTube description, an Instagram link-in-bio — and the page itself shows the streaming row plus an "open in Achordion" affordance. Free. Open source. Attributable back to MusicBrainz and ListenBrainz, the open-data foundations the whole thing sits on.
+
+(Parachord's existing [`go.parachord.com` smart-links]({% post_url 2026-02-09-introducing-smartlinks %}) are still the right tool when you want a Parachord-hosted landing for a one-off track or a custom playlist. Achordion pages are the right tool when the thing you're sharing is a real catalog entity with an MBID — they're indexed, share metadata with MusicBrainz, and benefit from every Parachord listener's plays.)
 
 And every page has an embed widget. Drop something like this into your own site:
 
