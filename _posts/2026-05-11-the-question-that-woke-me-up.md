@@ -38,7 +38,7 @@ This works without Parachord. Send a friend an Achordion link, the friend on App
 
 ## What's in Parachord 0.9.2
 
-The submission half — Parachord contributing verified matches back to Achordion — ships in [Parachord 0.9.2 for desktop](https://github.com/Parachord/parachord/releases/tag/v0.9.2) (and [Parachord 0.6.0 for Android](https://github.com/Parachord/parachord-android/releases/tag/v0.6.0)) - both out today. 
+The submission half — Parachord contributing verified matches back to Achordion — ships in [Parachord 0.9.2 for desktop](https://github.com/Parachord/parachord/releases/tag/v0.9.2) (and [Parachord 0.6.1 for Android](https://github.com/Parachord/parachord-android/releases/)) - both out today. 
 
 A few things landed in desktop alongside the submit pipeline:
 
