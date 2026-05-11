@@ -1,0 +1,87 @@
+---
+layout: post
+title: "A Self-Building Database of Streaming Links for Every Song"
+date: 2026-05-11
+author: "J Herskowitz"
+category: "Announcement"
+---
+
+The question that woke me up this morning:
+
+> Can the distributed network of Parachord players — that are resolving thousands of tracks a day to multiple music services and storefronts — implicitly\* contribute to an open database of multi-service streaming links for artists, albums, and tracks, leveraged by [Achordion](https://achordion.xyz) so that everyone benefits, even if they don't use Parachord?
+
+A: Yes, yes they can.
+
+<sup>\*or you can opt out from the Plugins tab, but sharing is caring.</sup>
+
+<iframe
+  width="100%"
+  height="450"
+  src="https://www.youtube.com/embed/gOujIGsN7Ds"
+  title="Parachord + Achordion: multi-service smart-links, by accident on purpose"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
+
+## What this actually does
+
+You've shared or posted a song with a link to a song that the recipient(s) don't use. Everyone has. You're on Spotify, they're on Apple Music. You paste the link. They squint. They copy the title, paste it into their own app, hope they get the right version. Discovery that should feel exciting starts to feel like data entry.
+
+Parachord smart-links were [the first take]({% post_url 2026-02-09-introducing-smartlinks %}) at `go.parachord.com` — one URL that resolves to whichever service a recipient uses. They worked. But they lived in isolation. Smart-link generation now flows through [Achordion]({% post_url 2026-05-04-introducing-achordion %}) — keyed by MusicBrainz IDs, backed by a public community-curated table of recording → streaming-URL pairings that anyone can read, indexed and share-metadata-aware in a way the old format never could be.
+
+Every time someone plays a track in Parachord, the player has already done the hard work of finding that recording on whichever streaming service the listener is set up with — Spotify, Apple Music, YouTube, Bandcamp, SoundCloud, and other streaming plug-ins they have installed. That match isn't just internal state. It's a *human-confirmed pairing*: a real listener picked the song, pressed play, and music came out.
+
+We're now flowing those confirmations back to Achordion's link table. It's an enriched scrobble. As Parachord users listen, the table fills in. As the table fills in, every Achordion page for every recording and album sprouts a row of streaming-service tiles that point at the *same song* on each platform. As plug-ins for more streaming services are added to Parachord, more service links show up on Achordion. Click whichever service you use. No copy-paste, no search.
+
+The Parachord usage benefits the larger community. Send a friend an Achordion link, the friend on Apple Music clicks the Apple tile, the friend on Spotify clicks the Spotify tile, and everyone's listening to the actual song you meant.
+
+## What's in Parachord 0.9.2
+
+The submission half — Parachord contributing verified matches back to Achordion — ships in [Parachord 0.9.2 for desktop](https://github.com/Parachord/parachord/releases/tag/v0.9.2) (and [Parachord 0.6.1 for Android](https://github.com/Parachord/parachord-android/releases/)) — both out today.
+
+A few other related things landed alongside the submit pipeline:
+
+- **"View on Achordion" right-click** on tracks, albums, and artists. One click out of Parachord into the canonical multi-service landing page for whatever you're looking at.
+- **Share links + embed codes** on tracks and albums now route through Achordion. Copy a share link from Parachord, paste it anywhere, and the recipient lands on a service-agnostic page that works for them whether they have Parachord or not.
+- **Submissions are on by default**, no personal data attached — just the MusicBrainz ID of the track plus the streaming URLs Parachord matched it to.
+
+The other half — Parachord *consuming* the community-built database to skip live resolver searches when Achordion already has a known-good match — is the next thing on the roadmap. Today the contribution flows one way; soon it'll close the loop and Parachord itself will resolve faster as the table grows.
+
+## The two sides
+
+**For listeners without Parachord** — Achordion is a multi-service "play this on whatever service you use" landing page. Free. Open. Same shape no matter who's looking at it.
+
+**For listeners with Parachord** — playlists and stations work end to end. You can't really hand someone a Spotify-only playlist URL if they're an Apple Music user — they'd be hunting and pecking through 30 tracks one at a time, hoping each one lands on the right song. Most people just don't bother. Parachord plays the whole thing on whichever service *you* have, so passing playlists and stations across services becomes the obvious thing instead of the impossible one.
+
+Same Achordion link, both audiences. The Parachord crowd gets lean-back; everyone else gets the smart-link landing.
+
+## For artists: free, embeddable, multi-service smart-link pages
+
+Multi-service "play me on the service of your choice" pages — Feature.fm, Linkfire, Linktree's music tier — have all become commercial analytics products. Useful, but the subscriptions add up, and you're routing your fans through someone else's branding for the privilege.
+
+Achordion's track and album pages *are* multi-service smart links — and as of today, they're the smart-links Parachord generates when you click Share. Every recording and every album gets a canonical URL you can paste anywhere — a bio, a newsletter, a YouTube description, an Instagram link-in-bio — and the page itself shows the streaming row plus an "open in Achordion" affordance. Free. Open source. Attributable back to MusicBrainz and ListenBrainz, the open-data foundations the whole thing sits on.
+
+And every album and song page has an embeddable widget. Drop something like this into your own site:
+
+```html
+<iframe src="https://achordion.xyz/embed/album/efa54250-c7ba-47aa-9761-9a56aaf06887" width="600" height="260" loading="lazy" style="border:0;border-radius:12px" title="Achordion album"></iframe>
+```
+
+…and visitors get a clean cover-art card with the streaming services available, branded as part of *your* page rather than someone else's. Tracks get the same treatment in a more compact card; albums add an expandable tracklist with per-track service rows. Play your own song once in Parachord, and the embed populates with the streaming services your fans use.
+
+## The bigger picture
+
+The mapping from "this recording" to "the streaming URLs where it lives" is, surprisingly, the open music ecosystem's biggest data gap right now. MusicBrainz built the canonical metadata layer. ListenBrainz built the canonical listen-history layer. The layer in between — *where can I actually play this thing right now?* — has never had a community-curated open home. Commercial services charge for it. MusicBrainz's editor-driven URL relationships are sparse and slow to fill, because the only way to populate them is for someone to sit down and search, copy, and paste one streaming service link at a time.
+
+Parachord plus Achordion is the self-building version of that work. Nobody sits down to edit. The data gets built as a side effect of people listening to music. The same playbook MusicBrainz itself used against the closed fingerprint databases of the early 2000s: give humans the right tools and let them, just by being themselves, build something better than the corporate alternative.
+
+Sharing is caring.
+
+---
+
+If you're a listener: click around [achordion.xyz](https://achordion.xyz). Pin a track, share a station, see what shows up. If you're into similar music, maybe you want to follow [this guy](https://achordion.xyz/user/jherskowitz).
+
+If you're an artist: find your album page on [achordion.xyz](https://achordion.xyz), click the **Embed** button, and copy the snippet straight into your site.
+
+If you're already on Parachord, [grab 0.9.2](https://github.com/Parachord/parachord/releases/tag/v0.9.2) — every track you play now quietly grows the open table. If you're not running Parachord yet, [parachord.com](https://parachord.com) is the next step. Every play helps.
