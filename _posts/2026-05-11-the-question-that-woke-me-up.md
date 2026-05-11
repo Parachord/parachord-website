@@ -30,25 +30,23 @@ You've shared or posted a song with a link to a song that the recipient(s) don't
 
 We've been chipping away at this from the Parachord side for about 5 months now. The first take was [Parachord smart-links]({% post_url 2026-02-09-introducing-smartlinks %}) at `go.parachord.com` — one URL that resolves to whichever service a recipient uses. They worked. But they lived in isolation. Smart-link generation now flows through [Achordion]({% post_url 2026-05-04-introducing-achordion %}) — keyed by MusicBrainz IDs, backed by a public community-curated table of recording → streaming-URL pairings that anyone can read, indexed and share-metadata-aware in a way the old format never could be.
 
-Every time someone plays a track in Parachord, the player has already done the hard work of finding that recording on whichever streaming service the listener is set up with — Spotify, Apple Music, YouTube Music, Tidal, Bandcamp, SoundCloud, the lot. That match isn't just internal state. It's a *human-confirmed pairing*: a real listener picked the song, pressed play, and music came out.
+Every time someone plays a track in Parachord, the player has already done the hard work of finding that recording on whichever streaming service the listener is set up with — Spotify, Apple Music, YouTube, Bandcamp, SoundCloud, and other streaming plug-ins they have installed. That match isn't just internal state. It's a *human-confirmed pairing*: a real listener picked the song, pressed play, and music came out.
 
-We're now flowing those confirmations back to Achordion's public link table. It's sort of an enriched scrobble. As Parachord users listen, the table fills in. As the table fills in, every Achordion page for every recording and album sprouts a row of streaming-service tiles that point at the *same song* on each platform. Click whichever service you use. No copy-paste, no search.
+We're now flowing those confirmations back to Achordion's link table. It's sort of an enriched scrobble. As Parachord users listen, the table fills in. As the table fills in, every Achordion page for every recording and album sprouts a row of streaming-service tiles that point at the *same song* on each platform. As plug-ins for more streaming services are added to Parachord, more service links show up on Achordion. Click whichever service you use. No copy-paste, no search.
 
-This works without Parachord. Send a friend an Achordion link, the friend on Apple Music clicks the Apple tile, the friend on Spotify clicks the Spotify tile, and everyone's listening to the actual song you meant.
+The Parachord usage benefits the larger community. Send a friend an Achordion link, the friend on Apple Music clicks the Apple tile, the friend on Spotify clicks the Spotify tile, and everyone's listening to the actual song you meant.
 
 ## What's in Parachord 0.9.2
 
 The submission half — Parachord contributing verified matches back to Achordion — ships in [Parachord 0.9.2 for desktop](https://github.com/Parachord/parachord/releases/tag/v0.9.2) (and [Parachord 0.6.1 for Android](https://github.com/Parachord/parachord-android/releases/)) - both out today. 
 
-A few things landed in desktop alongside the submit pipeline:
+A few other related things landed alongside the submit pipeline:
 
 - **"View on Achordion" right-click** on tracks, albums, and artists. One click out of Parachord into the canonical multi-service landing page for whatever you're looking at.
 - **Share links + embed codes** on tracks and albums now route through Achordion. Copy a share link from Parachord, paste it anywhere, and the recipient lands on a service-agnostic page that works for them whether they have Parachord or not.
 - **Submissions are on by default**, with no personal data attached — just the MusicBrainz ID of the track plus the streaming URLs Parachord matched it to. If you'd rather not contribute, the toggle lives in the Plugins tab.
 
 The other half — Parachord *consuming* the community-built database to skip live resolver searches when Achordion already has a known-good match — is the next thing on the roadmap. Today the contribution flows one way; soon it'll close the loop and Parachord itself will resolve faster as the table grows.
-
-(0.9.2 also ships a meaningful chunk of performance + reliability work — cold-launch is snappier, big local-library imports no longer freeze the app, embedded album art shows up immediately, listen-along works again, and the resolver does less work in a smarter order. The [full release notes](https://github.com/Parachord/parachord/releases/tag/v0.9.2) have the details.)
 
 ## The two sides
 
@@ -60,9 +58,9 @@ Same Achordion link, both audiences. The Parachord crowd gets lean-back; everyon
 
 ## For artists: free, embeddable, multi-service smart-link pages
 
-Multi-service "play me on the service of your choice" pages — Songlink, Linkfire, Linktree's music tier — have historically been a paid product. Useful, but those subscriptions add up, and you're routing your fans through someone else's branding for the privilege.
+Multi-service "play me on the service of your choice" pages — Feature.fm, Linkfire, Linktree's music tier — are increaingly becoming commercial analtyics products. Useful, but those subscriptions add up, and you're routing your fans through someone else's branding for the privilege.
 
-Achordion's track and album pages *are* multi-service smart links — and as of 0.9.2, they're the smart-links Parachord generates when you click Share. Every recording and every album gets a canonical URL you can paste anywhere — a bio, a newsletter, a YouTube description, an Instagram link-in-bio — and the page itself shows the streaming row plus an "open in Achordion" affordance. Free. Open source. Attributable back to MusicBrainz and ListenBrainz, the open-data foundations the whole thing sits on.
+Achordion's track and album pages *are* multi-service smart links — and as of today, they're the smart-links Parachord generates when you click Share. Every recording and every album gets a canonical URL you can paste anywhere — a bio, a newsletter, a YouTube description, an Instagram link-in-bio — and the page itself shows the streaming row plus an "open in Achordion" affordance. Free. Open source. Attributable back to MusicBrainz and ListenBrainz, the open-data foundations the whole thing sits on.
 
 And every album and song page has an embeddable widget. Drop something like this into your own site:
 
@@ -70,7 +68,7 @@ And every album and song page has an embeddable widget. Drop something like this
 <iframe src="https://achordion.xyz/embed/album/efa54250-c7ba-47aa-9761-9a56aaf06887" width="600" height="260" loading="lazy" style="border:0;border-radius:12px" title="Achordion album"></iframe>
 ```
 
-…and visitors get a clean cover-art card with the streaming services available, branded as part of *your* page rather than someone else's. Tracks get the same treatment in a more compact card; albums add an expandable tracklist with per-track service rows.
+…and visitors get a clean cover-art card with the streaming services available, branded as part of *your* page rather than someone else's. Tracks get the same treatment in a more compact card; albums add an expandable tracklist with per-track service rows. Just giving your new song a quick listen in Parachord will seed the page/embed with the links your fans are looking for.
 
 ## The bigger picture
 
