@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The question that woke me up this morning"
+title: "A Self-Building Database of Streaming Links for Every Song"
 date: 2026-05-11
 author: "J Herskowitz"
 category: "Announcement"
@@ -26,21 +26,21 @@ A: Yes, yes they can.
 
 ## What this actually does
 
-You've shared a song with someone on the wrong service. Everyone has. You're on Spotify, they're on Apple Music. You paste the link. They squint. They copy the title, paste it into their own app, hope they get the right version. Discovery that should feel exciting starts to feel like data entry.
+You've shared or posted a song with a link to a song that the recipient(s) don't use. Everyone has. You're on Spotify, they're on Apple Music. You paste the link. They squint. They copy the title, paste it into their own app, hope they get the right version. Discovery that should feel exciting starts to feel like data entry.
 
-We've been chipping away at this from the Parachord side for a while. The first take was [Parachord smart-links]({% post_url 2026-02-09-introducing-smartlinks %}) at `go.parachord.com` — one URL that resolves to whichever service a recipient uses. They worked. But they were a closed system: the IDs were ours, the metadata was ours, the landing pages were ours. The new version is open all the way down. Smart-link generation now flows through [Achordion]({% post_url 2026-05-04-introducing-achordion %}) — keyed by MusicBrainz IDs, backed by a public community-curated table of recording → streaming-URL pairings that anyone can read, indexed and share-metadata-aware in a way the old format never could be.
+We've been chipping away at this from the Parachord side for about 5 months now. The first take was [Parachord smart-links]({% post_url 2026-02-09-introducing-smartlinks %}) at `go.parachord.com` — one URL that resolves to whichever service a recipient uses. They worked. But they lived in isolation. Smart-link generation now flows through [Achordion]({% post_url 2026-05-04-introducing-achordion %}) — keyed by MusicBrainz IDs, backed by a public community-curated table of recording → streaming-URL pairings that anyone can read, indexed and share-metadata-aware in a way the old format never could be.
 
-Every time someone plays a track in Parachord, the player has already done the hard work of finding that recording on whichever streaming service the listener is set up with — Spotify, Apple Music, YouTube Music, Tidal, Bandcamp, SoundCloud, the lot. That match isn't just internal state. It's a *human-confirmed pairing*: a real listener picked the song, picked a service, pressed play, and audio came out.
+Every time someone plays a track in Parachord, the player has already done the hard work of finding that recording on whichever streaming service the listener is set up with — Spotify, Apple Music, YouTube Music, Tidal, Bandcamp, SoundCloud, the lot. That match isn't just internal state. It's a *human-confirmed pairing*: a real listener picked the song, pressed play, and music came out.
 
-We're now flowing those confirmations back to Achordion's public link table. As Parachord users listen, the table fills in. As the table fills in, every Achordion page for every recording and album sprouts a row of streaming-service tiles that point at the *same song* on each platform. Click whichever service you use. No copy-paste, no search.
+We're now flowing those confirmations back to Achordion's public link table. It's sort of an enriched scrobble. As Parachord users listen, the table fills in. As the table fills in, every Achordion page for every recording and album sprouts a row of streaming-service tiles that point at the *same song* on each platform. Click whichever service you use. No copy-paste, no search.
 
 This works without Parachord. Send a friend an Achordion link, the friend on Apple Music clicks the Apple tile, the friend on Spotify clicks the Spotify tile, and everyone's listening to the actual song you meant.
 
 ## What's in Parachord 0.9.2
 
-The submission half — Parachord contributing verified matches back to Achordion — ships in [Parachord 0.9.2](https://github.com/Parachord/parachord/releases/tag/v0.9.2), out today. (Same release that drops the "beta" tag from the version string. Bigger milestone than the .2 bump suggests.)
+The submission half — Parachord contributing verified matches back to Achordion — ships in [Parachord 0.9.2 for desktop](https://github.com/Parachord/parachord/releases/tag/v0.9.2) (and [Parachord 0.6.0 for Android](https://github.com/Parachord/parachord-android/releases/tag/v0.6.0)) - both out today. 
 
-A few things landed alongside the submit pipeline:
+A few things landed in desktop alongside the submit pipeline:
 
 - **"View on Achordion" right-click** on tracks, albums, and artists. One click out of Parachord into the canonical multi-service landing page for whatever you're looking at.
 - **Share links + embed codes** on tracks and albums now route through Achordion. Copy a share link from Parachord, paste it anywhere, and the recipient lands on a service-agnostic page that works for them whether they have Parachord or not.
@@ -64,7 +64,7 @@ Multi-service "play me on the service of your choice" pages — Songlink, Linkfi
 
 Achordion's track and album pages *are* multi-service smart links — and as of 0.9.2, they're the smart-links Parachord generates when you click Share. Every recording and every album gets a canonical URL you can paste anywhere — a bio, a newsletter, a YouTube description, an Instagram link-in-bio — and the page itself shows the streaming row plus an "open in Achordion" affordance. Free. Open source. Attributable back to MusicBrainz and ListenBrainz, the open-data foundations the whole thing sits on.
 
-And every page has an embed widget. Drop something like this into your own site:
+And every album and song page has an embeddable widget. Drop something like this into your own site:
 
 ```html
 <iframe src="https://achordion.xyz/embed/album/efa54250-c7ba-47aa-9761-9a56aaf06887" width="600" height="260" loading="lazy" style="border:0;border-radius:12px" title="Achordion album"></iframe>
@@ -76,13 +76,13 @@ And every page has an embed widget. Drop something like this into your own site:
 
 The mapping from "this recording" to "the streaming URLs where it lives" is, surprisingly, the open music ecosystem's biggest data gap right now. MusicBrainz built the canonical metadata layer. ListenBrainz built the canonical listen-history layer. The layer in between — *where can I actually play this thing right now?* — has never had a community-curated open home. Commercial services charge for it. MusicBrainz's editor-driven URL relationships are sparse and slow to fill, because the only way to populate them is for someone to sit down and search, copy, and paste one streaming service link at a time.
 
-Parachord plus Achordion is the implicit-contribution version of that work. Nobody sits down to edit. The data gets built as a side effect of people listening to music. The same playbook MusicBrainz itself used against the closed fingerprint databases of the early 2000s: give humans the right tools and let them, just by being themselves, build something better than the corporate alternative.
+Parachord plus Achordion is the self-building version of that work. Nobody sits down to edit. The data gets built as a side effect of people listening to music. The same playbook MusicBrainz itself used against the closed fingerprint databases of the early 2000s: give humans the right tools and let them, just by being themselves, build something better than the corporate alternative.
 
 Sharing is caring.
 
 ---
 
-If you're a listener: click around [achordion.xyz](https://achordion.xyz). Pin a track, share a station, see what shows up.
+If you're a listener: click around [achordion.xyz](https://achordion.xyz). Pin a track, share a station, see what shows up. If you're into similar music, maybe you want to follow [this guy](https://achordion.xyz/user/jherskowitz).
 
 If you're an artist: find your album page on [achordion.xyz](https://achordion.xyz), click the **Embed** button, and copy the snippet straight into your site.
 
