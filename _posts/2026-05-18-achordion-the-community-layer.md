@@ -16,7 +16,7 @@ This post is about the social layer that's filled in between then and now — an
 - **Cross-platform handshakes**: link your Bluesky once, and your Achordion profile picks up your bsky avatar, bio, and a "Find your Bluesky friends on Achordion" section. Your followers see the linkage as a feed event.
 - **A real activity feed** — pins, loves, recommendations, follows, plus four new Achordion-side event types: `loved_recording`, `bsky_friend_linked`, `mention` (when someone `@you` in a pin's blurb), `listen_along` (someone tuned into your stream in Parachord), and `playlist_published` (when a friend flips a playlist public). Unread-count badge in the nav, opt-in browser notifications when there's something new.
 - **Playlists got a second life**: a real browsable tab on every profile with filter, sort, lazy cover mosaics, Load-more pagination, an owner-side Public / Private filter pill, an inline visibility toggle on every card, and Delete from the overflow menu.
-- **The Parachord knot tightened**: playlist mirror-links that Parachord submits show up as favicon tiles inline with the playlist's action row. The Listen-along pill records a synthetic event everywhere it renders. Radio Rewind pages picked up the same overflow menu as playlists so everything plays into Parachord the same way.
+- **The Parachord knot tightened**: playlist mirror-links that Parachord submits show up as favicon tiles inline with the playlist's action row. The Listen-along pill records a synthetic event everywhere it renders. 
 
 The rest of the post is a tour of the surfaces.
 
@@ -85,15 +85,10 @@ Every card on your own profile has an **inline visibility toggle** — flip Publ
 
 A few smaller pieces that close some loops:
 
-**Playlist mirror-links from Parachord.** Per the [previous post]({% post_url 2026-05-11-the-question-that-woke-me-up %}), Parachord submits the streaming URLs it resolves back to Achordion. For playlists, those mirror links now render as favicon tiles right next to the playlist's overflow menu — same visual pattern as the recording and album pages. The submit endpoint busts the playlist page's cache on success, so a Parachord-side push surfaces on the next page visit instead of waiting out the edge TTL. ListenBrainz isn't shown in that tile row (Achordion's already a LB mirror; linking back would be redundant).
+**Playlist mirror-links from Parachord.** Per the [previous post]({% post_url 2026-05-11-the-question-that-woke-me-up %}), Parachord submits the streaming URLs it resolves back to Achordion. For playlists, those mirror links now render as favicon tiles right next to the playlist's overflow menu — same visual pattern as the recording and album pages. 
 
 **Listen-along beacon, anywhere the pill renders.** The Listen along pill exists in three places — profile headers, user cards in lists, and the compact now-playing pill — and all three now fire the same beacon when Parachord is confirmed connected. The shared `<ListenAlongLink>` component is the only thing that knows about the beacon shape, so future surfaces get the integration for free.
 
-**Radio Rewind overflow-menu parity.** The college/public-radio rewind station pages picked up the same overflow menu as playlists, so the XSPF download / Share / Open-in-Parachord actions are in the consistent spot. Tune into any station as a one-click hand-off; export the XSPF for use anywhere.
-
-**Friendlier failure modes.** When LB rate-limits us mid-page-load, the resulting page now reads "ListenBrainz is rate-limiting us — try again in a few seconds" with retry guidance, instead of dumping the raw `429 Too Many Requests` string. Our own per-IP rate-limit on the middleware likewise serves a styled "Slow down a sec" page with Try again / Back to home buttons instead of plaintext.
-
-**Distinct-artist count is exact.** The "Number of artists" milestone chip used to bottom out at ">500 artists" because we were counting an array LB capped at 500 rows. LB actually exposes the exact lifetime total in the same payload; we read that now. Rob shows 8.6k artists; the long-tail open-music listeners can finally see their actual numbers.
 
 ## What's behind the curtain
 
@@ -101,7 +96,6 @@ Almost every new event type lives behind a feature flag (`listen-along-events`, 
 
 The synthetic-event pipeline now handles five non-LB event types, all sharing the same `FeedEvent` shape so a single renderer dispatches them. Adding a sixth is a small PR: index helper + reader + renderer branch + flag definition. The architecture is intentionally cheap to extend, because the open-community front-end keeps growing surfaces.
 
-A handful of operational tightening landed in support of all this: admin **Cache** tab for manual cache busts when a Parachord-side write needs to surface immediately, per-entity tag-vote cache busting so a vote on a recording surfaces on the next page render instead of after the next day, concurrency cap on the playlist mosaic loader so a fast scroll through 100 playlists doesn't pile up parallel LB calls, plus a friendlier 429 page when something does go wrong. Mostly invisible, all in service of the rest of the experience feeling instant.
 
 ## Try it
 
