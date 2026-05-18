@@ -75,13 +75,13 @@ There's an unread-count badge in the nav for new activity, and you can opt into 
 
 ## Pinned songs as a social atom
 
-The pin button on every track was always there, but it now updates instantly. Click pin → toast → your profile and Pins tab paint the new pin in place, no manual reload. The Overview pin and the dedicated Pins tab pull from the same cache slot so they no longer drift; whichever surface you land on first shows the same fresh state.
+The pin button on every track was always there, but it now updates instantly. Click pin → toast → your profile and Pins tab paint the new pin in place, no manual reload. 
 
 Combined with the `@-mention` flow, this turns pins into a real social atom: pin a track, write *"@friend you have to hear this — chorus at 1:42"*, and the friend gets the pin in their feed (with the unread-count badge and an opt-in browser notification), with the song embedded inline and one click to play in Parachord.
 
 ## Playlists, finally
 
-LB's playlists endpoint is one of the richer surfaces in the API, but it had never gotten the UI love it deserves. Today every profile has a full **Playlists** tab that:
+ListenBrainz's playlists endpoint is one of the richer surfaces in the API, but I decided to give them a bit more UI love. Today every profile has a full **Playlists** tab that:
 
 - Browses with **filter-as-you-type** (matches title + description).
 - **Sorts** by Modified / Created / Title, both directions.
@@ -89,7 +89,6 @@ LB's playlists endpoint is one of the richer surfaces in the API, but it had nev
 - **Loads more** past the first hundred with the same scroll-into-view UX.
 - **On your own profile**, surfaces a Public / Private / All pill so you can scope the list.
 
-Every card on your own profile has an **inline visibility toggle** — flip Public ↔ Private without opening the playlist. The per-playlist overflow menu now has a **Delete playlist** action (with a confirm dialog, since LB has no undelete). Clicking the card navigates to the playlist; clicking the toggle pill flips visibility; the two interactions don't conflict thanks to a stretched-link pattern on the card.
 
 ## The Parachord knot tightened
 
