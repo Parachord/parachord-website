@@ -24,6 +24,11 @@ The rest of the post is a tour of the surfaces.
 
 ListenBrainz holds your listening data. Achordion's job is to turn that into something that reads as a *person* at a glance — not as a leaderboard or a heatmap.
 
+![Achordion profile header showing the auto-bio sentence, archetype + milestone chips, the colorful listener fingerprint glyph, and the user's currently-playing track.](/assets/achordion-profile-header.png){:style="display: block; max-width: 100%; margin: 1.5rem auto; border-radius: 8px;"}
+
+*A profile header in practice — auto-bio under the username, archetype + milestone chips wrapping below it, fingerprint glyph on the right, and the user's currently-spinning track inline with a Listen-along pill.*
+{:style="display: block; max-width: 100%; margin: 0 auto 1.5rem; text-align: center; font-size: 0.875rem; color: #6b7280;"}
+
 Three layers stacked on every profile header today:
 
 **The auto-bio**, a single live sentence in the user's voice: *"Currently spinning The Replacements, Quarantine Angst, and Bon Iver."* No one writes it, no one maintains it, the artists link to their pages, and the names rotate as the user's listening shifts. If the profile owner has linked Bluesky, their bsky bio shows here instead — so the two surfaces stay coherent without making anyone write copy twice.
@@ -35,11 +40,6 @@ Three layers stacked on every profile header today:
 **The fingerprint** — a radial-bar SVG glyph on every profile header. Each wedge is one of that user's top 24 artists. Bar height = relative plays. Color = a deterministic hash of the artist's top genre, so any two listeners with heavy jazz overlap have visible color clusters in their fingerprints — at a glance, you can tell people apart by what they listen to. Hover a wedge to highlight it and see the artist + play count; click to open the artist page.
 
 The whole identity strip costs nothing extra — it's stateless, derived live from LB stats endpoints, and cached at the LB-client layer. Nobody writes anything. Nobody maintains anything. Walk onto any profile and there's a person looking back.
-
-![Achordion profile header showing the auto-bio sentence, archetype + milestone chips, the colorful listener fingerprint glyph, and the user's currently-playing track.](/assets/achordion-profile-header.png){:style="display: block; max-width: 100%; margin: 1.5rem auto; border-radius: 8px;"}
-
-*A profile header in practice — auto-bio under the username, archetype + milestone chips wrapping below it, fingerprint glyph on the right, and the user's currently-spinning track inline with a Listen-along pill.*
-{:style="display: block; max-width: 100%; margin: 0 auto 1.5rem; text-align: center; font-size: 0.875rem; color: #6b7280;"}
 
 ## Cross-platform identity: Bluesky
 
