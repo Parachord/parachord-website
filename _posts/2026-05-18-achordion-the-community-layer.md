@@ -63,6 +63,11 @@ There's an unread-count badge in the nav for new activity, and you can opt into 
 
 @-mentions render as clickable links anywhere a pin blurb shows up — profile pinned-track cards, the activity feed, the autocomplete suggestions in the pin dialog itself. You can tag people without needing to remember their exact username casing.
 
+![Achordion's My Feed view: synthetic "You listened along with kutx in Parachord" event at the top, followed by loves, pins (one with an @mention rendered as a clickable handle), and follow events from accounts the viewer follows on ListenBrainz.](/assets/achordion-feed-screenshot.png){:style="display: block; max-width: 100%; margin: 1.5rem auto; border-radius: 8px;"}
+
+*The feed in practice — `listen_along` synthetic event at the top, an `@phredspin` mention in an older pin rendered as a link, plus the LB-native loves / pins / follows. Five event sources merging into one stream.*
+{:style="display: block; max-width: 100%; margin: 0 auto 1.5rem; text-align: center; font-size: 0.875rem; color: #6b7280;"}
+
 ## Pinned songs as a social atom
 
 The pin button on every track was always there, but it now updates instantly. Click pin → toast → your profile and Pins tab paint the new pin in place, no manual reload. The Overview pin and the dedicated Pins tab pull from the same cache slot so they no longer drift; whichever surface you land on first shows the same fresh state.
