@@ -32,11 +32,19 @@ describe('router', () => {
   });
 
   it('serves template B for /play with query', async () => {
-    const r = await get('https://parachord.com/play?artist=Radiohead&title=Karma+Police');
-    expect(r.status).toBe(200);
-    const body = await r.text();
-    expect(body).toContain('Radiohead');
-    expect(body).toContain('Karma Police');
+    const original = globalThis.fetch;
+    globalThis.fetch = async () => new Response(JSON.stringify({ results: [] }), {
+      status: 200, headers: { 'content-type': 'application/json' }
+    });
+    try {
+      const r = await get('https://parachord.com/play?artist=Radiohead&title=Karma+Police');
+      expect(r.status).toBe(200);
+      const body = await r.text();
+      expect(body).toContain('Radiohead');
+      expect(body).toContain('Karma Police');
+    } finally {
+      globalThis.fetch = original;
+    }
   });
 
   it('passes /blog/foo through to GH Pages origin', async () => {

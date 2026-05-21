@@ -1,4 +1,4 @@
-import { renderShell } from '../render.js';
+import { renderShell, escapeHtml } from '../render.js';
 
 function copyFor(pathname, query) {
   const t = query.title;
@@ -36,12 +36,13 @@ function copyFor(pathname, query) {
 
 export function renderTemplateB({ pathname, query, deepLink, cta, canonicalUrl, coverArtUrl }) {
   const { title, subtitle } = copyFor(pathname, query);
-  const hero = coverArtUrl
-    ? `<div class="hero"><img src="${coverArtUrl.replace(/"/g, '&quot;')}" alt=""></div>`
+  const safeImg = coverArtUrl && /^https:\/\//i.test(coverArtUrl) ? escapeHtml(coverArtUrl) : null;
+  const hero = safeImg
+    ? `<div class="hero"><img src="${safeImg}" alt=""></div>`
     : `<div class="hero"></div>`;
   return renderShell({
     title, subtitle, deepLink, cta, canonicalUrl,
-    ogImage: coverArtUrl || 'https://parachord.com/assets/home.png',
+    ogImage: safeImg ? coverArtUrl : 'https://parachord.com/assets/home.png',
     hero
   });
 }

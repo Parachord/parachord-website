@@ -41,6 +41,31 @@ describe('renderTemplateB', () => {
     expect(html.toLowerCase()).toContain('parachord');
   });
 
+  it('drops non-https cover art URLs', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: { title: 'X', artist: 'Y' },
+      deepLink: 'parachord://play',
+      cta,
+      canonicalUrl: 'https://parachord.com/play',
+      coverArtUrl: 'javascript:alert(1)'
+    });
+    expect(html).not.toContain('javascript:alert');
+    expect(html).not.toContain('<img');
+  });
+
+  it('escapes HTML-special chars in cover-art URL', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: { title: 'X', artist: 'Y' },
+      deepLink: 'parachord://play',
+      cta,
+      canonicalUrl: 'https://parachord.com/play',
+      coverArtUrl: 'https://example.com/img.jpg?a=1&b=<2>'
+    });
+    expect(html).toContain('&amp;b=&lt;2&gt;');
+  });
+
   it('handles /import with a url param', () => {
     const html = renderTemplateB({
       pathname: '/import',

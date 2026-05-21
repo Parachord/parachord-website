@@ -92,6 +92,31 @@ describe('renderTemplateC', () => {
     expect(html).toMatch(/<img[^>]+src="https:\/\/i\.scdn\.co\/image\/xyz\.jpg"/);
   });
 
+  it('drops non-https cover art URLs', () => {
+    const html = renderTemplateC({
+      pathname: '/artist/foo',
+      query: {},
+      deepLink: 'parachord://artist/foo',
+      cta,
+      canonicalUrl: 'https://parachord.com/artist/foo',
+      coverArtUrl: 'javascript:alert(1)'
+    });
+    expect(html).not.toContain('javascript:alert');
+    expect(html).not.toContain('<img');
+  });
+
+  it('escapes HTML-special chars in cover-art URL', () => {
+    const html = renderTemplateC({
+      pathname: '/artist/foo',
+      query: {},
+      deepLink: 'parachord://artist/foo',
+      cta,
+      canonicalUrl: 'https://parachord.com/artist/foo',
+      coverArtUrl: 'https://example.com/img.jpg?a=1&b=<2>'
+    });
+    expect(html).toContain('&amp;b=&lt;2&gt;');
+  });
+
   it('renders a gradient hero (no img tag) when no cover art is provided', () => {
     const html = renderTemplateC({
       pathname: '/artist/radiohead',
