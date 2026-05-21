@@ -30,3 +30,48 @@ export function handleAssetLinks() {
     }
   });
 }
+
+const AASA = {
+  applinks: {
+    details: [
+      {
+        // appIDs stays empty until parachord-android#124 (iOS) lands.
+        appIDs: [],
+        components: [
+          { '/': '/play',           '?': { '*': '*' } },
+          { '/': '/play/*' },
+          { '/': '/listen-along',   '?': { '*': '*' } },
+          { '/': '/import',         '?': { '*': '*' } },
+          { '/': '/queue/*' },
+          { '/': '/control/*' },
+          { '/': '/shuffle/*' },
+          { '/': '/volume/*' },
+          { '/': '/artist/*' },
+          { '/': '/album/*' },
+          { '/': '/playlist/*' },
+          { '/': '/library*' },
+          { '/': '/history*' },
+          { '/': '/friend/*' },
+          { '/': '/recommendations*' },
+          { '/': '/playlists' },
+          { '/': '/charts' },
+          { '/': '/critics-picks' },
+          { '/': '/settings*' },
+          { '/': '/search',         '?': { '*': '*' } },
+          { '/': '/chat',           '?': { '*': '*' } },
+          { '/': '/home' }
+        ]
+      }
+    ]
+  }
+};
+
+export function handleAasa() {
+  return new Response(JSON.stringify(AASA, null, 2), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600'
+    }
+  });
+}
