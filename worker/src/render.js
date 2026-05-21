@@ -57,7 +57,7 @@ export function renderShell({ title, subtitle, deepLink, cta, canonicalUrl, ogIm
   <a href="${ctaHref}" class="cta">${ctaLabel}</a>
   <a href="parachord://" class="alt">Already have Parachord? Open it</a>
 </div>
-<script>setTimeout(_=>{location.href=${JSON.stringify(deepLink)}},50);</script>
+<script>setTimeout(_=>{location.href=${JSON.stringify(deepLink).replace(/</g, '\\u003c')}},50);</script>
 </body>
 </html>`;
 }

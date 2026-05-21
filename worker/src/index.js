@@ -70,6 +70,8 @@ async function passthrough(request, env) {
   const origin = env.GH_PAGES_ORIGIN || 'https://parachord.github.io';
   const url = new URL(request.url);
   const upstream = new URL(url.pathname + url.search, origin);
+  // Forwards Host: parachord.com intentionally — GH Pages routes on Host for
+  // the custom-domain CNAME. Do not strip.
   const upstreamReq = new Request(upstream.toString(), {
     method: request.method,
     headers: request.headers,
