@@ -10,19 +10,18 @@
 //   android -keypass android` on 2026-05-25. Matches the debug APK
 //   the Android team sideloads via `./gradlew installDebug`.
 //
-// - **Release**: still placeholder. This app uses Play App Signing,
-//   so the cert that matters for App Links verification is Google's
-//   signing cert, NOT the upload key in the repo's CI keystore. Pull
-//   from Play Console → Setup → App integrity → App signing → App
-//   signing key certificate → SHA-256 certificate fingerprint, and
-//   swap inline.
+// - **Release**: Google's signing cert from Play App Signing — pulled
+//   from Play Console → `com.parachord.android` → Setup → App integrity
+//   → App signing → App signing key certificate → SHA-256 on 2026-05-25.
+//   NOT the upload key in the Android repo's CI keystore (that one
+//   signs the AAB Google then re-signs with this cert).
 const ASSETLINKS = [
   {
     relation: ['delegate_permission/common.handle_all_urls'],
     target: {
       namespace: 'android_app',
       package_name: 'com.parachord.android',
-      sha256_cert_fingerprints: ['REPLACE_WITH_RELEASE_SHA256_FROM_PLAY_CONSOLE']
+      sha256_cert_fingerprints: ['2F:32:00:79:AD:48:31:7E:3C:88:5F:42:07:D8:3A:7E:11:25:DC:8C:06:62:99:DB:98:C5:EA:C1:FC:79:5C:C9']
     }
   },
   {
