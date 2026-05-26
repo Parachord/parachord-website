@@ -13,11 +13,19 @@ routes = [
   # Well-known files
   { pattern = "parachord.com/.well-known/*", zone_name = "parachord.com" },
 
-  # Universal-link verb routes (must match AASA components in src/well-known.js)
-  { pattern = "parachord.com/play",           zone_name = "parachord.com" },
-  { pattern = "parachord.com/play/*",         zone_name = "parachord.com" },
-  { pattern = "parachord.com/listen-along",   zone_name = "parachord.com" },
-  { pattern = "parachord.com/import",         zone_name = "parachord.com" },
+  # Universal-link verb routes — wildcard suffix on every verb so query strings
+  # are captured (CF treats `?query` as part of the URL for route matching;
+  # an exact `parachord.com/play` route would NOT catch `/play?artist=X`).
+  # The wildcard pattern matches greedily — e.g. `/play*` also captures
+  # `/playlist`, `/playlists`, `/playoffs`. That's fine because the Worker's
+  # internal classifyPath() routes /playlist and /playlists to the right
+  # templates and only sends genuinely-unrouted traffic to passthrough.
+  # If a future marketing path starts with one of these prefixes (e.g.
+  # `/searches`), add it to the Jekyll site at the same time as adding a
+  # narrower route here.
+  { pattern = "parachord.com/play*",          zone_name = "parachord.com" },
+  { pattern = "parachord.com/listen-along*",  zone_name = "parachord.com" },
+  { pattern = "parachord.com/import*",        zone_name = "parachord.com" },
   { pattern = "parachord.com/queue/*",        zone_name = "parachord.com" },
   { pattern = "parachord.com/control/*",      zone_name = "parachord.com" },
   { pattern = "parachord.com/shuffle/*",      zone_name = "parachord.com" },
@@ -25,21 +33,16 @@ routes = [
   { pattern = "parachord.com/artist/*",       zone_name = "parachord.com" },
   { pattern = "parachord.com/album/*",        zone_name = "parachord.com" },
   { pattern = "parachord.com/playlist/*",     zone_name = "parachord.com" },
-  { pattern = "parachord.com/library",        zone_name = "parachord.com" },
-  { pattern = "parachord.com/library/*",      zone_name = "parachord.com" },
-  { pattern = "parachord.com/history",        zone_name = "parachord.com" },
-  { pattern = "parachord.com/history/*",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/library*",       zone_name = "parachord.com" },
+  { pattern = "parachord.com/history*",       zone_name = "parachord.com" },
   { pattern = "parachord.com/friend/*",       zone_name = "parachord.com" },
-  { pattern = "parachord.com/recommendations", zone_name = "parachord.com" },
-  { pattern = "parachord.com/recommendations/*", zone_name = "parachord.com" },
-  { pattern = "parachord.com/settings",       zone_name = "parachord.com" },
-  { pattern = "parachord.com/settings/*",     zone_name = "parachord.com" },
-  { pattern = "parachord.com/playlists",      zone_name = "parachord.com" },
-  { pattern = "parachord.com/charts",         zone_name = "parachord.com" },
-  { pattern = "parachord.com/critics-picks",  zone_name = "parachord.com" },
-  { pattern = "parachord.com/search",         zone_name = "parachord.com" },
-  { pattern = "parachord.com/chat",           zone_name = "parachord.com" },
-  { pattern = "parachord.com/home",           zone_name = "parachord.com" },
+  { pattern = "parachord.com/recommendations*", zone_name = "parachord.com" },
+  { pattern = "parachord.com/settings*",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/charts*",        zone_name = "parachord.com" },
+  { pattern = "parachord.com/critics-picks*", zone_name = "parachord.com" },
+  { pattern = "parachord.com/search*",        zone_name = "parachord.com" },
+  { pattern = "parachord.com/chat*",          zone_name = "parachord.com" },
+  { pattern = "parachord.com/home*",          zone_name = "parachord.com" },
 ]
 
 [vars]
