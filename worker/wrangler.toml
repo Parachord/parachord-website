@@ -3,11 +3,9 @@ main = "src/index.js"
 compatibility_date = "2026-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Route is commented out until DNS migration is done. Uncomment in the
-# deploy PR that flips the cutover.
-# routes = [
-#   { pattern = "parachord.com/*", zone_name = "parachord.com" }
-# ]
+routes = [
+  { pattern = "parachord.com/*", zone_name = "parachord.com" }
+]
 
 [vars]
 # Public, non-secret defaults. Secrets go via `wrangler secret put`.
