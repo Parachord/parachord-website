@@ -3,10 +3,47 @@ main = "src/index.js"
 compatibility_date = "2026-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Specific routes only. Everything else falls through to Cloudflare's
+# normal proxy → GH Pages (which routes by Host: parachord.com).
+# Wildcard `parachord.com/*` would intercept the marketing site too,
+# and Worker subrequests can't override the Host header on free tier,
+# so GH Pages would 404 on passthrough. Keeping the route surface
+# narrow lets CF's built-in proxy handle the rest natively.
 routes = [
-  { pattern = "parachord.com/*", zone_name = "parachord.com" }
+  # Well-known files
+  { pattern = "parachord.com/.well-known/*", zone_name = "parachord.com" },
+
+  # Universal-link verb routes (must match AASA components in src/well-known.js)
+  { pattern = "parachord.com/play",           zone_name = "parachord.com" },
+  { pattern = "parachord.com/play/*",         zone_name = "parachord.com" },
+  { pattern = "parachord.com/listen-along",   zone_name = "parachord.com" },
+  { pattern = "parachord.com/import",         zone_name = "parachord.com" },
+  { pattern = "parachord.com/queue/*",        zone_name = "parachord.com" },
+  { pattern = "parachord.com/control/*",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/shuffle/*",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/volume/*",       zone_name = "parachord.com" },
+  { pattern = "parachord.com/artist/*",       zone_name = "parachord.com" },
+  { pattern = "parachord.com/album/*",        zone_name = "parachord.com" },
+  { pattern = "parachord.com/playlist/*",     zone_name = "parachord.com" },
+  { pattern = "parachord.com/library",        zone_name = "parachord.com" },
+  { pattern = "parachord.com/library/*",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/history",        zone_name = "parachord.com" },
+  { pattern = "parachord.com/history/*",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/friend/*",       zone_name = "parachord.com" },
+  { pattern = "parachord.com/recommendations", zone_name = "parachord.com" },
+  { pattern = "parachord.com/recommendations/*", zone_name = "parachord.com" },
+  { pattern = "parachord.com/settings",       zone_name = "parachord.com" },
+  { pattern = "parachord.com/settings/*",     zone_name = "parachord.com" },
+  { pattern = "parachord.com/playlists",      zone_name = "parachord.com" },
+  { pattern = "parachord.com/charts",         zone_name = "parachord.com" },
+  { pattern = "parachord.com/critics-picks",  zone_name = "parachord.com" },
+  { pattern = "parachord.com/search",         zone_name = "parachord.com" },
+  { pattern = "parachord.com/chat",           zone_name = "parachord.com" },
+  { pattern = "parachord.com/home",           zone_name = "parachord.com" },
 ]
 
 [vars]
 # Public, non-secret defaults. Secrets go via `wrangler secret put`.
+# (Still set, but only used if a Worker route ever falls through to passthrough —
+# which now only happens for unmatched paths *under* a Worker route, e.g. a 404.)
 GH_PAGES_ORIGIN = "https://parachord.github.io"
