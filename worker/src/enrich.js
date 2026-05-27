@@ -74,6 +74,104 @@ async function searchItunes(query) {
   }
 }
 
+// --- Playlist metadata via OpenGraph scraping ---
+
+// Hosts we'll fetch playlist metadata from. Strict allowlist to prevent SSRF
+// (someone passing ?url=http://internal-service/ to probe our network) and
+// to limit the abuse surface. Add hostnames here when adding new providers.
+const PLAYLIST_HOST_ALLOWLIST = new Set([
+  'achordion.xyz',
+]);
+
+const PLAYLIST_USER_AGENT = 'parachord-edge/0.1 (+https://parachord.com)';
+const PLAYLIST_FETCH_TIMEOUT_MS = 5000;
+const PLAYLIST_MAX_BYTES = 256 * 1024; // 256 KB — Achordion's head is ~10 KB
+
+// Extract a single <meta property="og:X" content="..."> value from HTML.
+// Handles both attribute orders (property before content, or content before
+// property), matches case-insensitively on the property name only.
+function extractOgTag(html, prop) {
+  const escaped = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // property=... content=...
+  const m1 = html.match(new RegExp(`<meta[^>]*property=["']${escaped}["'][^>]*content=["']([^"']*)["']`, 'i'));
+  if (m1) return m1[1];
+  // content=... property=...
+  const m2 = html.match(new RegExp(`<meta[^>]*content=["']([^"']*)["'][^>]*property=["']${escaped}["']`, 'i'));
+  if (m2) return m2[1];
+  return null;
+}
+
+/**
+ * Resolve playlist metadata from a third-party URL by scraping OpenGraph tags.
+ * Returns `{ title, description, coverArtUrl, providerType, sourceUrl }` or
+ * null. Never throws. SSRF-safe: only fetches hosts in the allowlist.
+ */
+export async function resolvePlaylistFromUrl({ url }) {
+  if (!url) return null;
+
+  // Validate scheme + host before touching the network.
+  let parsed;
+  try { parsed = new URL(url); } catch { return null; }
+  if (parsed.protocol !== 'https:') return null;
+  if (!PLAYLIST_HOST_ALLOWLIST.has(parsed.hostname)) return null;
+
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), PLAYLIST_FETCH_TIMEOUT_MS);
+    let resp;
+    try {
+      resp = await fetch(url, {
+        headers: { 'User-Agent': PLAYLIST_USER_AGENT, 'Accept': 'text/html' },
+        signal: controller.signal,
+        redirect: 'follow'
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    if (!resp.ok) return null;
+
+    // Read only the first PLAYLIST_MAX_BYTES — OG tags live in <head>, so we
+    // don't need the full body. Guards against an upstream sending megabytes.
+    const reader = resp.body?.getReader();
+    if (!reader) return null;
+    const chunks = [];
+    let total = 0;
+    while (total < PLAYLIST_MAX_BYTES) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      total += value.length;
+    }
+    try { await reader.cancel(); } catch { /* ignore */ }
+    const html = new TextDecoder('utf-8').decode(concatUint8(chunks));
+
+    const title = extractOgTag(html, 'og:title');
+    const description = extractOgTag(html, 'og:description');
+    const coverArtUrl = extractOgTag(html, 'og:image');
+    const providerType = extractOgTag(html, 'og:type');
+
+    // Require at least a title — without it, the response is useless for
+    // rendering. Allow missing description/image (we degrade gracefully).
+    if (!title) return null;
+
+    return { title, description, coverArtUrl, providerType, sourceUrl: url };
+  } catch {
+    return null;
+  }
+}
+
+function concatUint8(chunks) {
+  let total = 0;
+  for (const c of chunks) total += c.length;
+  const out = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    out.set(c, offset);
+    offset += c.length;
+  }
+  return out;
+}
+
 // --- MusicBrainz + Cover Art Archive ---
 
 // MusicBrainz requires a unique User-Agent identifying the app + contact.
