@@ -66,6 +66,46 @@ describe('renderTemplateB', () => {
     expect(html).toContain('&amp;b=&lt;2&gt;');
   });
 
+  it('renders "Play album X by Y" copy when type=album', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: { type: 'album', album: 'Rites of Spring', artist: 'Noah Gundersen' },
+      deepLink: 'parachord://play?type=album&mbid=abc',
+      cta,
+      canonicalUrl: 'https://parachord.com/play?type=album&mbid=abc',
+      coverArtUrl: 'https://coverartarchive.org/release-group/abc/front-500'
+    });
+    expect(html).toContain('Rites of Spring');
+    expect(html).toContain('Noah Gundersen');
+    expect(html.toLowerCase()).toContain('album');
+    expect(html).toContain('coverartarchive.org/release-group/abc/front-500');
+  });
+
+  it('renders "Open artist X" copy when type=artist', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: { type: 'artist', artist: 'Noah Gundersen' },
+      deepLink: 'parachord://play?type=artist&mbid=abc',
+      cta,
+      canonicalUrl: 'https://parachord.com/play?type=artist&mbid=abc',
+      coverArtUrl: null
+    });
+    expect(html).toContain('Noah Gundersen');
+    expect(html.toLowerCase()).toMatch(/open|artist/);
+  });
+
+  it('falls back to album copy without artist if only album name is known', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: { type: 'album', album: 'Rites of Spring' },
+      deepLink: 'parachord://play?type=album',
+      cta,
+      canonicalUrl: 'https://parachord.com/play?type=album',
+      coverArtUrl: null
+    });
+    expect(html).toContain('Rites of Spring');
+  });
+
   it('handles /import with a url param', () => {
     const html = renderTemplateB({
       pathname: '/import',

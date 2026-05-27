@@ -47,6 +47,30 @@ describe('router', () => {
     }
   });
 
+  it('normalizes /play/album?mbid=X to /play?type=album and resolves metadata', async () => {
+    const original = globalThis.fetch;
+    globalThis.fetch = async (url) => {
+      const s = String(url);
+      if (s.includes('musicbrainz.org/ws/2/release-group/')) {
+        return new Response(JSON.stringify({
+          title: 'Rites of Spring',
+          'artist-credit': [{ name: 'Noah Gundersen', joinphrase: '' }]
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 404 });
+    };
+    try {
+      const r = await get('https://parachord.com/play/album?mbid=0ae16d85-8692-4e91-903a-b4c3dbab9dac');
+      expect(r.status).toBe(200);
+      const body = await r.text();
+      expect(body).toContain('Rites of Spring');
+      expect(body).toContain('Noah Gundersen');
+      expect(body).toContain('coverartarchive.org/release-group/0ae16d85-8692-4e91-903a-b4c3dbab9dac/front-500');
+    } finally {
+      globalThis.fetch = original;
+    }
+  });
+
   it('passes /blog/foo through to GH Pages origin', async () => {
     const original = globalThis.fetch;
     globalThis.fetch = async (req) => {

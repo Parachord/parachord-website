@@ -5,7 +5,11 @@ import { storeCtaForUserAgent } from './ua.js';
 import { renderTemplateA } from './templates/templateA.js';
 import { renderTemplateB } from './templates/templateB.js';
 import { renderTemplateC } from './templates/templateC.js';
-import { resolveCoverArt } from './enrich.js';
+import { resolveCoverArt, resolveMbid } from './enrich.js';
+
+// Recognized `type` words that can appear as the path segment after /play/.
+// e.g. /play/album?mbid=X normalizes to /play?type=album&mbid=X.
+const PLAY_TYPE_WORDS = new Set(['album', 'track', 'artist', 'release', 'release-group', 'recording']);
 
 export default {
   async fetch(request, env, ctx) {
@@ -19,6 +23,10 @@ export default {
       return handleAasa();
     }
 
+    // URL normalization: /play/<type>?... → /play?type=<type>&...
+    // Lets external link-generators use either shape; both render the same.
+    normalizePlayTypePath(url);
+
     // Universal-link verb routes
     const template = classifyPath(url.pathname);
     if (template !== 'passthrough') {
@@ -30,6 +38,17 @@ export default {
   }
 };
 
+function normalizePlayTypePath(url) {
+  const segments = url.pathname.split('/').filter(Boolean);
+  if (segments.length === 2 && segments[0] === 'play' && PLAY_TYPE_WORDS.has(segments[1])) {
+    // Set type query param if not already present, then collapse path to /play.
+    if (!url.searchParams.has('type')) {
+      url.searchParams.set('type', segments[1]);
+    }
+    url.pathname = '/play';
+  }
+}
+
 async function renderVerbPage(template, url, request, env) {
   const deepLink = reconstructDeepLink(url);
   const ua = request.headers.get('user-agent') || '';
@@ -37,7 +56,24 @@ async function renderVerbPage(template, url, request, env) {
   const canonicalUrl = url.toString();
 
   const query = Object.fromEntries(url.searchParams);
-  const coverArtUrl = template === 'A' ? null : await safeCoverArt(query, env);
+
+  // When an mbid is present, resolve metadata + cover art from MusicBrainz/CAA
+  // first. Result populates missing artist/title/album and provides the
+  // cover-art URL, skipping the text-search fallback.
+  let coverArtUrl = null;
+  if (query.mbid && template !== 'A') {
+    const mbidResult = await safeMbid(query);
+    if (mbidResult) {
+      if (!query.artist && mbidResult.artist) query.artist = mbidResult.artist;
+      if (!query.title && mbidResult.title) query.title = mbidResult.title;
+      if (!query.album && mbidResult.album) query.album = mbidResult.album;
+      coverArtUrl = mbidResult.coverArtUrl;
+    }
+  }
+  // Fall back to text search if MBID didn't yield art (or wasn't present).
+  if (!coverArtUrl && template !== 'A') {
+    coverArtUrl = await safeCoverArt(query, env);
+  }
 
   let html;
   if (template === 'A') {
@@ -56,6 +92,14 @@ async function renderVerbPage(template, url, request, env) {
     status: 200,
     headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': cache }
   });
+}
+
+async function safeMbid(query) {
+  try {
+    return await resolveMbid({ mbid: query.mbid, type: query.type });
+  } catch {
+    return null;
+  }
 }
 
 async function safeCoverArt(query, env) {
