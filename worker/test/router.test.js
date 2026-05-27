@@ -71,6 +71,32 @@ describe('router', () => {
     }
   });
 
+  it('normalizes /play/playlist?url=<achordion-url> and scrapes OG metadata', async () => {
+    const original = globalThis.fetch;
+    const achordionHtml = `<html><head>
+      <meta property="og:title" content="🪹 (Fall 2024) by jherskowitz"/>
+      <meta property="og:description" content="🪹 (Fall 2024) by jherskowitz · 8 tracks · Achordion playlist."/>
+      <meta property="og:image" content="https://achordion.xyz/playlist/c2accebd/opengraph-image-xyz"/>
+      <meta property="og:type" content="music.playlist"/>
+    </head></html>`;
+    globalThis.fetch = async (url) => {
+      if (String(url).startsWith('https://achordion.xyz/')) {
+        return new Response(achordionHtml, { status: 200, headers: { 'content-type': 'text/html' } });
+      }
+      return new Response('{}', { status: 404 });
+    };
+    try {
+      const r = await get('https://parachord.com/play/playlist?url=https%3A%2F%2Fachordion.xyz%2Fplaylist%2Fc2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13');
+      expect(r.status).toBe(200);
+      const body = await r.text();
+      expect(body).toContain('🪹 (Fall 2024) by jherskowitz');
+      expect(body).toContain('8 tracks');
+      expect(body).toContain('opengraph-image-xyz');
+    } finally {
+      globalThis.fetch = original;
+    }
+  });
+
   it('passes /blog/foo through to GH Pages origin', async () => {
     const original = globalThis.fetch;
     globalThis.fetch = async (req) => {

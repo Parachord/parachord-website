@@ -106,6 +106,43 @@ describe('renderTemplateB', () => {
     expect(html).toContain('Rites of Spring');
   });
 
+  it('renders playlist copy when type=playlist with title + description', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: {
+        type: 'playlist',
+        title: '🪹 (Fall 2024) by jherskowitz',
+        description: '🪹 (Fall 2024) by jherskowitz · 8 tracks · Achordion playlist.'
+      },
+      deepLink: 'parachord://play?type=playlist&url=https://achordion.xyz/playlist/abc',
+      cta,
+      canonicalUrl: 'https://parachord.com/play?type=playlist&url=https://achordion.xyz/playlist/abc',
+      coverArtUrl: 'https://achordion.xyz/playlist/abc/opengraph-image-xyz'
+    });
+    expect(html).toContain('🪹 (Fall 2024) by jherskowitz');
+    expect(html).toContain('8 tracks');
+    expect(html).toContain('Achordion playlist');
+    expect(html).toContain('opengraph-image-xyz');
+    // Title should not appear twice in a row (subtitle dedup)
+    const titleCount = (html.match(/🪹 \(Fall 2024\) by jherskowitz/g) || []).length;
+    // Appears in <title>, og:title, og:description, h1 — but the subtitle
+    // <p class="sub"> should have ONLY the tail, not the duplicate prefix.
+    expect(html).toMatch(/<p class="sub">8 tracks · Achordion playlist\.<\/p>/);
+  });
+
+  it('falls back to generic playlist copy when no metadata resolves', () => {
+    const html = renderTemplateB({
+      pathname: '/play',
+      query: { type: 'playlist', url: 'https://achordion.xyz/playlist/missing' },
+      deepLink: 'parachord://play?type=playlist&url=...',
+      cta,
+      canonicalUrl: 'https://parachord.com/play?type=playlist',
+      coverArtUrl: null
+    });
+    expect(html.toLowerCase()).toContain('playlist');
+    expect(html.toLowerCase()).toContain('parachord');
+  });
+
   it('handles /import with a url param', () => {
     const html = renderTemplateB({
       pathname: '/import',

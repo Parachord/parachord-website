@@ -5,11 +5,14 @@ import { storeCtaForUserAgent } from './ua.js';
 import { renderTemplateA } from './templates/templateA.js';
 import { renderTemplateB } from './templates/templateB.js';
 import { renderTemplateC } from './templates/templateC.js';
-import { resolveCoverArt, resolveMbid } from './enrich.js';
+import { resolveCoverArt, resolveMbid, resolvePlaylistFromUrl } from './enrich.js';
 
 // Recognized `type` words that can appear as the path segment after /play/.
 // e.g. /play/album?mbid=X normalizes to /play?type=album&mbid=X.
-const PLAY_TYPE_WORDS = new Set(['album', 'track', 'artist', 'release', 'release-group', 'recording']);
+const PLAY_TYPE_WORDS = new Set([
+  'album', 'track', 'artist', 'release', 'release-group', 'recording',
+  'playlist',
+]);
 
 export default {
   async fetch(request, env, ctx) {
@@ -57,11 +60,20 @@ async function renderVerbPage(template, url, request, env) {
 
   const query = Object.fromEntries(url.searchParams);
 
-  // When an mbid is present, resolve metadata + cover art from MusicBrainz/CAA
-  // first. Result populates missing artist/title/album and provides the
-  // cover-art URL, skipping the text-search fallback.
+  // Metadata enrichment, in order of identifier specificity:
+  // 1) ?url= for type=playlist — scrape OG tags from a known provider host
+  // 2) ?mbid= — MusicBrainz lookup (covers album/track/artist)
+  // 3) text search via Spotify/iTunes (artist+title)
   let coverArtUrl = null;
-  if (query.mbid && template !== 'A') {
+  if (query.type === 'playlist' && query.url && template !== 'A') {
+    const playlist = await safePlaylist(query);
+    if (playlist) {
+      if (!query.title && playlist.title) query.title = playlist.title;
+      if (!query.description && playlist.description) query.description = playlist.description;
+      coverArtUrl = playlist.coverArtUrl;
+    }
+  }
+  if (!coverArtUrl && query.mbid && template !== 'A') {
     const mbidResult = await safeMbid(query);
     if (mbidResult) {
       if (!query.artist && mbidResult.artist) query.artist = mbidResult.artist;
@@ -70,7 +82,6 @@ async function renderVerbPage(template, url, request, env) {
       coverArtUrl = mbidResult.coverArtUrl;
     }
   }
-  // Fall back to text search if MBID didn't yield art (or wasn't present).
   if (!coverArtUrl && template !== 'A') {
     coverArtUrl = await safeCoverArt(query, env);
   }
@@ -97,6 +108,14 @@ async function renderVerbPage(template, url, request, env) {
 async function safeMbid(query) {
   try {
     return await resolveMbid({ mbid: query.mbid, type: query.type });
+  } catch {
+    return null;
+  }
+}
+
+async function safePlaylist(query) {
+  try {
+    return await resolvePlaylistFromUrl({ url: query.url });
   } catch {
     return null;
   }

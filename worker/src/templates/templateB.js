@@ -1,10 +1,33 @@
 import { renderShell, escapeHtml } from '../render.js';
 
+// Achordion's og:description repeats the og:title at the start, e.g.
+//   "🪹 (Fall 2024) by jherskowitz · 8 tracks · Achordion playlist."
+// Use just the tail after the first " · " so the subtitle doesn't duplicate
+// the page title.
+function playlistSubtitle(description, title) {
+  if (!description) return 'Open in Parachord to listen.';
+  if (title && description.startsWith(title)) {
+    const tail = description.slice(title.length).replace(/^\s*[·•]\s*/, '');
+    if (tail) return tail;
+  }
+  return description;
+}
+
 function copyFor(pathname, query) {
   const t = query.title;
   const a = query.artist;
 
   if (pathname === '/play') {
+    // Playlist: title comes straight from og:title (already includes "by <owner>"
+    // for Achordion). Subtitle is the descriptive tail of og:description after
+    // stripping the title duplicate at the start.
+    if (query.type === 'playlist') {
+      if (t) {
+        const subtitle = playlistSubtitle(query.description, t);
+        return { title: t, subtitle };
+      }
+      return { title: 'Play this playlist in Parachord', subtitle: 'Open in Parachord to listen.' };
+    }
     // Album: query.album (from MBID lookup) or query.title used as album name.
     if (query.type === 'album') {
       const albumName = query.album || query.title;
