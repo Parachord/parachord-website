@@ -5,6 +5,19 @@ function copyFor(pathname, query) {
   const a = query.artist;
 
   if (pathname === '/play') {
+    // Album: query.album (from MBID lookup) or query.title used as album name.
+    if (query.type === 'album') {
+      const albumName = query.album || query.title;
+      if (albumName && a) return { title: `Play "${albumName}" by ${a}`, subtitle: 'Open the album in Parachord.' };
+      if (albumName)      return { title: `Play "${albumName}"`,         subtitle: 'Open the album in Parachord.' };
+      return { title: 'Play album in Parachord', subtitle: 'Open the album in Parachord.' };
+    }
+    // Artist: open the artist page in the app.
+    if (query.type === 'artist') {
+      if (a) return { title: `Open ${a}`, subtitle: 'Open this artist in Parachord.' };
+      return { title: 'Open artist in Parachord', subtitle: 'Open this artist in Parachord.' };
+    }
+    // Default: track (with or without explicit type=track).
     if (t && a) return { title: `Play "${t}" by ${a}`, subtitle: 'Open in Parachord to listen.' };
     if (t)      return { title: `Play "${t}"`,         subtitle: 'Open in Parachord to listen.' };
     return { title: 'Play in Parachord', subtitle: 'Open in Parachord to listen.' };
