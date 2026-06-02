@@ -10,7 +10,7 @@
 
 **Design doc:** `docs/plans/2026-05-21-universal-app-links-design.md`. Read it before starting.
 
-**Issues:** [parachord-website#78](https://github.com/Parachord/parachord-website/issues/78), [parachord-android#123](https://github.com/Parachord/parachord-android/issues/123).
+**Issues:** [parachord-website#78](https://github.com/Parachord/parachord-website/issues/78), [parachord-mobile#123](https://github.com/Parachord/parachord-mobile/issues/123).
 
 ---
 
@@ -21,7 +21,7 @@
 - Test runner: `cd worker && npx vitest run <file>`.
 - Each task ends with a commit on `feat/universal-app-links`.
 - Commit subjects follow the existing repo style: lowercase area prefix, e.g. `worker: add URL reconstruction helper`.
-- The `parachord://` URL we generate must be byte-identical to what Android's `parseParachordHttps` (in [parachord-android#123](https://github.com/Parachord/parachord-android/issues/123)) accepts. When in doubt, copy/paste the AASA `components` list and Android intent-filter paths verbatim and test against both.
+- The `parachord://` URL we generate must be byte-identical to what Android's `parseParachordHttps` (in [parachord-mobile#123](https://github.com/Parachord/parachord-mobile/issues/123)) accepts. When in doubt, copy/paste the AASA `components` list and Android intent-filter paths verbatim and test against both.
 
 ---
 
@@ -278,7 +278,7 @@ describe('handleAssetLinks', () => {
 
 ```js
 // SHA-256 fingerprints are PLACEHOLDERS. Real values come from
-// https://github.com/Parachord/parachord-android/issues/123.
+// https://github.com/Parachord/parachord-mobile/issues/123.
 // They are not secrets — every release APK exposes them — so they live
 // in source. Swap inline and redeploy once #123 delivers them.
 const ASSETLINKS = [
@@ -381,7 +381,7 @@ const AASA = {
   applinks: {
     details: [
       {
-        // appIDs stays empty until parachord-android#124 (iOS) lands.
+        // appIDs stays empty until parachord-mobile#124 (iOS) lands.
         appIDs: [],
         components: [
           { '/': '/play',           '?': { '*': '*' } },
@@ -1372,7 +1372,7 @@ git commit -m "worker: github action to deploy on push to main"
   - DNS migration (separate PR coordination).
   - Uncomment `routes` in `wrangler.toml`, deploy.
   - Run Google's Digital Asset Links verifier against `https://parachord.com`.
-  - Comment on parachord-android#123 with the live URL.
+  - Comment on parachord-mobile#123 with the live URL.
 
 ---
 

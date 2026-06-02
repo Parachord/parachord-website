@@ -40,7 +40,7 @@ Deploys via `wrangler` GitHub Action on push to `main`.
 
 ## Deliverable 1 — `assetlinks.json`
 
-Inline JS module constant. Two entries (release + debug package names) with placeholder SHA-256 fingerprints until [Parachord/parachord-android#123](https://github.com/Parachord/parachord-android/issues/123) delivers real values. Top-of-file comment captures provenance.
+Inline JS module constant. Two entries (release + debug package names) with placeholder SHA-256 fingerprints until [Parachord/parachord-mobile#123](https://github.com/Parachord/parachord-mobile/issues/123) delivers real values. Top-of-file comment captures provenance.
 
 Response headers:
 
@@ -55,7 +55,7 @@ Cache-Control: public, max-age=3600
 
 Inline. The Worker matches the path string `/.well-known/apple-app-site-association` exactly — no file-extension routing. Apple is strict about this.
 
-Ships with `appIDs: []` and the full `components` array from #78. Populate `appIDs` once [Parachord/parachord-android#124](https://github.com/Parachord/parachord-android/issues/124) provides `<TEAM_ID>.com.parachord.ios`.
+Ships with `appIDs: []` and the full `components` array from #78. Populate `appIDs` once [Parachord/parachord-mobile#124](https://github.com/Parachord/parachord-mobile/issues/124) provides `<TEAM_ID>.com.parachord.ios`.
 
 Response headers:
 
