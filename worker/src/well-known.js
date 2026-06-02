@@ -1,4 +1,4 @@
-// SHA-256 fingerprints from Parachord/parachord-android#123.
+// SHA-256 fingerprints from Parachord/parachord-mobile#123.
 //
 // These are NOT secrets — every release APK exposes its cert, and the
 // debug-key value is universal across every Android developer's
@@ -48,7 +48,7 @@ const AASA = {
   applinks: {
     details: [
       {
-        // appIDs stays empty until parachord-android#124 (iOS) lands.
+        // appIDs stays empty until parachord-mobile#124 (iOS) lands.
         appIDs: [],
         components: [
           { '/': '/play',           '?': { '*': '*' } },
