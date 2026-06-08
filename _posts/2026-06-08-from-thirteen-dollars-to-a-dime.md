@@ -1,14 +1,14 @@
 ---
 layout: post
-title: "From thirteen dollars a day to a dime: keeping a hobby music site cheap to run"
+title: "Battling bots: keeping a hobby music site cheap to run"
 date: 2026-06-08
 author: "J Herskowitz"
 category: "Engineering"
 ---
 
-Parachord is a one-person hobby project. I build the whole thing on nights and weekends: the desktop app, the Android app, and [Achordion]({% post_url 2026-05-04-introducing-achordion %}), its companion website. None of it earns money, and I pay for all of the infrastructure out of my own pocket.
+Parachord is a one-person hobby project. I build all of it for fun and love: the desktop app, the Android app, the iOS app (I just started) and [Achordion]({% post_url 2026-05-04-introducing-achordion %}), the companion website to it all. All of it is open-source, none of it earns money, and I pay for all of the infrastructure out of my own pocket.
 
-This post is about the part of that infrastructure that surprised me. The apps run on your own device, so they cost me almost nothing to operate. Achordion is different. It is a real website, hosted on Vercel, which is a cloud platform that runs web apps for you and bills you based on how much they get used. A few weeks ago, Achordion's Vercel bill quietly climbed to a high of about thirteen dollars a day.
+This post is about the part of that infrastructure that surprised me. Parachord apps run on your own device - and call various endpoints and services directly, so they cost me almost nothing to operate. Achordion is different. It is a real website, hosted on Vercel, which is a cloud platform that runs web apps for you and bills you based on how much they get used. Last week, Achordion's Vercel bill quietly climbed to a high of about thirteen dollars a day.
 
 Thirteen dollars a day is roughly four hundred dollars a month. For a side project with no revenue, that is not a rounding error. That is the difference between "a fun thing I happily keep running" and "I cannot justify leaving this on." Yesterday the bill was ten cents. This post is about the week in between, and why the fixes that brought it down turned out to be the exact same work as making the site faster and more reliable for the people who actually use it.
 
@@ -20,15 +20,15 @@ That changes how you think about cost. It stops being an optimization you might 
 
 ## A website is a different animal than an app
 
-I have spent a long time building the Parachord apps, and in all that time, hosting cost and bots were simply never my problem. An app runs on the user's device. It talks out to services, it does its work locally, and when it is done it goes quiet. There is no server with my name on it sitting on the public internet, and nothing for a stranger to come poking at. My "scaling" concerns were things like memory use on a laptop.
+I have spent most of this year building the Parachord apps, and in all that time, hosting cost and bots were simply never a concern. An app runs on the user's device. It talks out to services, it does its work locally, and when it is done it goes quiet. There is no server with my name on it sitting on the public internet, and nothing for a stranger to come poking at. My "scaling" concerns were things like memory use on a laptop.
 
-Achordion broke that comfortable arrangement, because a website is the opposite of an app in the way that matters here. It is a machine with a public address, sitting there around the clock, answering anyone who asks. And "anyone" turns out to include a lot of things that are not people. This was genuinely new territory for me. Most of what follows is stuff app developers never have to think about, and that I had to learn in a hurry the first time my hobby started sending me a real bill.
+Achordion broke that comfortable arrangement, because a website is the opposite of an app in the way that matters here. It is a machine with a public address, sitting there around the clock, answering anyone who asks. And "anyone" turns out to include a lot of things that are not people. This was genuinely new territory for me. Most of what follows is stuff that I hadn't had to think about, and that I had to learn in a hurry the first time my hobby started sending me a real bill.
 
 ## Where the money was going
 
 Vercel breaks usage into line items, and three of them were doing the damage: Observability, Fluid Provisioned Memory, and Fluid Active CPU. In plain terms:
 
-- **Observability** was a monitoring add-on that bills for every event it records. Two thirds of those events were not user traffic at all. They were my own server logging each call it made out to other services.
+- **Observability** was a monitoring add-on that bills for every event it records (and one that Vercel rather sneakily let get enabled without me realizing it). Two thirds of those events were not user traffic at all. They were my own server logging each call it made out to other services.
 - **Fluid Provisioned Memory** bills for the memory a function holds while it is alive, including time it spends just waiting on a slow external API.
 - **Fluid Active CPU** bills for actual compute, and was the smallest of the three, which was itself a clue: the site was not working hard, it was waiting.
 
@@ -56,11 +56,11 @@ When this stack is working, a popular page almost never touches MusicBrainz. Tha
 
 ## Why bots crawl a site nobody has heard of
 
-Here is the surprise, and the moment I really felt like a website operator instead of an app developer. Partway through, I found the site being crawled by more than three hundred different IP addresses at once, all from Alibaba Cloud, each making just a few requests so no single one tripped a rate limit. A coordinated, distributed crawl. Of a hobby music site.
+Here is the surprise I wasn't prepared for as the creator of a little web app that very few people know about... I found the site being crawled by more than three hundred different IP addresses at once, all from Alibaba Cloud, each making just a few requests so no single one tripped a rate limit. A coordinated, distributed crawl. Of a hobby music site.
 
-Why would anyone bother? Because audience size and crawl surface are two completely different things. Almost nobody has heard of Achordion, but it is a catalog. Every artist, every album, every song is its own page, which adds up to an enormous number of clean, structured, interlinked pages. That is exactly what AI training scrapers, dataset builders, and SEO tooling want to vacuum up. They do not care that the site is small. They care that it is deep.
+Why would anyone bother? I should have reminded myself that catalog is King - and people (or bots morelike) are always looking to crawl catalogs. Every artist, every album, every song is its own page, which adds up to an enormous number of clean, structured, interlinked pages. That is exactly what AI training scrapers, dataset builders, and SEO tooling want to vacuum up. They do not care that the site is small. They care that it is deep.
 
-And every one of those crawled pages is a cold page, the worst case: nothing cached, so the server has to build it from scratch through the one request per second MusicBrainz queue. The crawler was effectively forcing the most expensive possible path, thousands of times, around the clock. There is a name for what this can do to a hobby project's wallet, and it is "denial of wallet." A site with no users can still run up a real bill if something is hammering it. An app on your phone never has this problem. A public website has it on day one.
+And every one of those crawled pages is a cold page, the worst case: nothing cached, so the server has to build it from scratch through the one request per second MusicBrainz queue. The crawler was effectively forcing the most expensive possible path, thousands of times, around the clock. There is a name for what this can do to a hobby project's wallet, and it is "denial of wallet." A site with no users can still run up a real bill if something is hammering it (just ask me about my parking app experiment that rang me up a $250 Google Maps API bill). 
 
 ## Fast for users and cheap to run are the same project
 
@@ -85,4 +85,4 @@ None of these is exotic. Deadlines, caching, and a firewall are standard tools f
 
 For a one-person hobby project, cost is not a back office concern. It is the thing that decides whether the project survives. The encouraging part is that you rarely have to choose between cheap and good. The work that made Achordion affordable to run, calling MusicBrainz less, caching aggressively, failing fast instead of hanging, and keeping crawlers from forcing the worst case, is the same work that made it faster, more reliable, and a better citizen of the open music stack it is part of.
 
-Thirteen dollars a day was the wake up call. A dime a day is the version I can happily keep running. And I learned a whole category of things, about bots and bills and the strange economics of a public website, that years of building apps never once required of me.
+Thirteen dollars a day was the wake up call. A dime a day is the version I can happily keep running. I hope you all enjoy [it](https://achordion.xyz) as much as I have been. 
