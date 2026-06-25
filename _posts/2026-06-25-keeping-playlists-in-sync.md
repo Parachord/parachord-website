@@ -16,7 +16,7 @@ And the stakes went up when Achordion, via ListenBrainz integration, became the 
 
 Here is the plain version... I want to edit a playlist on any surface and have it stay right everywhere. Add three songs in the Spotify app on my laptop. Reorder it in Apple Music on my phone. Drop a track from inside Parachord. Whichever one I touched, the others should quietly catch up, and nobody's edit should silently stomp on anyone else's.
 
-That "any surface" part is the whole game. It is not "one master copy and a bunch of dumb mirrors." Every copy can be the one you just edited. I have been calling this N-way sync, which is a pseudo-techie way of saying there is no single boss copy. They are all equal, and they all have to agree in the end.
+That "any surface" part is the whole game. It is not "one source copy and a bunch of dumb mirrors." Every copy can be the one you just edited. I have been calling this N-way sync, which is a pseudo-techie way of saying there is no single boss copy. They are all equal, and they all have to agree in the end.
 
 My old approach could not do this. If Spotify was the boss and you edited the Apple Music copy, your edit was wrong by definition and got wiped on the next sync. That is fine for "import my Spotify playlists into the app." It is useless for "this is my playlist and I edit it from wherever."
 
@@ -100,7 +100,7 @@ A quick honest map of what each service can and cannot do as a sync target right
 
 The Apple Music column is not me being lazy. Every "No" there is an endpoint Apple has chosen not to offer. The ListenBrainz column is full of "Yes" because the open stack was built by people who actually wanted this to work, and that is a big part of why it is becoming the default place Parachord shares your music.
 
-If you want to follow the gory details, the mobile work is public at [github.com/Parachord/parachord-android](https://github.com/Parachord/parachord-android), and the design write-ups live in the `docs/` folder. I went deep on the cross-platform reasoning back in [the re-architecture post]({% post_url 2026-04-12-why-were-re-architecting-before-shipping-android %}), and on why the open music stack matters in [the Achordion posts]({% post_url 2026-05-18-achordion-the-community-layer %}).
+If you want to follow the gory details, the mobile work is public at [github.com/Parachord/parachord-mobile](https://github.com/Parachord/parachord-mobile), and the design write-ups live in the `docs/` folder. I went deep on the cross-platform reasoning back in [the re-architecture post]({% post_url 2026-04-12-why-were-re-architecting-before-shipping-android %}), and on why the open music stack matters in [the Achordion posts]({% post_url 2026-05-18-achordion-the-community-layer %}).
 
 Thanks for reading, and thanks in advance to everyone who reports the weird ones once you get your hands on the mobile apps.
 
