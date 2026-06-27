@@ -1,18 +1,16 @@
 import { handleAssetLinks, handleAasa } from './well-known.js';
 import { classifyPath } from './dispatch.js';
-import { reconstructDeepLink } from './reconstruct.js';
+import { reconstructDeepLink, PLAY_TYPE_WORDS } from './reconstruct.js';
 import { storeCtaForUserAgent } from './ua.js';
 import { renderTemplateA } from './templates/templateA.js';
 import { renderTemplateB } from './templates/templateB.js';
 import { renderTemplateC } from './templates/templateC.js';
 import { resolveCoverArt, resolveMbid, resolvePlaylistFromUrl } from './enrich.js';
 
-// Recognized `type` words that can appear as the path segment after /play/.
-// e.g. /play/album?mbid=X normalizes to /play?type=album&mbid=X.
-const PLAY_TYPE_WORDS = new Set([
-  'album', 'track', 'artist', 'release', 'release-group', 'recording',
-  'playlist',
-]);
+// PLAY_TYPE_WORDS (the /play/<type> sub-action vocabulary) is the single source
+// of truth in reconstruct.js — normalizePlayTypePath below is the forward
+// transform (/play/<type> → /play?type=<type>) and reconstructDeepLink the
+// inverse, so they share one set. e.g. /play/album?mbid=X → /play?type=album&mbid=X.
 
 export default {
   async fetch(request, env, ctx) {
