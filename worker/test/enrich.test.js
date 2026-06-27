@@ -239,4 +239,78 @@ describe('resolvePlaylistFromUrl', () => {
     const r = await resolvePlaylistFromUrl({ url: ACHORDION_URL });
     expect(r?.title).toBe('Reverse Order Title');
   });
+
+  it('decodes HTML entities in extracted OG values (YouTube serves &amp; in image URLs)', async () => {
+    const html = `<html><head>
+      <meta property="og:title" content="Tom &amp; Jerry"/>
+      <meta property="og:image" content="https://i.ytimg.com/x.jpg?a=1&amp;b=2&amp;c=3"/>
+    </head></html>`;
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://www.youtube.com/playlist?list=abc' });
+    expect(r.title).toBe('Tom & Jerry');
+    expect(r.coverArtUrl).toBe('https://i.ytimg.com/x.jpg?a=1&b=2&c=3');
+  });
+
+  it('accepts open.spotify.com URLs', async () => {
+    const html = `<html><head>
+      <meta property="og:title" content="Today's Top Hits"/>
+      <meta property="og:description" content="Playlist · Spotify · 50 items · 34.2M saves"/>
+      <meta property="og:image" content="https://i.scdn.co/image/abc"/>
+      <meta property="og:type" content="music.playlist"/>
+    </head></html>`;
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M' });
+    expect(r.title).toBe("Today's Top Hits");
+    expect(r.coverArtUrl).toBe('https://i.scdn.co/image/abc');
+    expect(r.providerType).toBe('music.playlist');
+  });
+
+  it('accepts music.apple.com URLs (missing og:type is fine)', async () => {
+    const html = `<html><head>
+      <meta property="og:title" content="Today's Hits on Apple Music">
+      <meta property="og:description" content="Playlist · 50 Songs">
+      <meta property="og:image" content="https://is1-ssl.mzstatic.com/image/thumb/abc/1200x630SC.jpg">
+    </head></html>`;
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://music.apple.com/us/playlist/todays-hits/pl.abc' });
+    expect(r.title).toBe("Today's Hits on Apple Music");
+    expect(r.providerType).toBeNull();  // Apple Music doesn't serve og:type
+  });
+
+  it('accepts www.youtube.com URLs', async () => {
+    const html = `<meta property="og:title" content="EDM Music Playlist"/>
+                  <meta property="og:image" content="https://i.ytimg.com/vi/x/hqdefault.jpg"/>`;
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://www.youtube.com/playlist?list=PLabc' });
+    expect(r.title).toBe('EDM Music Playlist');
+  });
+
+  it('accepts bare youtube.com as alias for www.youtube.com', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(`<meta property="og:title" content="X"/>`, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://youtube.com/playlist?list=abc' });
+    expect(r?.title).toBe('X');
+  });
+
+  it('accepts soundcloud.com playlist URLs', async () => {
+    const html = `<html><head>
+      <meta property="og:type" content="music.playlist">
+      <meta property="og:title" content="Frozen in Time (2026)">
+      <meta property="og:image" content="https://i1.sndcdn.com/artworks-ale9ktpNlR3D-0-t500x500.jpg">
+      <meta property="og:description" content="Old dog. New tricks.">
+    </head></html>`;
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://soundcloud.com/jherskowitz/sets/frozen-in-time-2026' });
+    expect(r.title).toBe('Frozen in Time (2026)');
+    expect(r.description).toBe('Old dog. New tricks.');
+    expect(r.coverArtUrl).toContain('sndcdn.com');
+    expect(r.providerType).toBe('music.playlist');
+  });
+
+  it('accepts on.soundcloud.com short links (redirects to canonical)', async () => {
+    // redirect: 'follow' in our fetch handles the 302; the allowlist check
+    // is on the original hostname, which we've now whitelisted.
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(`<meta property="og:title" content="X"/>`, { status: 200 })));
+    const r = await resolvePlaylistFromUrl({ url: 'https://on.soundcloud.com/Drk2sCLhCHVNugYtAP' });
+    expect(r?.title).toBe('X');
+  });
 });
