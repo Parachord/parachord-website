@@ -145,6 +145,14 @@ export async function resolvePlaylistFromUrl({ url }) {
   if (parsed.protocol !== 'https:') return null;
   if (!PLAYLIST_HOST_ALLOWLIST.has(parsed.hostname)) return null;
 
+  // Achordion's playlist *page* is behind Vercel's bot challenge (429s any
+  // datacenter-IP scraper). They expose a dedicated metadata API at
+  // /api/playlist/<mbid>/meta that's not challenged. Use it instead of
+  // scraping the page HTML.
+  if (parsed.hostname === 'achordion.xyz') {
+    return resolveAchordionPlaylist(parsed, url);
+  }
+
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), PLAYLIST_FETCH_TIMEOUT_MS);
@@ -185,6 +193,42 @@ export async function resolvePlaylistFromUrl({ url }) {
     if (!title) return null;
 
     return { title, description, coverArtUrl, providerType, sourceUrl: url };
+  } catch {
+    return null;
+  }
+}
+
+async function resolveAchordionPlaylist(parsed, originalUrl) {
+  // Path shape: /playlist/<mbid>[/...][?...]
+  const segments = parsed.pathname.split('/').filter(Boolean);
+  if (segments.length < 2 || segments[0] !== 'playlist') return null;
+  const mbid = segments[1];
+  const api = `https://achordion.xyz/api/playlist/${mbid}/meta`;
+
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), PLAYLIST_FETCH_TIMEOUT_MS);
+    let resp;
+    try {
+      resp = await fetch(api, {
+        headers: { 'User-Agent': PLAYLIST_USER_AGENT, 'Accept': 'application/json' },
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    if (!resp.ok) return null;
+
+    const data = await resp.json();
+    if (!data || !data.title) return null;
+
+    return {
+      title: data.title,
+      description: data.description ?? null,
+      coverArtUrl: data.image ?? null,
+      providerType: data.type ?? 'music.playlist',
+      sourceUrl: originalUrl,
+    };
   } catch {
     return null;
   }

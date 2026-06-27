@@ -170,6 +170,10 @@ describe('resolvePlaylistFromUrl', () => {
   beforeEach(() => vi.restoreAllMocks());
 
   const ACHORDION_URL = 'https://achordion.xyz/playlist/c2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13';
+  // Generic allowlisted URL for tests that exercise the OG-scrape code path.
+  // Achordion-specific tests now use the dedicated /api/playlist/<id>/meta
+  // resolver instead and live in the nested describe block below.
+  const GENERIC_PLAYLIST_URL = 'https://soundcloud.com/test-user/sets/test-playlist';
 
   it('returns null when no url provided', async () => {
     expect(await resolvePlaylistFromUrl({})).toBeNull();
@@ -193,32 +197,32 @@ describe('resolvePlaylistFromUrl', () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it('parses og:title, og:description, og:image from Achordion HTML', async () => {
+  it('parses og:title, og:description, og:image from allowed-host HTML', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response(achordionHtml(), {
       status: 200, headers: { 'content-type': 'text/html' }
     })));
-    const r = await resolvePlaylistFromUrl({ url: ACHORDION_URL });
+    const r = await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL });
     expect(r.title).toBe('🪹 (Fall 2024) by jherskowitz');
     expect(r.description).toBe('🪹 (Fall 2024) by jherskowitz · 8 tracks · Achordion playlist.');
     expect(r.coverArtUrl).toBe('https://achordion.xyz/playlist/c2accebd/opengraph-image-17lsgi?ffe3d536244006f0');
     expect(r.providerType).toBe('music.playlist');
-    expect(r.sourceUrl).toBe(ACHORDION_URL);
+    expect(r.sourceUrl).toBe(GENERIC_PLAYLIST_URL);
   });
 
   it('returns null when fetch returns non-2xx', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('not found', { status: 404 })));
-    expect(await resolvePlaylistFromUrl({ url: ACHORDION_URL })).toBeNull();
+    expect(await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL })).toBeNull();
   });
 
   it('returns null when HTML has no OG tags', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('<html><head></head><body>nope</body></html>', { status: 200 })));
-    expect(await resolvePlaylistFromUrl({ url: ACHORDION_URL })).toBeNull();
+    expect(await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL })).toBeNull();
   });
 
   it('returns partial result when only og:title is present', async () => {
     const html = `<html><head><meta property="og:title" content="My Playlist"/></head></html>`;
     vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
-    const r = await resolvePlaylistFromUrl({ url: ACHORDION_URL });
+    const r = await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL });
     expect(r.title).toBe('My Playlist');
     expect(r.coverArtUrl).toBeNull();
   });
@@ -229,14 +233,14 @@ describe('resolvePlaylistFromUrl', () => {
       capturedUA = opts?.headers?.['User-Agent'] || '';
       return new Response(achordionHtml(), { status: 200 });
     }));
-    await resolvePlaylistFromUrl({ url: ACHORDION_URL });
+    await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL });
     expect(capturedUA).toMatch(/parachord-edge/);
   });
 
   it('handles HTML where attributes are in reverse order (content before property)', async () => {
     const html = `<meta content="Reverse Order Title" property="og:title"/>`;
     vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
-    const r = await resolvePlaylistFromUrl({ url: ACHORDION_URL });
+    const r = await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL });
     expect(r?.title).toBe('Reverse Order Title');
   });
 
@@ -246,7 +250,7 @@ describe('resolvePlaylistFromUrl', () => {
       <meta property="og:image" content="https://cdn.example/x.jpg?a=1&amp;b=2&amp;c=3"/>
     </head></html>`;
     vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
-    const r = await resolvePlaylistFromUrl({ url: ACHORDION_URL });
+    const r = await resolvePlaylistFromUrl({ url: GENERIC_PLAYLIST_URL });
     expect(r.title).toBe('Tom & Jerry');
     expect(r.coverArtUrl).toBe('https://cdn.example/x.jpg?a=1&b=2&c=3');
   });
@@ -306,5 +310,65 @@ describe('resolvePlaylistFromUrl', () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response(`<meta property="og:title" content="X"/>`, { status: 200 })));
     const r = await resolvePlaylistFromUrl({ url: 'https://on.soundcloud.com/Drk2sCLhCHVNugYtAP' });
     expect(r?.title).toBe('X');
+  });
+
+  // Achordion-specific: page is behind Vercel's bot challenge, so we call
+  // the dedicated /api/playlist/<mbid>/meta endpoint instead of scraping.
+  describe('Achordion via /api/playlist/<mbid>/meta', () => {
+    it('calls the metadata API instead of scraping the page HTML', async () => {
+      let calledUrl = '';
+      vi.stubGlobal('fetch', vi.fn(async (url) => {
+        calledUrl = String(url);
+        return new Response(JSON.stringify({
+          title: '🪹 (Fall 2024) by jherskowitz',
+          description: '🪹 (Fall 2024) by jherskowitz · 12 tracks · Achordion playlist.',
+          image: 'https://coverartarchive.org/release/aeaaf50f-437f-4d8d-b0db-f616ea09e1cd/front-500',
+          type: 'music.playlist'
+        }), { status: 200, headers: { 'content-type': 'application/json' } });
+      }));
+      const r = await resolvePlaylistFromUrl({ url: 'https://achordion.xyz/playlist/c2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13' });
+      expect(calledUrl).toBe('https://achordion.xyz/api/playlist/c2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13/meta');
+      expect(r.title).toBe('🪹 (Fall 2024) by jherskowitz');
+      expect(r.description).toBe('🪹 (Fall 2024) by jherskowitz · 12 tracks · Achordion playlist.');
+      expect(r.coverArtUrl).toBe('https://coverartarchive.org/release/aeaaf50f-437f-4d8d-b0db-f616ea09e1cd/front-500');
+      expect(r.providerType).toBe('music.playlist');
+      expect(r.sourceUrl).toBe('https://achordion.xyz/playlist/c2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13');
+    });
+
+    it('strips query string and trailing slash when extracting mbid', async () => {
+      let calledUrl = '';
+      vi.stubGlobal('fetch', vi.fn(async (url) => {
+        calledUrl = String(url);
+        return new Response(JSON.stringify({ title: 'X', description: null, image: null, type: 'music.playlist' }), { status: 200 });
+      }));
+      await resolvePlaylistFromUrl({ url: 'https://achordion.xyz/playlist/c2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13/?utm_source=share' });
+      expect(calledUrl).toBe('https://achordion.xyz/api/playlist/c2accebd-ccd1-42c6-8ce7-ec0e8cf6cd13/meta');
+    });
+
+    it('returns null when image is null (empty playlist) but keeps the title', async () => {
+      vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({
+        title: 'Empty Playlist',
+        description: null,
+        image: null,
+        type: 'music.playlist'
+      }), { status: 200 })));
+      const r = await resolvePlaylistFromUrl({ url: 'https://achordion.xyz/playlist/abc' });
+      expect(r.title).toBe('Empty Playlist');
+      expect(r.coverArtUrl).toBeNull();
+    });
+
+    it('returns null when the API returns 404 (private or nonexistent playlist)', async () => {
+      vi.stubGlobal('fetch', vi.fn(async () => new Response('{}', { status: 404 })));
+      const r = await resolvePlaylistFromUrl({ url: 'https://achordion.xyz/playlist/nonexistent' });
+      expect(r).toBeNull();
+    });
+
+    it('returns null when the URL is not a /playlist/<id> path', async () => {
+      const fetchSpy = vi.fn();
+      vi.stubGlobal('fetch', fetchSpy);
+      const r = await resolvePlaylistFromUrl({ url: 'https://achordion.xyz/user/jherskowitz' });
+      expect(r).toBeNull();
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
   });
 });
