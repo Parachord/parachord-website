@@ -40,10 +40,10 @@ describe('handleAasa', () => {
     expect(resp.headers.get('content-type')).toMatch(/^application\/json/);
   });
 
-  it('ships with empty appIDs until iOS lands', async () => {
+  it('declares the iOS app ID (TEAM_ID.bundle_id)', async () => {
     const resp = handleAasa();
     const body = await resp.json();
-    expect(body.applinks.details[0].appIDs).toEqual([]);
+    expect(body.applinks.details[0].appIDs).toEqual(['YR3XETE537.com.parachord.ios']);
   });
 
   it('declares every verb from issue #78 components list', async () => {
