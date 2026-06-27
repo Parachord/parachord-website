@@ -79,12 +79,15 @@ async function searchItunes(query) {
 // Hosts we'll fetch playlist metadata from. Strict allowlist to prevent SSRF
 // (someone passing ?url=http://internal-service/ to probe our network) and
 // to limit the abuse surface. Add hostnames here when adding new providers.
+// YouTube was previously listed but rolled back: the playlist page YouTube
+// serves to Cloudflare's edge IPs is a different (OG-tag-free) HTML shell
+// than what browsers / residential IPs receive. Until we have a reliable
+// strategy (YouTube Data API with a key, or ytInitialData JSON parsing
+// from the shell response), don't pretend to support it.
 const PLAYLIST_HOST_ALLOWLIST = new Set([
   'achordion.xyz',
   'open.spotify.com',
   'music.apple.com',
-  'www.youtube.com',
-  'youtube.com',
   'soundcloud.com',
   'on.soundcloud.com',  // SC short-link service; 302s to soundcloud.com
 ]);

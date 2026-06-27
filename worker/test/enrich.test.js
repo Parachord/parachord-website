@@ -240,15 +240,15 @@ describe('resolvePlaylistFromUrl', () => {
     expect(r?.title).toBe('Reverse Order Title');
   });
 
-  it('decodes HTML entities in extracted OG values (YouTube serves &amp; in image URLs)', async () => {
+  it('decodes HTML entities in extracted OG values (some providers serve &amp; in image URLs)', async () => {
     const html = `<html><head>
       <meta property="og:title" content="Tom &amp; Jerry"/>
-      <meta property="og:image" content="https://i.ytimg.com/x.jpg?a=1&amp;b=2&amp;c=3"/>
+      <meta property="og:image" content="https://cdn.example/x.jpg?a=1&amp;b=2&amp;c=3"/>
     </head></html>`;
     vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
-    const r = await resolvePlaylistFromUrl({ url: 'https://www.youtube.com/playlist?list=abc' });
+    const r = await resolvePlaylistFromUrl({ url: ACHORDION_URL });
     expect(r.title).toBe('Tom & Jerry');
-    expect(r.coverArtUrl).toBe('https://i.ytimg.com/x.jpg?a=1&b=2&c=3');
+    expect(r.coverArtUrl).toBe('https://cdn.example/x.jpg?a=1&b=2&c=3');
   });
 
   it('accepts open.spotify.com URLs', async () => {
@@ -277,18 +277,12 @@ describe('resolvePlaylistFromUrl', () => {
     expect(r.providerType).toBeNull();  // Apple Music doesn't serve og:type
   });
 
-  it('accepts www.youtube.com URLs', async () => {
-    const html = `<meta property="og:title" content="EDM Music Playlist"/>
-                  <meta property="og:image" content="https://i.ytimg.com/vi/x/hqdefault.jpg"/>`;
-    vi.stubGlobal('fetch', vi.fn(async () => new Response(html, { status: 200 })));
-    const r = await resolvePlaylistFromUrl({ url: 'https://www.youtube.com/playlist?list=PLabc' });
-    expect(r.title).toBe('EDM Music Playlist');
-  });
-
-  it('accepts bare youtube.com as alias for www.youtube.com', async () => {
-    vi.stubGlobal('fetch', vi.fn(async () => new Response(`<meta property="og:title" content="X"/>`, { status: 200 })));
-    const r = await resolvePlaylistFromUrl({ url: 'https://youtube.com/playlist?list=abc' });
-    expect(r?.title).toBe('X');
+  it('rejects YouTube URLs (rolled back — YouTube serves OG-stripped HTML to CF edge IPs)', async () => {
+    const fetchSpy = vi.fn();
+    vi.stubGlobal('fetch', fetchSpy);
+    expect(await resolvePlaylistFromUrl({ url: 'https://www.youtube.com/playlist?list=abc' })).toBeNull();
+    expect(await resolvePlaylistFromUrl({ url: 'https://youtube.com/playlist?list=abc' })).toBeNull();
+    expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it('accepts soundcloud.com playlist URLs', async () => {
