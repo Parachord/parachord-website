@@ -81,23 +81,50 @@ async function searchItunes(query) {
 // to limit the abuse surface. Add hostnames here when adding new providers.
 const PLAYLIST_HOST_ALLOWLIST = new Set([
   'achordion.xyz',
+  'open.spotify.com',
+  'music.apple.com',
+  'www.youtube.com',
+  'youtube.com',
+  'soundcloud.com',
+  'on.soundcloud.com',  // SC short-link service; 302s to soundcloud.com
 ]);
 
 const PLAYLIST_USER_AGENT = 'parachord-edge/0.1 (+https://parachord.com)';
 const PLAYLIST_FETCH_TIMEOUT_MS = 5000;
 const PLAYLIST_MAX_BYTES = 256 * 1024; // 256 KB — Achordion's head is ~10 KB
 
+// Decode the handful of HTML entities that show up in OG content attributes.
+// Needed for providers like YouTube that HTML-encode `&` in image URLs as
+// `&amp;` — without this, the templates re-encode to `&amp;amp;` and the URL
+// breaks. Numeric entities (&#NN; / &#xHH;) are also handled.
+function decodeHtmlEntities(s) {
+  if (!s) return s;
+  return s
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');  // last — must not undo our own decoding chain
+}
+
 // Extract a single <meta property="og:X" content="..."> value from HTML.
 // Handles both attribute orders (property before content, or content before
-// property), matches case-insensitively on the property name only.
+// property), matches case-insensitively on the property name only. Decodes
+// HTML entities in the extracted value.
 function extractOgTag(html, prop) {
   const escaped = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Capture content between the OPENING quote and its matching close quote
+  // (backreference \1) so apostrophes inside double-quoted content (and
+  // vice versa) don't truncate the value.
   // property=... content=...
-  const m1 = html.match(new RegExp(`<meta[^>]*property=["']${escaped}["'][^>]*content=["']([^"']*)["']`, 'i'));
-  if (m1) return m1[1];
+  const m1 = html.match(new RegExp(`<meta[^>]*property=["']${escaped}["'][^>]*content=(["'])([\\s\\S]*?)\\1`, 'i'));
+  if (m1) return decodeHtmlEntities(m1[2]);
   // content=... property=...
-  const m2 = html.match(new RegExp(`<meta[^>]*content=["']([^"']*)["'][^>]*property=["']${escaped}["']`, 'i'));
-  if (m2) return m2[1];
+  const m2 = html.match(new RegExp(`<meta[^>]*content=(["'])([\\s\\S]*?)\\1[^>]*property=["']${escaped}["']`, 'i'));
+  if (m2) return decodeHtmlEntities(m2[2]);
   return null;
 }
 
