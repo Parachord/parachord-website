@@ -48,8 +48,9 @@ const AASA = {
   applinks: {
     details: [
       {
-        // appIDs stays empty until parachord-mobile#124 (iOS) lands.
-        appIDs: [],
+        // YR3XETE537 = iOS DEVELOPMENT_TEAM in parachord-mobile/iosApp/Parachord.xcodeproj.
+        // com.parachord.ios = bundle id. Per parachord-mobile#124 (landed).
+        appIDs: ['YR3XETE537.com.parachord.ios'],
         components: [
           { '/': '/play',           '?': { '*': '*' } },
           { '/': '/play/*' },
