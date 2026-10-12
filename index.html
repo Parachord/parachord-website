@@ -27,81 +27,49 @@
     <link rel="icon" type="image/png" href="assets/icon128.png">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* ── Design tokens (Parachord Design System) ── */
         :root {
-            --bg: #0a0a0a;
-            --bg-elevated: #111111;
-            --bg-subtle: #1a1a1a;
-            --text: #f5f5f5;
-            --text-muted: rgba(255,255,255,0.5);
-            --gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #f97316);
-            --accent: #ec4899;
+            --pc-violet: #8b5cf6; --pc-pink: #ec4899; --pc-orange: #f97316;
+            --pc-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #f97316);
+            --pc-black: #0a0a0a; --pc-elevated: #111111; --pc-subtle: #1a1a1a; --pc-ink: #f5f5f5;
+            --pc-white-04: rgba(255,255,255,0.04); --pc-white-05: rgba(255,255,255,0.05); --pc-white-06: rgba(255,255,255,0.06);
+            --pc-white-08: rgba(255,255,255,0.08); --pc-white-12: rgba(255,255,255,0.12); --pc-white-15: rgba(255,255,255,0.15);
+            --pc-online: #22c55e;
+
+            --bg: var(--pc-black); --bg-elevated: var(--pc-elevated); --bg-subtle: var(--pc-subtle); --surface-card: var(--pc-elevated);
+            --text: var(--pc-ink); --text-muted: rgba(255,255,255,0.5); --text-faint: rgba(255,255,255,0.25);
+            --accent: var(--pc-pink); --gradient: var(--pc-gradient);
+            --border: var(--pc-white-05); --border-strong: var(--pc-white-12); --hover-fill: var(--pc-white-04);
+
+            --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --fs-label: 0.7rem; --tracking-label: 0.15em; --tracking-nav: 0.08em; --fs-card-title: 1.1rem; --fs-sm: 0.9rem;
+
+            --section-pad-y: 4rem; --section-pad-x: 2rem;
+            --rail-narrow: 720px; --rail-mid: 960px; --rail-wide: 1200px;
+
+            --radius-btn: 8px; --radius-tile: 14px; --radius-card: 16px; --radius-lg: 20px; --radius-pill: 100px;
+            --shadow-card: 0 4px 16px rgba(0,0,0,0.30); --shadow-pop: 0 8px 32px rgba(0,0,0,0.40);
+            --shadow-cta: 0 8px 30px rgba(236,72,153,0.30);
+            --shadow-hero: -8px 20px 80px rgba(0,0,0,0.6), 0 0 120px rgba(139,92,246,0.12), 0 0 60px rgba(236,72,153,0.06);
+            --glow-hero: radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.05) 50%, transparent 70%);
+            --glass-bg: rgba(10,10,10,0.88); --glass-blur: blur(16px);
+            --ease: cubic-bezier(0.4, 0, 0.2, 1); --dur-fast: 0.2s; --dur-med: 0.3s;
+            --lift: translateY(-2px); --lift-lg: translateY(-4px);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ── Navigation ── */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 1.25rem 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        nav.scrolled {
-            background: rgba(10, 10, 10, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.04);
-        }
-
-        .logo {
-            height: 26px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--text);
-        }
+        /* ── Nav (sticky glass) ── */
+        nav { position: sticky; top: 0; z-index: 100; padding: 1.1rem 2.5rem; display: flex; justify-content: space-between; align-items: center;
+              background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); box-shadow: 0 1px 0 var(--pc-white-04); }
+        .logo { height: 26px; display: block; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: var(--tracking-nav); transition: color var(--dur-fast); }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
         /* ── Hamburger Menu ── */
         .hamburger {
@@ -176,466 +144,97 @@
             color: var(--accent);
         }
 
-        /* ── Hero — Split Layout ── */
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            padding: 7rem 4rem 2rem;
-            position: relative;
-            overflow: hidden;
-            gap: 2rem;
-        }
+        
+        /* ── Mobile Menu Overlay ── */
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(10,10,10,0.98); backdrop-filter: blur(16px); z-index: 99;
+                        flex-direction: column; justify-content: center; align-items: center; gap: 2rem; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .mobile-menu.active { opacity: 1; visibility: visible; }
+        .mobile-menu a { color: var(--text); text-decoration: none; font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.2s; }
+        .mobile-menu a:hover { color: var(--accent); }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            right: 5%;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.05) 50%, transparent 70%);
-            pointer-events: none;
-        }
+        /* ── Shared primitives ── */
+        .section-label { display: inline-block; font-family: var(--font-display); font-size: var(--fs-label); font-weight: 700; text-transform: uppercase; letter-spacing: var(--tracking-label);
+                          background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-word { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 2rem; font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border-radius: var(--radius-btn); cursor: pointer; border: 1px solid transparent; white-space: nowrap;
+                transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease); }
+        .btn svg { flex-shrink: 0; }
+        .btn-primary { background: var(--gradient); color: #fff; }
+        .btn-primary:hover { transform: var(--lift); box-shadow: var(--shadow-cta); }
+        .btn-secondary { background: transparent; color: var(--text); border-color: var(--pc-white-15); }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.3); background: var(--hover-fill); }
+        .pc-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem 0.4rem 0.75rem; background: var(--pc-white-06); border: 1px solid var(--pc-white-08); border-radius: var(--radius-pill);
+                     font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); }
+        .pc-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pc-online); animation: pc-pulse 2s ease-in-out infinite; }
+        @keyframes pc-pulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,.4); } 50% { opacity: .7; box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
 
-        .hero-left {
-            position: relative;
-            z-index: 1;
-            max-width: 640px;
-        }
+        /* ── Section scaffold ── */
+        .pc-section { padding: var(--section-pad-y) var(--section-pad-x); scroll-margin-top: 72px; }
+        .pc-section.subtle { background: var(--bg-subtle); }
+        .pc-section.center { text-align: center; }
+        .pc-rail-narrow { max-width: var(--rail-narrow); margin: 0 auto; }
+        .pc-rail-mid { max-width: var(--rail-mid); margin: 0 auto; }
+        .pc-rail-wide { max-width: var(--rail-wide); margin: 0 auto; }
+        .pc-section h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 800; line-height: 1.2; margin: 0.75rem 0 1rem; }
+        .pc-section .lead { color: var(--text-muted); font-size: 1.02rem; max-width: 560px; margin: 0 auto; }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 1rem 0.4rem 0.75rem;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 100px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.1s;
-        }
+        /* ── Hero ── */
+        .hero { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 2rem; padding: 4.5rem 4rem 3.5rem; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; right: 0; width: 640px; height: 640px; background: var(--glow-hero); pointer-events: none; }
+        .hero-left { position: relative; z-index: 1; max-width: 640px; }
+        .hero-left .pc-badge { margin-bottom: 1.75rem; }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 5vw, 4.6rem); font-weight: 800; line-height: 0.95; text-transform: uppercase; letter-spacing: -0.03em; margin-bottom: 1.25rem; }
+        .hero .subhead { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; max-width: 440px; line-height: 1.4; margin-bottom: 0.75rem; }
+        .hero .tagline { font-size: 1.02rem; color: var(--text-muted); max-width: 440px; line-height: 1.6; margin-bottom: 2rem; }
+        .hero-ctas { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .hero .platforms { display: flex; gap: 1.1rem; align-items: center; }
+        .hero .platforms svg { width: 20px; height: 20px; fill: #fff; opacity: 0.35; transition: opacity var(--dur-fast); }
+        .hero .platforms svg:hover { opacity: 0.7; }
+        .hero .plat-divider { width: 1px; height: 18px; background: var(--pc-white-12); }
+        .hero .plat-mobile { display: flex; gap: 1.1rem; align-items: center; cursor: pointer; }
+        .hero .plat-mobile:hover svg { opacity: 0.7; }
+        .hero-right { position: relative; z-index: 1; display: flex; justify-content: flex-end; margin-right: -4rem; }
+        .hero-art { position: relative; display: inline-block; }
+        .hero-shot { width: 100%; max-width: 560px; border-radius: 16px 0 0 16px; box-shadow: var(--shadow-hero); display: block; }
+        .hero-phone { position: absolute; left: -44px; bottom: -28px; z-index: 2; }
+        .hero-phone .device { --w: 150px; }
 
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #22c55e;
-            animation: pulse 2s ease-in-out infinite;
-        }
+        /* ── Device frame (phone mock) ── */
+        .device { --w: 200px; position: relative; width: var(--w); height: calc(var(--w) * 2.16); background: linear-gradient(160deg, #1a1a1d, #0b0b0d); border-radius: calc(var(--w) * 0.16);
+                   padding: max(8px, calc(var(--w) * 0.045)); border: 1px solid var(--pc-white-12);
+                   box-shadow: 0 20px 70px rgba(0,0,0,0.6), 0 0 80px rgba(139,92,246,0.12), 0 0 50px rgba(236,72,153,0.06); }
+        .device-screen { position: relative; width: 100%; height: 100%; border-radius: calc(var(--w) * 0.16 - max(8px, calc(var(--w) * 0.045))); overflow: hidden; background: var(--bg); }
+        .device-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
-        }
+        /* ── Press ── */
+        .press-items { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .press-item { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 280px; flex: 1; min-width: 220px; gap: 0.75rem; text-decoration: none; padding: 1.5rem;
+                       background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-card); transition: border-color var(--dur-med), transform var(--dur-fast); }
+        .press-item:hover { border-color: var(--border-strong); transform: var(--lift); }
+        .press-source { display: flex; align-items: center; justify-content: center; height: 56px; }
+        .press-source img { max-height: 100%; max-width: 170px; object-fit: contain; border-radius: 6px; opacity: 0.7; transition: opacity var(--dur-fast); }
+        .press-item:hover .press-source img { opacity: 1; }
+        .press-quote { font-size: 0.8rem; font-style: italic; color: var(--text); line-height: 1.5; }
 
-        .hero h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            font-weight: 800;
-            line-height: 0.95;
-            text-transform: uppercase;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.25s;
-        }
+        /* ── Concept ── */
+        .concept-copy { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; line-height: 1.4; color: rgba(255,255,255,.8); max-width: 620px; margin: 0 auto; }
+        .concept-copy strong { color: var(--text); }
 
-        .hero h1 .gradient-word,
-        .gradient-word {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero .hero-subhead {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-            max-width: 440px;
-            line-height: 1.4;
-            margin-bottom: 0.75rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.35s;
-        }
-
-        .hero .tagline {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            max-width: 440px;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.45s;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.55s;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gradient);
-            color: white;
-            padding: 0.85rem 2rem;
-            text-decoration: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(236,72,153,0.3);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: transparent;
-            color: var(--text);
-            padding: 0.85rem 2rem;
-            text-decoration: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: border-color 0.2s, background 0.2s;
-        }
-
-        .btn-secondary:hover {
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.04);
-        }
-
-        .hero .platforms {
-            display: flex;
-            justify-content: center;
-            gap: 1.25rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.65s;
-        }
-
-        .hero .platforms svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-            opacity: 0.35;
-            transition: opacity 0.2s;
-        }
-
-        .hero .platforms svg:hover {
-            opacity: 0.7;
-        }
-
-        .hero .up-next {
-            margin-top: 0.75rem;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.75s;
-        }
-
-        .hero .up-next a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .hero .up-next a:hover {
-            color: #fff;
-            border-bottom-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .hero-right {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            opacity: 0;
-            animation: fadeUp 0.8s ease forwards;
-            animation-delay: 0.4s;
-            /* Allow the image to bleed off the right edge */
-            margin-right: -4rem;
-            height: 80vh;
-            max-height: 720px;
-            min-height: 480px;
-        }
-
-        .hero-screenshot {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: left top;
-            border-radius: 16px 0 0 16px;
-            box-shadow:
-                -8px 20px 80px rgba(0,0,0,0.6),
-                0 0 120px rgba(139,92,246,0.12),
-                0 0 60px rgba(236,72,153,0.06);
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── Press Section ── */
-        .press {
-            padding: 2.5rem 2rem 3.5rem;
-            background: var(--bg);
-        }
-
-        .press-label {
-            text-align: center;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            margin-bottom: 1.5rem;
-        }
-
-        .press-items {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .press-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            max-width: 280px;
-            flex: 1;
-            min-width: 240px;
-            gap: 0.75rem;
-            text-decoration: none;
-            padding: 1.5rem;
-            background: var(--bg-elevated);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            transition: border-color 0.3s, transform 0.2s;
-        }
-
-        .press-item:hover {
-            border-color: rgba(255,255,255,0.12);
-            transform: translateY(-2px);
-        }
-
-        .press-source {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 64px;
-        }
-
-        .press-source img,
-        .press-source .press-icon-svg {
-            max-height: 100%;
-            max-width: 180px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 6px;
-            opacity: 0.7;
-        }
-
-        .press-item:hover .press-source img,
-        .press-item:hover .press-source .press-icon-svg { opacity: 1; }
-
-        .press-quote {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: var(--text);
-            font-weight: 400;
-            line-height: 1.5;
-        }
-
-        /* ── Concept Section ── */
-        .concept {
-            padding: 4rem 2rem;
-            text-align: center;
-            background: var(--bg-subtle);
-        }
-
-        .concept-inner {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .concept h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(1.75rem, 4vw, 2.75rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        .concept h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 1.5rem;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .concept h3 strong {
-            color: var(--text);
-        }
-
-        .concept p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ── Features Section ── */
-        .features {
-            padding: 4rem 2rem;
-            background: var(--bg);
-        }
-
-        .features-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature {
-            background: var(--bg-elevated);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.2s;
-        }
-
-        .feature:hover {
-            border-color: rgba(255,255,255,0.1);
-            transform: translateY(-4px);
-        }
-
-        .feature-screenshot {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-            transition: filter 0.3s, transform 0.3s;
-        }
-
-        .feature-screenshot:hover {
-            filter: brightness(1.15);
-            transform: scale(1.03);
-        }
-
-        .feature-body {
-            padding: 1.75rem;
-        }
-
-        .feature-icon {
-            width: 52px;
-            height: 52px;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: white;
-            stroke-width: 1.5;
-            fill: none;
-        }
-
-        .feature h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-        }
-
-        .feature p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+        /* ── Features ── */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: left; }
+        .feature { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden;
+                    transition: border-color var(--dur-med) var(--ease), transform var(--dur-fast) var(--ease); }
+        .feature:hover { border-color: var(--border-strong); transform: var(--lift-lg); }
+        .feature-screenshot { width: 100%; height: 200px; object-fit: cover; display: block; cursor: pointer; border-bottom: 1px solid var(--border);
+                               transition: filter var(--dur-med) var(--ease), transform var(--dur-med) var(--ease); }
+        .feature-screenshot:hover { filter: brightness(1.15); transform: scale(1.03); }
+        .feature > div:first-child, .feature .shot-wrap { overflow: hidden; }
+        .feature-body { padding: 1.75rem; }
+        .feature-icon { width: 52px; height: 52px; background: var(--gradient); border-radius: var(--radius-tile); display: flex; align-items: center; justify-content: center; color: #fff; margin-bottom: 1rem; }
+        .feature-body h3 { font-family: var(--font-display); font-size: var(--fs-card-title); font-weight: 700; margin: 0 0 0.6rem; }
+        .feature-body p { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
+        .features-cta { text-align: center; margin-top: 2.5rem; }
 
         /* ── Plugins Section ── */
         .plugins {
@@ -763,222 +362,78 @@
             letter-spacing: 0.06em;
         }
 
-        /* ── Experiences Section ── */
-        .experiences {
-            padding: 4rem 2rem;
-            background: var(--bg);
-        }
+        
+        /* Plugin section overrides to match the design system */
+        .plugins-header h2 strong { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: inherit; }
+        .plugin-filters { display: flex; justify-content: center; gap: 0.5rem; margin: 1.5rem 0 2rem; flex-wrap: wrap; }
+        .plugin-filter { background: transparent; border: 1px solid var(--pc-white-12); color: var(--text-muted); padding: 0.5rem 1.25rem; font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+                          text-transform: uppercase; letter-spacing: 0.08em; border-radius: var(--radius-pill); cursor: pointer; transition: all var(--dur-fast) var(--ease); }
+        .plugin-filter:hover { border-color: rgba(255,255,255,.25); color: var(--text); }
+        .plugin-filter.active { background: var(--gradient); border-color: transparent; color: #fff; }
+        .plugins-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1.5rem; max-width: 760px; margin: 0 auto; }
+        .plugin-card { display: flex; flex-direction: column; align-items: center; transition: transform var(--dur-fast) var(--ease); }
+        .plugin-card:hover { transform: var(--lift-lg); }
+        .plugin-card.hidden { display: none; }
+        .plugin-tile { width: 100px; height: 100px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: var(--shadow-card); transition: box-shadow var(--dur-fast) var(--ease); }
+        .plugin-card:hover .plugin-tile { box-shadow: var(--shadow-pop); }
+        .plugin-card h4 { margin-top: 0.75rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; color: var(--text); text-align: center; }
+        .plugin-card > span { font-family: var(--font-body); font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
 
-        .experiences-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+        /* ── Mobile showcase ── */
+        .pc-mobile-phones { display: flex; justify-content: center; align-items: flex-end; gap: 1.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .pc-mobile-phones .phone { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; }
+        .pc-mobile-phones .phone .cap { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+        .pc-mobile-phones .mid { transform: translateY(-20px); }
+        .pc-mobile-badges { display: flex; gap: 0.75rem; justify-content: center; margin-top: 2.25rem; flex-wrap: wrap; }
+        .pc-mobile-note { margin-top: 1rem; font-size: 0.8rem; color: var(--text-faint); }
+        .pc-mobile-note a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
 
-        .experiences-header h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(1.5rem, 3vw, 2.25rem);
-            font-weight: 800;
-        }
+        /* ── Experiences ── */
+        .exp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: var(--rail-mid); margin: 1.5rem auto 0; text-align: left; }
+        .exp-item { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; transition: border-color var(--dur-med), transform var(--dur-fast); }
+        .exp-item:hover { border-color: var(--border-strong); transform: var(--lift); }
+        .exp-item h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .exp-item h3 .ic { color: var(--accent); display: flex; }
+        .exp-item p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
 
-        .experiences-header h2 strong {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        /* ── Store badge ── */
+        .store-badge { display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.6rem 1.1rem; min-width: 180px; text-decoration: none; cursor: pointer; border-radius: var(--radius-btn);
+                        background: var(--bg-elevated); border: 1px solid var(--pc-white-12); color: #fff;
+                        transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+        .store-badge:hover { transform: var(--lift); border-color: var(--border-strong); }
+        .store-badge.accent { background: var(--gradient); border-color: transparent; }
+        .store-badge.accent:hover { box-shadow: var(--shadow-cta); }
+        .store-badge .sb-glyph { display: flex; flex-shrink: 0; }
+        .store-badge .sb-text { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
+        .store-badge .sb-top { font-family: var(--font-body); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+        .store-badge .sb-main { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
 
-        .exp-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .exp-item {
-            background: var(--bg-elevated);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 1.75rem;
-            transition: border-color 0.3s, transform 0.2s;
-        }
-
-        .exp-item:hover {
-            border-color: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .exp-item h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .exp-item h3 svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--accent);
-            stroke-width: 2;
-            fill: none;
-            flex-shrink: 0;
-        }
-
-        .exp-item p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* ── Download Section ── */
-        .download {
-            padding: 4rem 2rem;
-            background: var(--bg-subtle);
-            text-align: center;
-        }
-
-        .download-inner {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .download h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-        }
-
-        .download > .download-inner > p:first-of-type {
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .download-btn {
-            display: inline-block;
-            margin-top: 1rem;
-            background: var(--gradient);
-            color: white;
-            text-decoration: none;
-            border: none;
-            border-radius: 8px;
-            padding: 0.9rem 2.5rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(236,72,153,0.3);
-        }
-
-        .download-all-link {
-            display: none;
-            margin-top: 0.75rem;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.45);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        .download-all-link:hover {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .download-platforms {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            color: rgba(255,255,255,0.35);
-            font-size: 0.8rem;
-        }
-
-        .download-platforms span {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .download-platforms svg {
-            width: 16px;
-            height: 16px;
-            fill: rgba(255,255,255,0.35);
-        }
+        /* ── Download module ── */
+        .pc-dl-primary { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin: 1.5rem 0 2.5rem; }
+        .pc-dl-primary[hidden] { display: none; }
+        .pc-dl-primary .hint { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+        .pc-dl-cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 720px; margin: 0 auto; }
+        .pc-dl-panel { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; text-align: left; }
+        .pc-dl-panel h4 { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .pc-dl-panel .badges { display: flex; flex-direction: column; gap: 0.6rem; }
+        .pc-dl-panel .badges > a { width: 100%; }
+        .pc-dl-panel .badge-note { font-size: 0.72rem; color: var(--text-faint); line-height: 1.45; margin: -0.1rem 0 0.2rem 0.25rem; }
+        .pc-dl-panel .badge-note a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+        .pc-dl-more { margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted); }
+        .pc-dl-more a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--pc-white-15); }
+        .pc-dl-more a:hover { border-color: var(--text); }
 
         /* ── Footer ── */
-        footer {
-            padding: 3rem 2rem;
-            background: var(--bg);
-            border-top: 1px solid rgba(255,255,255,0.04);
-        }
-
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 1.5rem;
-        }
-
-        .footer-logo {
-            height: 22px;
-            filter: brightness(0) invert(1);
-            opacity: 0.4;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem 2rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.35);
-            text-decoration: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--text);
-        }
-
-        .footer-links a svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        .footer-copy {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.25);
-        }
-
-        .footer-tagline {
-            font-size: 0.65rem;
-            color: #fff;
-        }
-        .footer-tagline a {
-            color: #fff;
-        }
+        footer { padding: 3rem 2rem; border-top: 1px solid var(--pc-white-04); }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.25rem; }
+        .footer-logo { height: 22px; filter: brightness(0) invert(1); opacity: 0.4; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 2rem; }
+        .footer-links a { color: var(--text-faint); text-decoration: none; font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; transition: color var(--dur-fast); display: inline-flex; align-items: center; gap: 0.4rem; }
+        .footer-links a svg { width: 16px; height: 16px; fill: currentColor; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-copy { font-size: 0.7rem; color: var(--text-faint); }
+        .footer-tagline { font-size: 0.65rem; color: #fff; }
+        .footer-tagline a { color: inherit; }
 
         /* ── Lightbox ── */
         .lightbox {
@@ -1084,6 +539,7 @@
             font-size: 0.85rem;
         }
 
+        
         /* ── Scroll Animations ── */
         .fade-section {
             opacity: 0;
@@ -1096,129 +552,36 @@
             transform: translateY(0);
         }
 
+        
         /* ── Responsive ── */
-        @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 6rem 2.5rem 2rem;
-                text-align: center;
-                gap: 1.5rem;
-            }
-
-            .hero-left {
-                max-width: 100%;
-            }
-
-            .hero h1 {
-                font-size: clamp(2.5rem, 8vw, 4.5rem);
-            }
-
-            .hero .hero-subhead {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero .tagline {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-ctas {
-                justify-content: center;
-            }
-
-            .hero .platforms {
-                justify-content: center;
-            }
-
-            .hero-right {
-                order: -1;
-                margin-right: 0;
-                height: 50vh;
-                max-height: 440px;
-                min-height: 320px;
-                width: 100%;
-                max-width: 500px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-screenshot {
-                border-radius: 16px;
-                object-position: left center;
-            }
+        @media (max-width: 940px) {
+            .hero { grid-template-columns: 1fr; text-align: center; padding: 3rem 1.5rem; }
+            .hero-left { max-width: 100%; }
+            .hero .subhead, .hero .tagline { margin-left: auto; margin-right: auto; }
+            .hero-ctas, .hero .platforms { justify-content: center; }
+            .hero-right { order: -1; margin-right: 0; justify-content: center; }
+            .hero-shot { border-radius: 16px; max-width: 420px; }
+            .hero-phone { left: auto; right: -24px; bottom: -24px; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .exp-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .mobile-menu { display: flex; }
+            .pc-dl-cols { grid-template-columns: 1fr; }
+            .pc-mobile-phones .mid { transform: none; }
         }
-
-        @media (max-width: 900px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 700px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .mobile-menu {
-                display: flex;
-            }
-
-            .hero {
-                padding: 5rem 1.5rem 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: clamp(2rem, 10vw, 3.5rem);
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .plugins-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-
-            .plugin-tile {
-                width: 80px;
-                height: 80px;
-            }
-
-            .plugin-tile svg {
-                width: 36px;
-                height: 36px;
-            }
-
-            .exp-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .download-platforms {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .plugins-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero-ctas {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .btn-primary, .btn-secondary {
-                justify-content: center;
-            }
+        @media (max-width: 600px) {
+            .pc-section { padding: 3rem 1.25rem; }
+            .hero-ctas { flex-direction: column; align-items: stretch; }
+            .hero-ctas .btn { width: 100%; }
+            .hero-art { margin-right: 24px; }
+            .hero-shot { max-width: 100%; }
+            .hero-phone { right: -16px; bottom: -16px; }
+            .hero-phone .device { --w: 104px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .plugins-grid { grid-template-columns: repeat(2, 1fr); }
+            .pc-mobile-badges { flex-direction: column; align-items: center; }
+            .pc-mobile-badges .store-badge { width: 100%; max-width: 320px; }
         }
     </style>
 </head>
@@ -1228,8 +591,8 @@
         <div class="nav-links">
             <a href="#features">Features</a>
             <a href="#plugins">Plugins</a>
+            <a href="#mobile">Mobile</a>
             <a href="/blog/">Blog</a>
-            <a href="/demos/">Demos</a>
             <a href="#download">Download</a>
         </div>
         <div class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -1242,258 +605,135 @@
     <div class="mobile-menu" id="mobile-menu">
         <a href="#features">Features</a>
         <a href="#plugins">Plugins</a>
+        <a href="#mobile">Mobile</a>
         <a href="/blog/">Blog</a>
-        <a href="/demos/">Demos</a>
         <a href="#download">Download</a>
     </div>
 
     <!-- ── Hero ── -->
     <section class="hero">
         <div class="hero-left">
-            <div class="hero-badge">
-                <span class="dot"></span>
-                Betas Now Available
-            </div>
+            <span class="pc-badge"><span class="dot"></span>Desktop + Mobile Betas</span>
             <h1>Your Music<br>Is <span class="gradient-word">Everywhere.</span></h1>
-            <p class="hero-subhead">Now you don't have to be.</p>
+            <p class="subhead">Now you don't have to be.</p>
             <p class="tagline">A new kind of music player that invites all your streams, local audio files, and playlists scattered across multiple services to the same party. It's about time they mingle.</p>
             <div class="hero-ctas">
-                <a href="https://github.com/Parachord/parachord/releases" class="btn-primary" id="hero-download" target="_blank">Download Beta</a>
-                <a href="https://github.com/Parachord/parachord" class="btn-secondary" target="_blank">Source Code</a>
+                <a href="#download" class="btn btn-primary" id="hero-download"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg><span id="hero-download-label">Download Beta</span></a>
+                <a href="https://github.com/Parachord/parachord" class="btn btn-secondary" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>Source Code</a>
             </div>
-            <div class="platforms">
-                <!-- macOS -->
-                <svg viewBox="0 0 24 24"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg>
-                <!-- Windows -->
-                <svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
-                <!-- Linux (Tux) -->
-                <svg viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z"/></svg>
+            <div class="platforms" aria-label="Available platforms">
+                <svg viewBox="0 0 24 24"><title>macOS</title><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg>
+                <svg viewBox="0 0 24 24"><title>Windows</title><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                <svg viewBox="0 0 24 24"><title>Linux</title><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139z"/></svg>
+                <span class="plat-divider"></span>
+                <a class="plat-mobile" href="#mobile" title="Parachord for iOS &amp; Android">
+                    <svg viewBox="0 0 24 24"><title>iOS</title><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg>
+                    <svg viewBox="0 0 24 24"><title>Android</title><path d="M16.6 9.48l1.84-3.18a.4.4 0 00-.69-.4l-1.86 3.23a11.4 11.4 0 00-8.78 0L5.25 5.9a.4.4 0 10-.69.4L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2z"/></svg>
+                </a>
             </div>
-            <p class="up-next">Up Next: <a href="https://github.com/Parachord/parachord-mobile/releases" target="_blank">Android</a></p>
         </div>
         <div class="hero-right">
-            <img src="assets/hero.png" alt="Parachord App" class="hero-screenshot">
+            <div class="hero-art">
+                <img class="hero-shot" src="assets/hero.png" alt="Parachord desktop app">
+                <div class="hero-phone"><div class="device"><div class="device-screen"><img src="assets/screenshots/android/now-playing.png" alt="Parachord on mobile" loading="lazy"></div></div></div>
+            </div>
         </div>
     </section>
 
     <!-- ── Press ── -->
-    <section class="press fade-section">
-        <p class="press-label">What People Are Saying About Parachord</p>
+    <section class="pc-section subtle center fade-section">
+        <p class="section-label">What people are saying about Parachord</p>
         <div class="press-items">
-            <a href="https://www.theverge.com/column/881256/parachord-vibe-coded-music-streaming-app" target="_blank" class="press-item">
-                <div class="press-source">
-                    <img src="assets/press-theverge.png" alt="The Verge">
-                </div>
+            <a href="https://www.theverge.com/column/881256/parachord-vibe-coded-music-streaming-app" target="_blank" rel="noopener" class="press-item">
+                <div class="press-source"><img src="assets/press-theverge.png" alt="The Verge"></div>
                 <p class="press-quote">"The next iTunes may be vibe-coded"</p>
             </a>
-            <a href="https://musically.com/2026/02/20/the-spirit-of-tomahawk-lives-on-in-music-project-parachord/" target="_blank" class="press-item">
-                <div class="press-source">
-                    <img src="assets/press-musically.png" alt="Music Ally">
-                </div>
+            <a href="https://musically.com/2026/02/20/the-spirit-of-tomahawk-lives-on-in-music-project-parachord/" target="_blank" rel="noopener" class="press-item">
+                <div class="press-source"><img src="assets/press-musically.png" alt="Music Ally"></div>
                 <p class="press-quote">"The spirit of Tomahawk lives on in music project Parachord"</p>
             </a>
-            <a href="https://www.pcmag.com/news/a-beloved-music-streaming-app-is-back-thanks-to-claude-code" target="_blank" class="press-item">
-                <div class="press-source">
-                    <img src="assets/press-pcmag.png" alt="PCMag">
-                </div>
-                <p class="press-quote">"Parachord is a new all-in-one music-streaming app that pulls all your content into one interface, so you don't have to jump between platforms to listen to your favorite songs."</p>
+            <a href="https://www.pcmag.com/news/a-beloved-music-streaming-app-is-back-thanks-to-claude-code" target="_blank" rel="noopener" class="press-item">
+                <div class="press-source"><img src="assets/press-pcmag.png" alt="PCMag"></div>
+                <p class="press-quote">"A new all-in-one music-streaming app that pulls all your content into one interface."</p>
             </a>
         </div>
     </section>
 
     <!-- ── Concept ── -->
-    <section class="concept fade-section">
-        <div class="concept-inner">
-            <span class="section-label">Plugging The Big Idea</span>
+    <section class="pc-section center fade-section">
+        <div class="pc-rail-narrow">
+            <span class="section-label">Plugging the big idea</span>
             <h2>Stop chasing music across platforms.</h2>
-            <h3>Given metadata about a <strong>song</strong>, <strong>album</strong>, or <strong>playlist</strong>, Parachord finds the best available source for <strong class="gradient-word">you</strong> and just plays it.</h3>
-            
+            <p class="concept-copy">Given metadata about a <strong>song</strong>, <strong>album</strong>, or <strong>playlist</strong>, Parachord finds the best available source for <span class="gradient-word">you</span> and just plays it.</p>
         </div>
     </section>
 
     <!-- ── Features ── -->
-    <section class="features fade-section" id="features">
-        <div class="features-header">
-            <span class="section-label">Features</span>
-        </div>
-
-        <div class="features-grid">
+    <section class="pc-section center fade-section" id="features">
+        <span class="section-label">Features</span>
+        <div class="pc-rail-wide" style="margin-top: 1.5rem;">
+            <div class="features-grid">
             <div class="feature">
                 <img src="assets/sources.png" alt="Many Music Sources" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
-                    </div>
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg></div>
                     <h3>Many Music Sources</h3>
-                    <p>Connect your favorite streaming services and local libraries, then prioritize them however you like. Parachord seamlessly switches between sources so your music never stops — no manual juggling required.</p>
+                    <p>Connect your favorite streaming services and local libraries, then prioritize them however you like. Parachord seamlessly switches sources so your music never stops.</p>
                 </div>
             </div>
-
             <div class="feature">
                 <img src="assets/friends-2.png" alt="Friends & Listen Along" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
-                    </div>
-                    <h3>Friends & Listen Along</h3>
-                    <p>Real human curation. See what friends are playing (in whatever apps they use!), browse their libraries, and listen along in real-time. Music is better together.</p>
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg></div>
+                    <h3>Friends &amp; Listen Along</h3>
+                    <p>See what friends are playing — in whatever apps they use — browse their libraries, and listen along in real-time. Music is better together.</p>
                 </div>
             </div>
-
-            <div class="feature">
-                <img src="assets/sync.png" alt="Sync" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
-                    </div>
-                    <h3>Sync Your Library & Favorites</h3>
-                    <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
-                </div>
-            </div>
-
             <div class="feature">
                 <img src="assets/AI.png" alt="Shuffleupagus AI" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
-                    </div>
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></div>
                     <h3>Shuffleupagus AI</h3>
-                    <p>AI-powered music recommendations from the engines you choose - ChatGPT, Claude, Gemini, or all of them at once. Your taste, amplified.</p>
+                    <p>AI-powered recommendations from the engines you choose — ChatGPT, Claude, Gemini, or all at once. Your taste, amplified.</p>
                 </div>
             </div>
-
             <div class="feature">
-                <img src="assets/applemusic-import.png" alt="Music Service Interoperability" class="feature-screenshot">
+                <img src="assets/applemusic-import.png" alt="Service Interoperability" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
-                    </div>
-                    <h3>Music Service Interoperability</h3>
-                    <p>Someone shared a Spotify link but you use Apple Music? Use the browser extension to easily import and play it from your sources. Parachord translates between services so you can play anything from anywhere.</p>
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg></div>
+                    <h3>Service Interoperability</h3>
+                    <p>Someone shared a Spotify link but you use Apple Music? Parachord translates between services so you can play anything from anywhere.</p>
                 </div>
             </div>
-
             <div class="feature">
                 <img src="assets/embed.png" alt="Smartlinks & Embeds" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-4.072a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757"/><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 010-11.314l4.243-4.243a2 2 0 012.828 0L17.657 5.343"/></svg>
-                    </div>
-                    <h3>Smartlinks & Embeds</h3>
-                    <p>Embeddable buttons and smartlinks for artists, labels, and blogs. Let fans play music from their preferred service, right from your site.</p>
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-4.072a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757"/></svg></div>
+                    <h3>Smartlinks &amp; Embeds</h3>
+                    <p>Share a song that opens in the listener’s preferred service. One link, every platform, no dead ends.</p>
                 </div>
             </div>
-
             <div class="feature">
-                <img src="assets/freshdrops.png" alt="New Releases" class="feature-screenshot">
+                <img src="assets/recommended-artists.png" alt="Sync Library & Favorites" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
-                    </div>
-                    <h3>New Releases</h3>
-                    <p>Stay on top of what's dropping. Fresh releases from your favorite artists and curated charts, aggregated across all your connected services.</p>
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg></div>
+                    <h3>Sync Library &amp; Favorites</h3>
+                    <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
                 </div>
             </div>
-
-            <div class="feature">
-                <img src="assets/recommended-artists.png" alt="Recommendations" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
-                    </div>
-                    <h3>Recommendations</h3>
-                    <p>Discover new music through personalized recommendations — by artist or by song. Powered by your listening history and refined by the engines you trust.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/spinoffs.png" alt="Smart Queue Management & Spin-Offs" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
-                    </div>
-                    <h3>Smart Queue Management & Spin-Offs</h3>
-                    <p>Full control over what plays next. Drag, reorder, and spin off new playlists from your queue on the fly. Your listening session becomes a living playlist.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/critical-darlings.png" alt="Critical Darlings" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
-                    </div>
-                    <h3>Critical Darlings</h3>
-                    <p>The most acclaimed albums from across the web - collected and presented to you with overviews of what the critics are saying.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/buy-button.png" alt="Bandcamp Buy Buttons" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
-                    </div>
-                    <h3>Bandcamp Buy Buttons</h3>
-                    <p>Support the artists you love. Bandcamp purchase links appear in the Now Playing view for the songs Parachord can find there - regardless of where you are streaming it from, so you can buy music directly without leaving Parachord.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/search.png" alt="Search & Browse" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/><path d="M10.5 7.5v6m3-3h-6"/></svg>
-                    </div>
-                    <h3>Search & Browse</h3>
-                    <p>Search across multiple catalogs at once. Find something you like and follow the threads across related artists and more.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/ontour-now-playing.png" alt="Concert Discovery" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-                    </div>
-                    <h3>Concert Discovery</h3>
-                    <p>Never miss a show. Parachord surfaces upcoming concerts and tours from the artists you listen to, with ticket links from SeatGeek and Ticketmaster — right in the Now Playing view.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/pixies.png" alt="Rich Artist Pages" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
-                    </div>
-                    <h3>Rich Artist Pages</h3>
-                    <p>Full artist profiles with discographies, concert dates, bios, and band members — all pulled together from multiple metadata sources into one beautiful, browsable page.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <img src="assets/claude-mcp.png" alt="Raycast & MCP Support" class="feature-screenshot">
-                <div class="feature-body">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3M3.75 4.5h16.5a1.5 1.5 0 011.5 1.5v12a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6a1.5 1.5 0 011.5-1.5z"/></svg>
-                    </div>
-                    <h3>Raycast & MCP Support</h3>
-                    <p>Control Parachord from Raycast or any MCP-compatible AI assistant. Search, play, queue songs, and manage your library without ever leaving your workflow.</p>
-                </div>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2.5rem;">
-            <a href="#" class="btn-primary" id="open-video-lightbox">View Demo Screencasts</a>
+        <div class="features-cta">
+            <a href="#" class="btn btn-secondary" id="open-video-lightbox"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>View Demo Screencasts</a>
         </div>
     </section>
 
     <!-- ── Plugins Marketplace ── -->
-    <section class="plugins fade-section" id="plugins">
+    <section class="pc-section subtle center fade-section" id="plugins">
         <div class="plugins-header">
             <span class="section-label">Marketplace</span>
-            <h2>Plug in <strong>everything</strong></h2>
-            <p>Connect your favorite services, metadata providers, and recommendation engines.</p>
+            <h2>Plug in <strong>everything</strong>.</h2>
+            <p class="lead">Connect your favorite services, metadata providers, and recommendation engines.</p>
         </div>
 
         <div class="plugin-filters">
@@ -1679,65 +919,79 @@
         </div>
     </section>
 
-    <!-- ── Experiences ── -->
-    <section class="experiences fade-section" id="experiences">
-        <div class="experiences-header">
-            <span class="section-label">Why Parachord</span>
-            <h2>Experiences you can't get <strong>anywhere else</strong></h2>
+    <!-- ── Mobile ── -->
+    <section class="pc-section center fade-section" id="mobile">
+        <span class="section-label">Now on mobile</span>
+        <h2>Your music, in your pocket.</h2>
+        <p class="lead">The full resolver in your hand — play across every source, see what friends are spinning, and take your whole library anywhere. The Android beta is on Google Play; the iOS beta is on TestFlight.</p>
+        <div class="pc-mobile-phones">
+            <div class="phone"><div class="device" style="--w:200px"><div class="device-screen"><img src="assets/screenshots/android/friends.png" alt="Friends" loading="lazy"></div></div><span class="cap">Friends</span></div>
+            <div class="phone mid"><div class="device" style="--w:230px"><div class="device-screen"><img src="assets/screenshots/android/now-playing.png" alt="Now Playing" loading="lazy"></div></div><span class="cap">Now Playing</span></div>
+            <div class="phone"><div class="device" style="--w:200px"><div class="device-screen"><img src="assets/screenshots/android/artist.png" alt="Artist Page" loading="lazy"></div></div><span class="cap">Artist Page</span></div>
         </div>
+        <div class="pc-mobile-badges">
+            <a class="store-badge" data-store="testflight" href="https://testflight.apple.com/v1/app/6793584958" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg></span><span class="sb-text"><span class="sb-top">Join the beta on</span><span class="sb-main">TestFlight</span></span></a>
+            <a class="store-badge" data-store="playstore" href="https://play.google.com/store/apps/details?id=com.parachord.android" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M3 1.84v20.32c0 .67.73 1.07 1.3.72l16.5-10.16a.85.85 0 000-1.44L4.3 1.12C3.73.77 3 1.17 3 1.84z"/></svg></span><span class="sb-text"><span class="sb-top">Get it on</span><span class="sb-main">Google Play</span></span></a>
+            <a class="store-badge" data-store="apk" href="https://github.com/Parachord/parachord-mobile/releases/latest" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16.6 9.48l1.84-3.18a.4.4 0 00-.69-.4l-1.86 3.23a11.4 11.4 0 00-8.78 0L5.25 5.9a.4.4 0 10-.69.4L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2z"/></svg></span><span class="sb-text"><span class="sb-top">Direct download</span><span class="sb-main">Android APK</span></span></a>
+        </div>
+        <p class="pc-mobile-note">TestFlight is invite-only for now. For Google Play, <a href="https://groups.google.com/g/parachord-testers" target="_blank" rel="noopener">join the Parachord-Testers group</a> and opt in to testing first.</p>
+    </section>
 
+    <!-- ── Experiences ── -->
+    <section class="pc-section center fade-section" id="experiences">
+        <span class="section-label">The wider ecosystem</span>
+        <h2>Built as open, decoupled layers.</h2>
         <div class="exp-grid">
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg> Find the rare stuff</h3>
-                <p>That live recording only on YouTube. The Bandcamp-exclusive EP. The vinyl rip in your collection. Parachord finds them all and lets you listen to, collect, and playlist them together.</p>
+                <h3><span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-4.072a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757"/></svg></span>parachord:// deep links</h3>
+                <p>Any website can hand a tracklist to Parachord with one click — it resolves and plays from your top-ranked source.</p>
             </div>
-
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Prioritize your way</h3>
-                <p>Prioritize your service plug-ins however you want. Whether that is Bandcamp as the default service, backfilled by a streaming service or one streaming service over the other. It's up to you.</p>
+                <h3><span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/></svg></span>Own Your Playlists</h3>
+                <p>Export in standard XSPF format that works forever. No lock-in, no expiry, no platform holding your collection hostage.</p>
             </div>
-
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> Break through the paralysis of choice</h3>
-                <p>See what friends are playing and just hitch a ride while they drive the aux.</p>
+                <h3><span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></span>MCP Server</h3>
+                <p>Let Claude and other agents browse, queue, and control your music through the Parachord MCP server.</p>
             </div>
-
             <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> Your recommendation engines</h3>
-                <p>Plug in Last.fm, ListenBrainz, or AI engines. It's up to you which ones - or all of them. Get suggestions from sources you trust, not black-box algorithms.</p>
-            </div>
-
-            <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg> Translation layer</h3>
-                <p>Someone sent you a Spotify link but you use YouTube? Paste it in. Parachord plays it from your sources - not theirs.</p>
-            </div>
-
-            <div class="exp-item">
-                <h3><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg> Own your playlists</h3>
-                <p>Standard XSPF format. Import, convert, export, share, and keep your curation forever—even if platforms disappear.</p>
+                <h3><span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg></span>Achordion Community</h3>
+                <p>A modern web community on ListenBrainz data — every Play button deep-links straight back into Parachord.</p>
             </div>
         </div>
     </section>
 
     <!-- ── Download ── -->
-    <section class="download fade-section" id="download">
-        <div class="download-inner">
-            <span class="section-label">Get Parachord</span>
-            <h2>Download Parachord</h2>
-            <p>Free, open source, and yours to keep.</p>
-            <a href="https://github.com/Parachord/parachord/releases" class="download-btn" id="section-download" target="_blank">Download on GitHub</a>
-            <a href="https://github.com/Parachord/parachord/releases" class="download-all-link" id="all-releases-link" target="_blank"></a>
-            <div class="download-platforms">
-                <span><svg viewBox="0 0 24 24"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg> macOS</span>
-                <span><svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg> Windows</span>
-                <span><svg viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z"/></svg> Linux</span>
+    <section class="pc-section subtle center fade-section" id="download">
+        <span class="section-label">Download</span>
+        <h2>Get Parachord</h2>
+        <p class="lead">Free, open source, and ready on every desktop — with mobile betas now rolling out.</p>
+        <div class="pc-dl-primary" id="dl-primary" hidden>
+            <span class="hint" id="dl-primary-hint"></span>
+            <span id="dl-primary-slot"></span>
+        </div>
+        <div class="pc-dl-cols">
+            <div class="pc-dl-panel">
+                <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Desktop · Stable</h4>
+                <div class="badges">
+                    <a class="store-badge" data-store="mac" href="https://github.com/Parachord/parachord/releases" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg></span><span class="sb-text"><span class="sb-top">Download for</span><span class="sb-main">macOS</span></span></a>
+                    <a class="store-badge" data-store="windows" href="https://github.com/Parachord/parachord/releases" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg></span><span class="sb-text"><span class="sb-top">Download for</span><span class="sb-main">Windows</span></span></a>
+                    <a class="store-badge" data-store="linux" href="https://github.com/Parachord/parachord/releases" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139z"/></svg></span><span class="sb-text"><span class="sb-top">Download for</span><span class="sb-main">Linux</span></span></a>
+                </div>
             </div>
-            <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.8;">Make the Parachord experience even more magical with our browser extension</p>
-            <div class="download-platforms" style="margin-top: 0.5rem;">
-                <a href="https://chromewebstore.google.com/detail/parachord/gibkgapadebfoillbakpgmgpnppjlnie" target="_blank" style="text-decoration: none; color: inherit;"><span><svg viewBox="0 0 24 24"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"/></svg> Chrome</span></a>
-                <a href="https://addons.mozilla.org/en-US/firefox/addon/parachord/" target="_blank" style="text-decoration: none; color: inherit;"><span><svg viewBox="0 0 24 24"><path d="M8.824 7.287c.008 0 .004 0 0 0zm-2.8-1.4c.006 0 .003 0 0 0zm16.754 2.161c-.505-1.215-1.53-2.528-2.333-2.943.654 1.283 1.033 2.57 1.177 3.53l.002.02c-1.314-3.278-3.544-4.6-5.366-7.477-.091-.147-.184-.292-.273-.446a3.545 3.545 0 01-.13-.24 2.118 2.118 0 01-.172-.46.03.03 0 00-.027-.03.038.038 0 00-.021 0l-.006.001a.037.037 0 00-.01.005L15.624 0c-2.585 1.515-3.657 4.168-3.932 5.856a6.197 6.197 0 00-2.305.587.297.297 0 00-.147.37c.057.162.24.24.396.17a5.622 5.622 0 012.008-.523l.067-.005a5.847 5.847 0 011.957.222l.095.03a5.816 5.816 0 01.616.228c.08.036.16.073.238.112l.107.055a5.835 5.835 0 01.368.211 5.953 5.953 0 012.034 2.104c-.62-.437-1.733-.868-2.803-.681 4.183 2.09 3.06 9.292-2.737 9.02a5.164 5.164 0 01-1.513-.292 4.42 4.42 0 01-.538-.232c-1.42-.735-2.593-2.121-2.74-3.806 0 0 .537-2 3.845-2 .357 0 1.38-.998 1.398-1.287-.005-.095-2.029-.9-2.817-1.677-.422-.416-.622-.616-.8-.767a3.47 3.47 0 00-.301-.227 5.388 5.388 0 01-.032-2.842c-1.195.544-2.124 1.403-2.8 2.163h-.006c-.46-.584-.428-2.51-.402-2.913-.006-.025-.343.176-.389.206-.406.29-.787.616-1.136.974-.397.403-.76.839-1.085 1.303a9.816 9.816 0 00-1.562 3.52c-.003.013-.11.487-.19 1.073-.013.09-.026.181-.037.272a7.8 7.8 0 00-.069.667l-.002.034-.023.387-.001.06C.386 18.795 5.593 24 12.016 24c5.752 0 10.527-4.176 11.463-9.661.02-.149.035-.298.052-.448.232-1.994-.025-4.09-.753-5.844z"/></svg> Firefox</span></a>
+            <div class="pc-dl-panel">
+                <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>Mobile · Beta</h4>
+                <div class="badges">
+                    <a class="store-badge" data-store="testflight" href="https://testflight.apple.com/v1/app/6793584958" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z"/></svg></span><span class="sb-text"><span class="sb-top">Join the beta on</span><span class="sb-main">TestFlight</span></span></a>
+                    <p class="badge-note">Invite-only beta for now.</p>
+                    <a class="store-badge" data-store="playstore" href="https://play.google.com/store/apps/details?id=com.parachord.android" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M3 1.84v20.32c0 .67.73 1.07 1.3.72l16.5-10.16a.85.85 0 000-1.44L4.3 1.12C3.73.77 3 1.17 3 1.84z"/></svg></span><span class="sb-text"><span class="sb-top">Get it on</span><span class="sb-main">Google Play</span></span></a>
+                    <p class="badge-note"><a href="https://groups.google.com/g/parachord-testers" target="_blank" rel="noopener">Join the Parachord-Testers group</a> and opt in to testing first, then install from the Play listing.</p>
+                    <a class="store-badge" data-store="apk" href="https://github.com/Parachord/parachord-mobile/releases/latest" target="_blank" rel="noopener"><span class="sb-glyph"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16.6 9.48l1.84-3.18a.4.4 0 00-.69-.4l-1.86 3.23a11.4 11.4 0 00-8.78 0L5.25 5.9a.4.4 0 10-.69.4L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2z"/></svg></span><span class="sb-text"><span class="sb-top">Direct download</span><span class="sb-main">Android APK</span></span></a>
+                    <p class="badge-note">Sideload · Android 8.0+</p>
+                </div>
             </div>
         </div>
+        <p class="pc-dl-more">Prefer the full release list? <a href="https://github.com/Parachord/parachord/releases" target="_blank" rel="noopener">Desktop releases</a> · <a href="https://github.com/Parachord/parachord-mobile/releases" target="_blank" rel="noopener">Mobile releases</a> · Browser extension for <a href="https://chromewebstore.google.com/detail/parachord/gibkgapadebfoillbakpgmgpnppjlnie" target="_blank" rel="noopener">Chrome</a> and <a href="https://addons.mozilla.org/en-US/firefox/addon/parachord/" target="_blank" rel="noopener">Firefox</a>.</p>
     </section>
 
     <!-- ── Lightbox ── -->
@@ -1782,35 +1036,27 @@
         <div class="footer-content">
             <img src="assets/logo-wordmark.svg" alt="Parachord" class="footer-logo">
             <div class="footer-links">
-                <a href="https://achordion.xyz" target="_blank">Achordion</a>
-                <a href="https://github.com/Parachord/parachord" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
-                <a href="https://github.com/Parachord/parachord/issues" target="_blank">Issues</a>
-                <a href="https://github.com/Parachord/parachord/discussions" target="_blank">Forum</a>
-                <a href="https://join.slack.com/t/parachord/shared_invite/zt-3p81slpg5-_KYJLUwV3Kc~RCC1zQaipA" target="_blank">Slack</a>
-                <a href="https://github.com/Parachord/parachord/blob/main/docs/PRIVACY_POLICY.md" target="_blank">Privacy Policy</a>
+                <a href="https://achordion.xyz" target="_blank" rel="noopener">Achordion</a>
+                <a href="https://github.com/Parachord/parachord" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
+                <a href="https://github.com/Parachord/parachord/issues" target="_blank" rel="noopener">Issues</a>
+                <a href="https://github.com/Parachord/parachord/discussions" target="_blank" rel="noopener">Forum</a>
+                <a href="https://join.slack.com/t/parachord/shared_invite/zt-3p81slpg5-_KYJLUwV3Kc~RCC1zQaipA" target="_blank" rel="noopener">Slack</a>
+                <a href="https://github.com/Parachord/parachord/blob/main/docs/PRIVACY_POLICY.md" target="_blank" rel="noopener">Privacy Policy</a>
             </div>
             <span class="footer-copy">&copy; 2026 Parachord &middot; MIT License &middot; Open Source</span>
-            <span class="footer-tagline">Made with ❤️ by <a href="mailto:j@parachord.com">J Herskowitz</a><br>(and with cold indifference by 🤖)</span>
+            <span class="footer-tagline">Made with ❤️ by <a href="mailto:j@parachord.com">J Herskowitz</a> (and with cold indifference by 🤖)</span>
         </div>
     </footer>
 
     <script>
-        // Navigation scroll detection
-        const nav = document.querySelector('nav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 50);
-        });
-
         // Hamburger menu toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
-
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         });
-
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -1822,18 +1068,13 @@
         // Plugin filter
         const filters = document.querySelectorAll('.plugin-filter');
         const cards = document.querySelectorAll('.plugin-card');
-
         filters.forEach(filter => {
             filter.addEventListener('click', () => {
                 const category = filter.dataset.filter;
                 filters.forEach(f => f.classList.remove('active'));
                 filter.classList.add('active');
                 cards.forEach(card => {
-                    if (category === 'all' || card.dataset.category === category) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
+                    card.classList.toggle('hidden', !(category === 'all' || card.dataset.category === category));
                 });
             });
         });
@@ -1846,142 +1087,84 @@
         const featureScreenshots = document.querySelectorAll('.feature-screenshot');
         const featureImages = Array.from(featureScreenshots).map(img => img.src);
         let currentIndex = 0;
-
         lightboxTotal.textContent = featureImages.length;
 
-        function openLightbox(index) {
-            currentIndex = index % featureImages.length;
-            lightboxImg.src = featureImages[currentIndex];
-            lightboxCurrent.textContent = currentIndex + 1;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function showPrev() {
-            currentIndex = (currentIndex - 1 + featureImages.length) % featureImages.length;
+        function showIndex(i) {
+            currentIndex = (i + featureImages.length) % featureImages.length;
             lightboxImg.src = featureImages[currentIndex];
             lightboxCurrent.textContent = currentIndex + 1;
         }
-
-        function showNext() {
-            currentIndex = (currentIndex + 1) % featureImages.length;
-            lightboxImg.src = featureImages[currentIndex];
-            lightboxCurrent.textContent = currentIndex + 1;
-        }
-
-        featureScreenshots.forEach((img, index) => {
-            img.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openLightbox(index);
-            });
-        });
-
+        function openLightbox(index) { showIndex(index); lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+        featureScreenshots.forEach((img, index) => img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(index); }));
         document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-        document.querySelector('.lightbox-prev').addEventListener('click', showPrev);
-        document.querySelector('.lightbox-next').addEventListener('click', showNext);
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (lightbox.classList.contains('active')) {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') showPrev();
-                if (e.key === 'ArrowRight') showNext();
-            }
-            if (videoLightbox.classList.contains('active')) {
-                if (e.key === 'Escape') closeVideoLightbox();
-            }
-        });
+        document.querySelector('.lightbox-prev').addEventListener('click', () => showIndex(currentIndex - 1));
+        document.querySelector('.lightbox-next').addEventListener('click', () => showIndex(currentIndex + 1));
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 
         // Video Lightbox
         const videoLightbox = document.getElementById('video-lightbox');
         const videoIframe = document.getElementById('video-lightbox-iframe');
         const playlistUrl = 'https://www.youtube.com/embed/Vc8AswEs5f8?list=PLKIAXRUWOTo62Fy835ZhTtQfzXnqaiVXV&autoplay=1';
-
-        function openVideoLightbox() {
-            videoIframe.src = playlistUrl;
-            videoLightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeVideoLightbox() {
-            videoLightbox.classList.remove('active');
-            videoIframe.src = '';
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('open-video-lightbox').addEventListener('click', (e) => {
-            e.preventDefault();
-            openVideoLightbox();
-        });
-
+        function openVideoLightbox() { videoIframe.src = playlistUrl; videoLightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeVideoLightbox() { videoLightbox.classList.remove('active'); videoIframe.src = ''; document.body.style.overflow = ''; }
+        document.getElementById('open-video-lightbox').addEventListener('click', (e) => { e.preventDefault(); openVideoLightbox(); });
         document.getElementById('video-lightbox-close').addEventListener('click', closeVideoLightbox);
+        videoLightbox.addEventListener('click', (e) => { if (e.target === videoLightbox) closeVideoLightbox(); });
 
-        videoLightbox.addEventListener('click', (e) => {
-            if (e.target === videoLightbox) closeVideoLightbox();
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showIndex(currentIndex - 1);
+                if (e.key === 'ArrowRight') showIndex(currentIndex + 1);
+            }
+            if (videoLightbox.classList.contains('active') && e.key === 'Escape') closeVideoLightbox();
         });
 
         // Scroll animations (IntersectionObserver)
         const fadeSections = document.querySelectorAll('.fade-section');
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             }, { threshold: 0.1 });
-
-            fadeSections.forEach(section => observer.observe(section));
-
-            // Fallback for in-app browsers (e.g. Threads) where
-            // IntersectionObserver exists but never fires
-            setTimeout(() => {
-                fadeSections.forEach(section => {
-                    if (!section.classList.contains('visible')) {
-                        section.classList.add('visible');
-                    }
-                });
-            }, 3000);
+            fadeSections.forEach(s => observer.observe(s));
         } else {
-            // No IntersectionObserver support — show everything immediately
-            fadeSections.forEach(section => section.classList.add('visible'));
+            fadeSections.forEach(s => s.classList.add('visible'));
         }
 
-        // OS detection and auto-download link
+        // ── Download module: OS detection, primary badge, GitHub release asset resolution ──
         (function () {
             var ua = navigator.userAgent;
-            var os = 'unknown';
-            if (/Mac/i.test(ua)) os = 'mac';
+            var os = null;
+            if (/Android/i.test(ua)) os = 'android';
+            else if (/iPhone|iPad|iPod/i.test(ua) || (/Mac/i.test(ua) && navigator.maxTouchPoints > 1)) os = 'ios';
+            else if (/Mac/i.test(ua)) os = 'mac';
             else if (/Win/i.test(ua)) os = 'windows';
-            else if (/Linux/i.test(ua) && !/Android/i.test(ua)) os = 'linux';
+            else if (/Linux/i.test(ua)) os = 'linux';
 
-            var isAppleSilicon = false;
-            if (os === 'mac') {
-                // navigator.userAgentData provides accurate arch on Chromium browsers
-                if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-                    navigator.userAgentData.getHighEntropyValues(['architecture']).then(function (values) {
-                        isAppleSilicon = values.architecture === 'arm';
-                        // Re-run asset selection once we have accurate arch info
-                        refetchAndUpdate();
-                    }).catch(function () {
-                        // Fall through to GPU-based detection
-                        isAppleSilicon = detectAppleSiliconByGPU();
-                        refetchAndUpdate();
-                    });
-                } else {
-                    // Safari and Firefox: check WebGL renderer for Apple GPU names
-                    isAppleSilicon = detectAppleSiliconByGPU();
+            var OS_LABEL = { android: 'Android', ios: 'iOS', mac: 'macOS', windows: 'Windows', linux: 'Linux' };
+            var OS_PRIMARY = { android: 'apk', ios: 'testflight', mac: 'mac', windows: 'windows', linux: 'linux' };
+
+            function badges(store) { return Array.prototype.slice.call(document.querySelectorAll('.store-badge[data-store="' + store + '"]')); }
+            function setHref(store, url) { badges(store).forEach(function (a) { a.href = url; }); }
+
+            // Primary (accent) badge: a clone of the OS-matching badge, kept in sync via data-store.
+            var primary = os ? OS_PRIMARY[os] : null;
+            var heroLabel = document.getElementById('hero-download-label');
+            if (primary) {
+                var src = badges(primary)[0];
+                if (src) {
+                    var clone = src.cloneNode(true);
+                    clone.classList.add('accent');
+                    document.getElementById('dl-primary-slot').appendChild(clone);
+                    document.getElementById('dl-primary-hint').textContent = 'Looks like you’re on ' + OS_LABEL[os];
+                    document.getElementById('dl-primary').hidden = false;
                 }
+                if (heroLabel && (os === 'mac' || os === 'windows' || os === 'linux')) heroLabel.textContent = 'Download for ' + OS_LABEL[os];
             }
 
+            // ── Desktop: resolve the right asset from the latest parachord release ──
+            var isAppleSilicon = true;
             function detectAppleSiliconByGPU() {
                 try {
                     var canvas = document.createElement('canvas');
@@ -1990,116 +1173,58 @@
                         var dbg = gl.getExtension('WEBGL_debug_renderer_info');
                         if (dbg) {
                             var renderer = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
-                            // Apple Silicon GPUs report as "Apple M1", "Apple M2", "Apple GPU", etc.
                             if (/Apple (M\d|GPU)/i.test(renderer)) return true;
+                            if (/Intel|AMD|NVIDIA/i.test(renderer)) return false;
                         }
                     }
                 } catch (e) {}
-                // Default to Apple Silicon — most Macs sold since late 2020 are ARM-based
-                return true;
+                return true; // most Macs sold since late 2020 are Apple Silicon
             }
-
-            var heroBtn = document.getElementById('hero-download');
-            var sectionBtn = document.getElementById('section-download');
-            var allReleasesLink = document.getElementById('all-releases-link');
-            var releasesUrl = 'https://github.com/Parachord/parachord/releases';
-
-            function findAsset(assets) {
-                var dmgAssets, exeAssets, linuxAssets, match;
-
-                if (os === 'mac') {
-                    dmgAssets = assets.filter(function (a) {
-                        return /\.dmg$/i.test(a.name);
-                    });
-                    if (isAppleSilicon) {
-                        match = dmgAssets.find(function (a) {
-                            return /Apple.?Silicon/i.test(a.name);
-                        });
-                    } else {
-                        match = dmgAssets.find(function (a) {
-                            return /Intel/i.test(a.name);
-                        });
-                    }
-                    if (!match && dmgAssets.length) match = dmgAssets[0];
-                } else if (os === 'windows') {
-                    exeAssets = assets.filter(function (a) {
-                        return /\.(exe|msi)$/i.test(a.name);
-                    });
-                    match = exeAssets.find(function (a) {
-                        return /Setup/i.test(a.name);
-                    });
-                    if (!match && exeAssets.length) match = exeAssets[0];
-                    if (!match) {
-                        match = assets.find(function (a) {
-                            return /\.exe$/i.test(a.name);
-                        });
-                    }
-                } else if (os === 'linux') {
-                    linuxAssets = assets.filter(function (a) {
-                        return /\.(AppImage|deb|snap|rpm)$/i.test(a.name);
-                    });
-                    match = linuxAssets.find(function (a) {
-                        return /\.AppImage$/i.test(a.name);
-                    });
-                    if (!match && linuxAssets.length) match = linuxAssets[0];
+            function pick(assets, re) { return assets.find(function (a) { return re.test(a.name); }); }
+            function desktopAsset(assets, target) {
+                if (target === 'mac') {
+                    var dmgs = assets.filter(function (a) { return /\.dmg$/i.test(a.name); });
+                    return (isAppleSilicon ? pick(dmgs, /Apple.?Silicon|arm64|aarch64/i) : pick(dmgs, /Intel|x64|x86_64/i)) || dmgs[0];
                 }
-
-                return match;
-            }
-
-            var osLabels = { mac: 'macOS', windows: 'Windows', linux: 'Linux' };
-
-            function updateButtons(url, osName) {
-                if (heroBtn) {
-                    heroBtn.href = url;
-                    heroBtn.textContent = 'Download for ' + osName;
+                if (target === 'windows') {
+                    var exes = assets.filter(function (a) { return /\.(exe|msi)$/i.test(a.name); });
+                    return pick(exes, /Setup/i) || exes[0];
                 }
-                if (sectionBtn) {
-                    sectionBtn.href = url;
-                    sectionBtn.textContent = 'Download for ' + osName;
-                }
-                if (allReleasesLink) {
-                    allReleasesLink.href = releasesUrl;
-                    allReleasesLink.textContent = 'View all platforms & releases';
-                    allReleasesLink.style.display = 'block';
+                if (target === 'linux') {
+                    var lin = assets.filter(function (a) { return /\.(AppImage|deb|snap|rpm)$/i.test(a.name); });
+                    return pick(lin, /\.AppImage$/i) || lin[0];
                 }
             }
-
-            if (os === 'unknown') return;
-
-            var cachedRelease = null;
-
-            function applyAssetSelection(release) {
+            function applyDesktop(release) {
                 if (!release || !release.assets) return;
-
-                var assets = release.assets.map(function (a) {
-                    return { name: a.name, url: a.browser_download_url };
+                var assets = release.assets.map(function (a) { return { name: a.name, url: a.browser_download_url }; });
+                ['mac', 'windows', 'linux'].forEach(function (t) {
+                    var m = desktopAsset(assets, t);
+                    if (m) setHref(t, m.url);
                 });
-
-                var match = findAsset(assets);
-                if (match) {
-                    updateButtons(match.url, osLabels[os]);
-                } else {
-                    var tagUrl = release.html_url || releasesUrl;
-                    updateButtons(tagUrl, osLabels[os]);
-                }
             }
-
-            function refetchAndUpdate() {
-                if (cachedRelease) {
-                    applyAssetSelection(cachedRelease);
-                }
-            }
-
             fetch('https://api.github.com/repos/Parachord/parachord/releases/latest')
-                .then(function (res) { return res.json(); })
+                .then(function (r) { return r.json(); })
                 .then(function (release) {
-                    cachedRelease = release;
-                    applyAssetSelection(release);
+                    if (os === 'mac' && navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+                        return navigator.userAgentData.getHighEntropyValues(['architecture'])
+                            .then(function (v) { isAppleSilicon = v.architecture === 'arm'; })
+                            .catch(function () { isAppleSilicon = detectAppleSiliconByGPU(); })
+                            .then(function () { applyDesktop(release); });
+                    }
+                    if (os === 'mac') isAppleSilicon = detectAppleSiliconByGPU();
+                    applyDesktop(release);
                 })
-                .catch(function () {
-                    // API call failed; leave default links unchanged
-                });
+                .catch(function () { /* leave the releases-page links in place */ });
+
+            // ── Android APK: point the badge at the latest signed .apk asset ──
+            fetch('https://api.github.com/repos/Parachord/parachord-mobile/releases/latest')
+                .then(function (r) { return r.json(); })
+                .then(function (release) {
+                    var apk = (release.assets || []).find(function (a) { return /\.apk$/i.test(a.name); });
+                    if (apk) setHref('apk', apk.browser_download_url);
+                })
+                .catch(function () { /* leave the releases/latest link in place */ });
         })();
     </script>
 </body>
