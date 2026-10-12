@@ -231,6 +231,7 @@
         .feature-screenshot:hover { filter: brightness(1.15); transform: scale(1.03); }
         .feature > div:first-child, .feature .shot-wrap { overflow: hidden; }
         .feature-body { padding: 1.75rem; }
+        .feature-icon svg { width: 24px; height: 24px; stroke: #fff; stroke-width: 1.5; fill: none; }
         .feature-icon { width: 52px; height: 52px; background: var(--gradient); border-radius: var(--radius-tile); display: flex; align-items: center; justify-content: center; color: #fff; margin-bottom: 1rem; }
         .feature-body h3 { font-family: var(--font-display); font-size: var(--fs-card-title); font-weight: 700; margin: 0 0 0.6rem; }
         .feature-body p { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
@@ -593,6 +594,7 @@
             <a href="#plugins">Plugins</a>
             <a href="#mobile">Mobile</a>
             <a href="/blog/">Blog</a>
+            <a href="/demos/">Demos</a>
             <a href="#download">Download</a>
         </div>
         <div class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -607,6 +609,7 @@
         <a href="#plugins">Plugins</a>
         <a href="#mobile">Mobile</a>
         <a href="/blog/">Blog</a>
+        <a href="/demos/">Demos</a>
         <a href="#download">Download</a>
     </div>
 
@@ -676,49 +679,165 @@
             <div class="feature">
                 <img src="assets/sources.png" alt="Many Music Sources" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg></div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                    </div>
                     <h3>Many Music Sources</h3>
-                    <p>Connect your favorite streaming services and local libraries, then prioritize them however you like. Parachord seamlessly switches sources so your music never stops.</p>
+                    <p>Connect your favorite streaming services and local libraries, then prioritize them however you like. Parachord seamlessly switches between sources so your music never stops — no manual juggling required.</p>
                 </div>
             </div>
+
             <div class="feature">
                 <img src="assets/friends-2.png" alt="Friends & Listen Along" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg></div>
-                    <h3>Friends &amp; Listen Along</h3>
-                    <p>See what friends are playing — in whatever apps they use — browse their libraries, and listen along in real-time. Music is better together.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                    </div>
+                    <h3>Friends & Listen Along</h3>
+                    <p>Real human curation. See what friends are playing (in whatever apps they use!), browse their libraries, and listen along in real-time. Music is better together.</p>
                 </div>
             </div>
+
+            <div class="feature">
+                <img src="assets/sync.png" alt="Sync" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                    </div>
+                    <h3>Sync Your Library & Favorites</h3>
+                    <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
+                </div>
+            </div>
+
             <div class="feature">
                 <img src="assets/AI.png" alt="Shuffleupagus AI" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+                    </div>
                     <h3>Shuffleupagus AI</h3>
-                    <p>AI-powered recommendations from the engines you choose — ChatGPT, Claude, Gemini, or all at once. Your taste, amplified.</p>
+                    <p>AI-powered music recommendations from the engines you choose - ChatGPT, Claude, Gemini, or all of them at once. Your taste, amplified.</p>
                 </div>
             </div>
+
             <div class="feature">
-                <img src="assets/applemusic-import.png" alt="Service Interoperability" class="feature-screenshot">
+                <img src="assets/applemusic-import.png" alt="Music Service Interoperability" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg></div>
-                    <h3>Service Interoperability</h3>
-                    <p>Someone shared a Spotify link but you use Apple Music? Parachord translates between services so you can play anything from anywhere.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+                    </div>
+                    <h3>Music Service Interoperability</h3>
+                    <p>Someone shared a Spotify link but you use Apple Music? Use the browser extension to easily import and play it from your sources. Parachord translates between services so you can play anything from anywhere.</p>
                 </div>
             </div>
+
             <div class="feature">
                 <img src="assets/embed.png" alt="Smartlinks & Embeds" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-4.072a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757"/></svg></div>
-                    <h3>Smartlinks &amp; Embeds</h3>
-                    <p>Share a song that opens in the listener’s preferred service. One link, every platform, no dead ends.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-4.072a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757"/><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 010-11.314l4.243-4.243a2 2 0 012.828 0L17.657 5.343"/></svg>
+                    </div>
+                    <h3>Smartlinks & Embeds</h3>
+                    <p>Embeddable buttons and smartlinks for artists, labels, and blogs. Let fans play music from their preferred service, right from your site.</p>
                 </div>
             </div>
+
             <div class="feature">
-                <img src="assets/recommended-artists.png" alt="Sync Library & Favorites" class="feature-screenshot">
+                <img src="assets/freshdrops.png" alt="New Releases" class="feature-screenshot">
                 <div class="feature-body">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg></div>
-                    <h3>Sync Library &amp; Favorites</h3>
-                    <p>Sync favorites and libraries from your existing services. Your carefully curated collection, unified in one place.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+                    </div>
+                    <h3>New Releases</h3>
+                    <p>Stay on top of what's dropping. Fresh releases from your favorite artists and curated charts, aggregated across all your connected services.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/recommended-artists.png" alt="Recommendations" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                    </div>
+                    <h3>Recommendations</h3>
+                    <p>Discover new music through personalized recommendations — by artist or by song. Powered by your listening history and refined by the engines you trust.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/spinoffs.png" alt="Smart Queue Management & Spin-Offs" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+                    </div>
+                    <h3>Smart Queue Management & Spin-Offs</h3>
+                    <p>Full control over what plays next. Drag, reorder, and spin off new playlists from your queue on the fly. Your listening session becomes a living playlist.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/critical-darlings.png" alt="Critical Darlings" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                    </div>
+                    <h3>Critical Darlings</h3>
+                    <p>The most acclaimed albums from across the web - collected and presented to you with overviews of what the critics are saying.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/buy-button.png" alt="Bandcamp Buy Buttons" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+                    </div>
+                    <h3>Bandcamp Buy Buttons</h3>
+                    <p>Support the artists you love. Bandcamp purchase links appear in the Now Playing view for the songs Parachord can find there - regardless of where you are streaming it from, so you can buy music directly without leaving Parachord.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/search.png" alt="Search & Browse" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/><path d="M10.5 7.5v6m3-3h-6"/></svg>
+                    </div>
+                    <h3>Search & Browse</h3>
+                    <p>Search across multiple catalogs at once. Find something you like and follow the threads across related artists and more.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/ontour-now-playing.png" alt="Concert Discovery" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                    </div>
+                    <h3>Concert Discovery</h3>
+                    <p>Never miss a show. Parachord surfaces upcoming concerts and tours from the artists you listen to, with ticket links from SeatGeek and Ticketmaster — right in the Now Playing view.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/pixies.png" alt="Rich Artist Pages" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+                    </div>
+                    <h3>Rich Artist Pages</h3>
+                    <p>Full artist profiles with discographies, concert dates, bios, and band members — all pulled together from multiple metadata sources into one beautiful, browsable page.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <img src="assets/claude-mcp.png" alt="Raycast & MCP Support" class="feature-screenshot">
+                <div class="feature-body">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3M3.75 4.5h16.5a1.5 1.5 0 011.5 1.5v12a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6a1.5 1.5 0 011.5-1.5z"/></svg>
+                    </div>
+                    <h3>Raycast & MCP Support</h3>
+                    <p>Control Parachord from Raycast or any MCP-compatible AI assistant. Search, play, queue songs, and manage your library without ever leaving your workflow.</p>
                 </div>
             </div>
             </div>
